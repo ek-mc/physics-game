@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.1] - 2026-03-04
+### Added
+- Home behavior: clicking `🎯 Physics Game` always returns to homepage/menu.
+- Configurable timer per question: 20s / 30s / 45s / 60s.
+- New graph-concept question set (x-t and v-t interpretation).
+
+### Changed
+- Persisted user menu preferences in `localStorage` (difficulty, count, timer, streak, timer seconds).
+
 ## [0.2.0] - 2026-03-04
 ### Added
 - Expanded question bank to 500+ generated questions across all chapters.

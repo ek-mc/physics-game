@@ -7,9 +7,10 @@ const chapters = {
 
 const DIFFS = ['easy', 'medium', 'hard'];
 const DIFF_LABEL = { easy: 'Easy', medium: 'Medium', hard: 'Hard', mixed: 'Μικτή' };
-const TIMER_SECONDS = 20;
+const DEFAULT_TIMER_SECONDS = 45;
 const PREFS_KEY = 'physics-game-prefs-v1';
 
+const homeBtn = document.getElementById('homeBtn');
 const menu = document.getElementById('menu');
 const quiz = document.getElementById('quiz');
 const result = document.getElementById('result');
@@ -28,6 +29,7 @@ const bestResultText = document.getElementById('bestResultText');
 const difficultySelect = document.getElementById('difficultySelect');
 const countSelect = document.getElementById('countSelect');
 const timerToggle = document.getElementById('timerToggle');
+const timerSecondsSelect = document.getElementById('timerSecondsSelect');
 const streakToggle = document.getElementById('streakToggle');
 const bankInfo = document.getElementById('bankInfo');
 const bestInfo = document.getElementById('bestInfo');
@@ -284,11 +286,55 @@ function genEnergy(){
   return out;
 }
 
+function genGraphConcepts(){
+  const out = [];
+  out.push(makeQuestion('kinematics','easy',
+    'Σε διάγραμμα v-t, η κλίση της ευθείας τι εκφράζει;',
+    ['Επιτάχυνση', 'Θέση', 'Μετατόπιση', 'Ροπή'],0,
+    'Στο v-t η κλίση είναι η επιτάχυνση a.'));
+  out.push(makeQuestion('kinematics','easy',
+    'Σε διάγραμμα x-t, η κλίση της καμπύλης τι εκφράζει;',
+    ['Ταχύτητα', 'Επιτάχυνση', 'Δύναμη', 'Ενέργεια'],0,
+    'Στο x-t η κλίση είναι η ταχύτητα v.'));
+  out.push(makeQuestion('kinematics','medium',
+    'Σε διάγραμμα v-t, το εμβαδό κάτω από την καμπύλη σε χρονικό διάστημα δίνει:',
+    ['Μετατόπιση', 'Επιτάχυνση', 'Δύναμη', 'Ισχύ'],0,
+    'Το εμβαδό κάτω από v-t δίνει τη μετατόπιση Δx.'));
+
+  // Generate many graph-style numeric questions
+  for (const a of [1,2,3,4,-1,-2,-3]){
+    for (const v0 of [0,2,4,6,8,10]){
+      for (const t of [2,3,4,5,6]){
+        const v = v0 + a*t;
+        out.push(makeQuestion('kinematics','medium',
+          `Γραφικά: στο διάγραμμα v-t η γραμμή ξεκινά από v₀=${v0} m/s και έχει κλίση a=${a} m/s². Ποια είναι η v στο t=${t} s;`,
+          shuffle([v, v0+a, v0+t, a*t]).map(x=>`${fmt(x)} m/s`),0,
+          `Από το διάγραμμα: v=v₀+at=${fmt(v)} m/s.`
+        ));
+      }
+    }
+  }
+
+  for (const v0 of [2,4,6,8,10,12]){
+    for (const t of [2,3,4,5,6]){
+      const dx = v0*t;
+      out.push(makeQuestion('kinematics','easy',
+        `Σε διάγραμμα v-t με σταθερή ταχύτητα v=${v0} m/s για t=${t} s, πόση είναι η μετατόπιση;`,
+        shuffle([dx, v0+t, v0/t, t/v0]).map(x=>`${fmt(x)} m`),0,
+        `Εμβαδό ορθογωνίου: Δx=v·t=${fmt(dx)} m.`
+      ));
+    }
+  }
+
+  return out;
+}
+
 const bank = [
   ...genKinematics(),
   ...genDynamics(),
   ...genRotation(),
-  ...genEnergy()
+  ...genEnergy(),
+  ...genGraphConcepts()
 ];
 
 let quizSet = [];
@@ -299,11 +345,11 @@ let bestStreakRun = 0;
 let locked = false;
 let config = null;
 let timerId = null;
-let secondsLeft = TIMER_SECONDS;
+let secondsLeft = DEFAULT_TIMER_SECONDS;
 let renderedCorrectIndex = null;
 
 function bestKey(cfg){
-  return `physics-game-best-v2-${cfg.mode}-${cfg.chapter||'all'}-${cfg.difficulty}-${cfg.count}-${cfg.timer}-${cfg.streakMode}`;
+  return `physics-game-best-v3-${cfg.mode}-${cfg.chapter||'all'}-${cfg.difficulty}-${cfg.count}-${cfg.timer}-${cfg.timerSeconds}-${cfg.streakMode}`;
 }
 
 function getBest(cfg){
@@ -332,6 +378,7 @@ function savePrefs(){
     difficulty: difficultySelect.value,
     count: countSelect.value,
     timer: timerToggle.checked,
+    timerSeconds: timerSecondsSelect.value,
     streak: streakToggle.checked
   };
   localStorage.setItem(PREFS_KEY, JSON.stringify(prefs));
@@ -345,6 +392,7 @@ function loadPrefs(){
     if (p.difficulty) difficultySelect.value = p.difficulty;
     if (p.count) countSelect.value = String(p.count);
     if (typeof p.timer === 'boolean') timerToggle.checked = p.timer;
+    if (p.timerSeconds) timerSecondsSelect.value = String(p.timerSeconds);
     if (typeof p.streak === 'boolean') streakToggle.checked = p.streak;
   } catch {}
 }
@@ -353,6 +401,7 @@ function updateMenuInfo(){
   const difficulty = difficultySelect.value;
   const count = Number(countSelect.value);
   const timer = timerToggle.checked;
+  const timerSeconds = Number(timerSecondsSelect.value || DEFAULT_TIMER_SECONDS);
   const streakMode = streakToggle.checked;
 
   const byChapter = Object.keys(chapters).map(ch => {
@@ -361,7 +410,7 @@ function updateMenuInfo(){
   }).join(' | ');
 
   bankInfo.textContent = `Σύνολο ερωτήσεων: ${bank.length} | ${byChapter}`;
-  const cfg = { mode: 'random', chapter: null, difficulty, count, timer, streakMode };
+  const cfg = { mode: 'random', chapter: null, difficulty, count, timer, timerSeconds, streakMode };
   const b = getBest(cfg);
   bestInfo.textContent = `Best (τελευταίες ρυθμίσεις random): ${b.score}/${b.total} | καλύτερο streak: ${b.streak || 0}`;
 }
@@ -373,6 +422,7 @@ function start(mode, chapter){
     difficulty: difficultySelect.value,
     count: Number(countSelect.value),
     timer: timerToggle.checked,
+    timerSeconds: Number(timerSecondsSelect.value || DEFAULT_TIMER_SECONDS),
     streakMode: streakToggle.checked
   };
 
@@ -411,7 +461,7 @@ function tickTimer(){
 function startTimer(){
   if (!config.timer) return;
   clearInterval(timerId);
-  secondsLeft = TIMER_SECONDS;
+  secondsLeft = config.timerSeconds || DEFAULT_TIMER_SECONDS;
   tickTimer();
   timerId = setInterval(tickTimer, 1000);
 }
@@ -538,11 +588,18 @@ restartBtn.onclick = () => {
   menu.classList.remove('hidden');
 };
 
+homeBtn.onclick = () => {
+  stopTimer();
+  quiz.classList.add('hidden');
+  result.classList.add('hidden');
+  menu.classList.remove('hidden');
+};
+
 document.querySelectorAll('#menu button').forEach(b => {
   b.onclick = () => start(b.dataset.mode, b.dataset.chapter);
 });
 
-[difficultySelect, countSelect, timerToggle, streakToggle].forEach(el => {
+[difficultySelect, countSelect, timerToggle, timerSecondsSelect, streakToggle].forEach(el => {
   el.addEventListener('change', () => {
     savePrefs();
     updateMenuInfo();

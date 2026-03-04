@@ -8,7 +8,7 @@
 </head>
 <body>
   <main class="app">
-    <h1>🎯 Physics Game</h1>
+    <h1><button id="homeBtn" class="home-btn" title="Αρχική">🎯 Physics Game</button></h1>
     <p class="subtitle">Quiz φυσικής στα ελληνικά (ABCD) με παγίδες, επίπεδα και χρονόμετρο.</p>
 
     <section id="menu" class="card">
@@ -31,7 +31,15 @@
           </select>
         </label>
 
-        <label class="toggle"><input type="checkbox" id="timerToggle" checked /> Timer mode (20s/ερώτηση)</label>
+        <label class="toggle"><input type="checkbox" id="timerToggle" checked /> Timer mode</label>
+        <label>Χρόνος/ερώτηση
+          <select id="timerSecondsSelect">
+            <option value="20">20s</option>
+            <option value="30">30s</option>
+            <option value="45" selected>45s</option>
+            <option value="60">60s</option>
+          </select>
+        </label>
         <label class="toggle"><input type="checkbox" id="streakToggle" /> Streak mode (τέλος στο πρώτο λάθος)</label>
       </div>
 
