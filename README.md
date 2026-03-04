@@ -20,3 +20,6 @@
 
 ## Live Demo
 - https://ek-mc.github.io/physics-game/
+
+## UI
+- Includes a site favicon (`/favicon.svg`).
