@@ -389,6 +389,35 @@ function filterBank(mode, chapter, difficulty){
   return src;
 }
 
+function stemSignature(text){
+  return String(text)
+    .toLowerCase()
+    .replace(/[0-9]+([.,][0-9]+)?/g, 'N')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function pickDiverseQuestions(src, targetCount){
+  const shuffled = shuffle(src);
+  const used = new Set();
+  const picked = [];
+
+  for (const q of shuffled){
+    const sig = stemSignature(q.q);
+    if (used.has(sig)) continue;
+    used.add(sig);
+    picked.push(q);
+    if (picked.length >= targetCount) return picked;
+  }
+
+  for (const q of shuffled){
+    if (picked.length >= targetCount) break;
+    if (!picked.includes(q)) picked.push(q);
+  }
+
+  return picked;
+}
+
 function savePrefs(){
   const prefs = {
     difficulty: difficultySelect.value,
@@ -453,10 +482,11 @@ function start(mode, chapter){
     const graphPool = src.filter(q => q.isGraph);
     const nonGraphPool = src.filter(q => !q.isGraph);
     const minGraphs = Math.min(3, graphPool.length, targetCount);
-    quizSet = [...shuffle(graphPool).slice(0, minGraphs), ...shuffle(nonGraphPool).slice(0, targetCount - minGraphs)];
-    quizSet = shuffle(quizSet);
+    const pickedGraphs = pickDiverseQuestions(graphPool, minGraphs);
+    const pickedNonGraphs = pickDiverseQuestions(nonGraphPool, targetCount - minGraphs);
+    quizSet = shuffle([...pickedGraphs, ...pickedNonGraphs]);
   } else {
-    quizSet = shuffle(src).slice(0, targetCount);
+    quizSet = pickDiverseQuestions(src, targetCount);
   }
   idx = 0; score = 0; streak = 0; bestStreakRun = 0; locked = false;
 

@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.4] - 2026-03-04
+### Changed
+- Added diversity-first question picker: avoids same question stem/template repeating in the same run.
+- Kinematics mode now applies diversity to both graph and non-graph picks.
+
 ## [0.2.3] - 2026-03-04
 ### Fixed
 - Reduced repeated/same-stem questions (dedupe by chapter+difficulty+question text).
