@@ -288,6 +288,74 @@ function genEnergy(){
   return out;
 }
 
+function genWordProblems(){
+  const out = [];
+  const contexts = [
+    'Ένα όχημα σε ευθεία λεωφόρο',
+    'Ένα διαστημόπλοιο σε δοκιμή κινητήρα',
+    'Ένα ρολόι με δείκτη δευτερολέπτων',
+    'Ένας ανελκυστήρας σε κτίριο',
+    'Ένα τρένο σε γραμμή προαστιακού',
+    'Ένας ποδηλάτης σε ευθεία διαδρομή'
+  ];
+
+  for (const ctx of contexts){
+    for (const v0 of [4,6,8,10,12]){
+      for (const a of [-2,-1,1,2,3]){
+        for (const t of [2,3,4,5]){
+          const v = v0 + a*t;
+          if (v < -20 || v > 40) continue;
+          out.push(makeQuestion('kinematics','medium',
+            `${ctx}: ξεκινά με v₀=${v0} m/s και κινείται με σταθερή επιτάχυνση a=${a} m/s² για t=${t} s. Ποια είναι η τελική ταχύτητα;`,
+            [v, v0+a, v0+t, v0-a*t].map(x=>`${fmt(x)} m/s`),0,
+            `Χρησιμοποιούμε v=v₀+at → v=${fmt(v)} m/s.`
+          ));
+        }
+      }
+    }
+  }
+
+  for (const m of [2,3,4,5,6]){
+    for (const F1 of [8,10,12,14,16]){
+      for (const F2 of [2,4,6,8,10]){
+        const a = (F1-F2)/m;
+        out.push(makeQuestion('dynamics','medium',
+          `Ένα όχημα μάζας ${m} kg δέχεται προωθητική δύναμη ${F1} N και αντίσταση ${F2} N. Ποια είναι η επιτάχυνση;`,
+          [a, (F1+F2)/m, F1/m, F2/m].map(x=>`${fmt(x)} m/s²`),0,
+          `ΣF=F1-F2=${fmt(F1-F2)} N ⇒ a=${fmt(a)} m/s².`
+        ));
+      }
+    }
+  }
+
+  for (const I of [1,2,3,4]){
+    for (const alpha of [2,3,4,5,6]){
+      const tau = I*alpha;
+      out.push(makeQuestion('rotation','medium',
+        `Ένα ρολόι έχει ισοδύναμη ροπή αδράνειας I=${I} kg·m² και θέλουμε γωνιακή επιτάχυνση α=${alpha} rad/s². Πόση ροπή χρειάζεται;`,
+        [tau, I+alpha, alpha/I, I*alpha*alpha].map(x=>`${fmt(x)} N·m`),0,
+        `Στ=Iα ⇒ τ=${fmt(tau)} N·m.`
+      ));
+    }
+  }
+
+  for (const m of [2,3,4,5]){
+    for (const va of [2,3,4,5]){
+      for (const vb of [6,7,8,9]){
+        if (vb<=va) continue;
+        const dK=0.5*m*(vb*vb-va*va);
+        out.push(makeQuestion('energy','hard',
+          `Ένα διαστημόπλοιο μάζας ${m} kg αυξάνει ταχύτητα από ${va} m/s σε ${vb} m/s. Ποιο είναι το απαιτούμενο συνολικό έργο;`,
+          [dK, m*(vb-va), 0.5*(vb*vb-va*va), 0.5*m*(vb-va)].map(x=>`${fmt(x)} J`),0,
+          `Θεώρημα έργου-ενέργειας: ΣW=ΔK=${fmt(dK)} J.`
+        ));
+      }
+    }
+  }
+
+  return out;
+}
+
 function genGraphConcepts(){
   const out = [];
   const vtSvg = `<svg viewBox="0 0 240 120" aria-label="v-t graph"><line x1="20" y1="100" x2="220" y2="100" stroke="#94a3b8"/><line x1="20" y1="100" x2="20" y2="20" stroke="#94a3b8"/><line x1="20" y1="90" x2="200" y2="35" stroke="#22c55e" stroke-width="3"/><text x="210" y="110" fill="#94a3b8" font-size="12">t</text><text x="8" y="18" fill="#94a3b8" font-size="12">v</text></svg>`;
@@ -350,6 +418,7 @@ const bank = uniqueQuestions([
   ...genDynamics(),
   ...genRotation(),
   ...genEnergy(),
+  ...genWordProblems(),
   ...genGraphConcepts()
 ]);
 

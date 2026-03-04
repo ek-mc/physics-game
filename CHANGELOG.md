@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.5] - 2026-03-04
+### Added
+- Added many story-based problem questions (vehicle, spaceship, clock, elevator, train, cyclist scenarios).
+- Expanded exam-style wording across kinematics, dynamics, rotation, and energy sections.
+
 ## [0.2.4] - 2026-03-04
 ### Changed
 - Added diversity-first question picker: avoids same question stem/template repeating in the same run.
