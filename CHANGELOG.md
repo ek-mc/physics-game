@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.6] - 2026-03-04
+### Added
+- Added scenario/concept question set with distinct ideas per chapter (vehicle, spaceship, clock, elevator, train, cyclist).
+
+### Changed
+- Chapter mode now serves at least 20 questions per run (when available).
+- Expanded question count selector up to 60.
+
 ## [0.2.5] - 2026-03-04
 ### Added
 - Added many story-based problem questions (vehicle, spaceship, clock, elevator, train, cyclist scenarios).
