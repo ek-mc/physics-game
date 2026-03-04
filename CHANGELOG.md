@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.8] - 2026-03-04
+### Changed
+- Replaced clock-based rotation scenarios with neutral rotating-disk scenarios to avoid conceptual confusion.
+
 ## [0.2.7] - 2026-03-04
 ### Fixed
 - Respect selected question count exactly (no forced minimum in chapter mode).
