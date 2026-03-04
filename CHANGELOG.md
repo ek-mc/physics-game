@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.3] - 2026-03-04
+### Fixed
+- Reduced repeated/same-stem questions (dedupe by chapter+difficulty+question text).
+- Removed accidental high-frequency repetition of one kinematics formula-stem item.
+
+### Added
+- Graph rendering in quiz for selected kinematics items (inline SVG).
+- Guaranteed graph presence in Kinematics chapter mode (at least 3 graph questions when available).
+
 ## [0.2.2] - 2026-03-04
 ### Fixed
 - Correct-answer mapping bug in generated numeric questions (some items could highlight wrong option after answer shuffle).

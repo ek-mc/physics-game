@@ -16,6 +16,7 @@ const quiz = document.getElementById('quiz');
 const result = document.getElementById('result');
 const questionEl = document.getElementById('question');
 const answersEl = document.getElementById('answers');
+const graphBoxEl = document.getElementById('graphBox');
 const progressEl = document.getElementById('progress');
 const scoreEl = document.getElementById('score');
 const streakEl = document.getElementById('streak');
@@ -38,8 +39,8 @@ function shuffle(arr){ return [...arr].sort(()=>Math.random()-0.5); }
 function fmt(n){ return Number.isInteger(n) ? String(n) : n.toFixed(2).replace(/\.00$/, ''); }
 function clampPositive(x){ return x <= 0 ? 1 : x; }
 
-function makeQuestion(chapter, difficulty, q, answers, correctIndex, explanation){
-  return { chapter, difficulty, q, a: answers, c: correctIndex, e: explanation };
+function makeQuestion(chapter, difficulty, q, answers, correctIndex, explanation, meta = {}){
+  return { chapter, difficulty, q, a: answers, c: correctIndex, e: explanation, ...meta };
 }
 
 function genKinematics(){
@@ -64,20 +65,21 @@ function genKinematics(){
     }
   }
 
+  out.push(makeQuestion(
+    'kinematics',
+    'easy',
+    `Ποιος είναι ο σωστός τύπος για θέση με χρόνο σε σταθερή επιτάχυνση a;`,
+    ['x=x₀+v₀t+½at²','x=x₀+at','x=v/t','x=v₀+at'],
+    0,
+    'Σωστό: x=x₀+v₀t+½at² (σταθερή επιτάχυνση σημαίνει a σταθερή, όχι απαραίτητα 0).'
+  ));
+
   const x0s = [0,2,5,10];
   for (const x0 of x0s){
     for (const v0 of [2,4,6,8,10,12]){
       for (const a of [1,2,3,-1,-2]){
         for (const t of [2,3,4,5]){
           const x = x0 + v0*t + 0.5*a*t*t;
-          out.push(makeQuestion(
-            'kinematics',
-            Math.abs(a) <= 1 ? 'medium' : 'hard',
-            `Ποιος είναι ο σωστός τύπος για θέση με χρόνο σε σταθερή επιτάχυνση a;`,
-            ['x=x₀+v₀t+½at²','x=x₀+at','x=v/t','x=v₀+at'],
-            0,
-            'Σωστό: x=x₀+v₀t+½at² (σταθερή επιτάχυνση σημαίνει a σταθερή, όχι απαραίτητα 0).'
-          ));
           out.push(makeQuestion(
             'kinematics',
             'medium',
@@ -288,14 +290,16 @@ function genEnergy(){
 
 function genGraphConcepts(){
   const out = [];
+  const vtSvg = `<svg viewBox="0 0 240 120" aria-label="v-t graph"><line x1="20" y1="100" x2="220" y2="100" stroke="#94a3b8"/><line x1="20" y1="100" x2="20" y2="20" stroke="#94a3b8"/><line x1="20" y1="90" x2="200" y2="35" stroke="#22c55e" stroke-width="3"/><text x="210" y="110" fill="#94a3b8" font-size="12">t</text><text x="8" y="18" fill="#94a3b8" font-size="12">v</text></svg>`;
+  const xtSvg = `<svg viewBox="0 0 240 120" aria-label="x-t graph"><line x1="20" y1="100" x2="220" y2="100" stroke="#94a3b8"/><line x1="20" y1="100" x2="20" y2="20" stroke="#94a3b8"/><path d="M20 95 Q90 70 200 25" fill="none" stroke="#22c55e" stroke-width="3"/><text x="210" y="110" fill="#94a3b8" font-size="12">t</text><text x="8" y="18" fill="#94a3b8" font-size="12">x</text></svg>`;
   out.push(makeQuestion('kinematics','easy',
     'Σε διάγραμμα v-t, η κλίση της ευθείας τι εκφράζει;',
     ['Επιτάχυνση', 'Θέση', 'Μετατόπιση', 'Ροπή'],0,
-    'Στο v-t η κλίση είναι η επιτάχυνση a.'));
+    'Στο v-t η κλίση είναι η επιτάχυνση a.', {isGraph:true, graphSvg: vtSvg}));
   out.push(makeQuestion('kinematics','easy',
     'Σε διάγραμμα x-t, η κλίση της καμπύλης τι εκφράζει;',
     ['Ταχύτητα', 'Επιτάχυνση', 'Δύναμη', 'Ενέργεια'],0,
-    'Στο x-t η κλίση είναι η ταχύτητα v.'));
+    'Στο x-t η κλίση είναι η ταχύτητα v.', {isGraph:true, graphSvg: xtSvg}));
   out.push(makeQuestion('kinematics','medium',
     'Σε διάγραμμα v-t, το εμβαδό κάτω από την καμπύλη σε χρονικό διάστημα δίνει:',
     ['Μετατόπιση', 'Επιτάχυνση', 'Δύναμη', 'Ισχύ'],0,
@@ -329,13 +333,25 @@ function genGraphConcepts(){
   return out;
 }
 
-const bank = [
+function uniqueQuestions(list){
+  const seen = new Set();
+  const out = [];
+  for (const q of list) {
+    const key = `${q.chapter}|${q.difficulty}|${q.q}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(q);
+  }
+  return out;
+}
+
+const bank = uniqueQuestions([
   ...genKinematics(),
   ...genDynamics(),
   ...genRotation(),
   ...genEnergy(),
   ...genGraphConcepts()
-];
+]);
 
 let quizSet = [];
 let idx = 0;
@@ -432,7 +448,16 @@ function start(mode, chapter){
     return;
   }
 
-  quizSet = shuffle(src).slice(0, Math.min(config.count, src.length));
+  const targetCount = Math.min(config.count, src.length);
+  if (config.mode === 'chapter' && config.chapter === 'kinematics') {
+    const graphPool = src.filter(q => q.isGraph);
+    const nonGraphPool = src.filter(q => !q.isGraph);
+    const minGraphs = Math.min(3, graphPool.length, targetCount);
+    quizSet = [...shuffle(graphPool).slice(0, minGraphs), ...shuffle(nonGraphPool).slice(0, targetCount - minGraphs)];
+    quizSet = shuffle(quizSet);
+  } else {
+    quizSet = shuffle(src).slice(0, targetCount);
+  }
   idx = 0; score = 0; streak = 0; bestStreakRun = 0; locked = false;
 
   menu.classList.add('hidden');
@@ -477,6 +502,13 @@ function render(){
   scoreEl.textContent = `Σκορ: ${score}`;
   streakEl.textContent = `Streak: ${streak}`;
   questionEl.textContent = q.q;
+  if (q.graphSvg) {
+    graphBoxEl.style.display = 'block';
+    graphBoxEl.innerHTML = q.graphSvg;
+  } else {
+    graphBoxEl.style.display = 'none';
+    graphBoxEl.innerHTML = '';
+  }
   answersEl.innerHTML='';
   feedbackEl.textContent='';
   nextBtn.disabled=true;
