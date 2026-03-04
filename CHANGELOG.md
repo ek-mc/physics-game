@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.0] - 2026-03-04
+### Added
+- Expanded question bank to 500+ generated questions across all chapters.
+- Added difficulty levels: `easy`, `medium`, `hard`, `mixed`.
+- Added configurable quiz length: 10 / 20 / 30 questions.
+- Added timer mode (20 seconds per question).
+- Added streak mode (run ends on first wrong answer / timeout).
+- Added best score and best streak persistence via `localStorage`.
+
+### Changed
+- Improved question wording clarity (e.g. "σταθερή επιτάχυνση" and explicit "οριζόντιο επίπεδο χωρίς τριβή").
+- Refactored quiz flow/UI to support advanced modes.
+
 ## [0.1.1] - 2026-03-04
 ### Added
 - Added `CHANGELOG.md`.

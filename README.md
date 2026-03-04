@@ -4,18 +4,17 @@
 
 ## Features
 - Ενότητες: Κινηματική, Δυναμική, Περιστροφή, Έργο-Ενέργεια
-- Mode: 10 τυχαίες ερωτήσεις
-- Άμεσο feedback με σωστή απάντηση
+- Μεγάλη τράπεζα ερωτήσεων (500+ generated questions)
+- Επίπεδα δυσκολίας: Easy / Medium / Hard / Μικτή
+- Πλήθος ερωτήσεων ανά γύρο: 10 / 20 / 30
+- Timer mode (20s ανά ερώτηση)
+- Streak mode (τέλος στο πρώτο λάθος)
+- Best score + best streak (αποθήκευση localStorage)
+- Άμεσο feedback με σωστή μέθοδο/τύπο
 - Απλό static app (HTML/CSS/JS)
 
 ## Run
 Άνοιξε το `index.html` σε browser.
 
-## Next ideas
-- Περισσότερες ερωτήσεις ανά κεφάλαιο
-- Difficulty levels
-- Timer / leaderboard
-
 ## Live Demo
-
 - https://ek-mc.github.io/physics-game/
