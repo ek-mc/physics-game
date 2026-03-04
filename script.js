@@ -8,6 +8,7 @@ const chapters = {
 const DIFFS = ['easy', 'medium', 'hard'];
 const DIFF_LABEL = { easy: 'Easy', medium: 'Medium', hard: 'Hard', mixed: 'Μικτή' };
 const TIMER_SECONDS = 20;
+const PREFS_KEY = 'physics-game-prefs-v1';
 
 const menu = document.getElementById('menu');
 const quiz = document.getElementById('quiz');
@@ -326,6 +327,28 @@ function filterBank(mode, chapter, difficulty){
   return src;
 }
 
+function savePrefs(){
+  const prefs = {
+    difficulty: difficultySelect.value,
+    count: countSelect.value,
+    timer: timerToggle.checked,
+    streak: streakToggle.checked
+  };
+  localStorage.setItem(PREFS_KEY, JSON.stringify(prefs));
+}
+
+function loadPrefs(){
+  try {
+    const raw = localStorage.getItem(PREFS_KEY);
+    if (!raw) return;
+    const p = JSON.parse(raw);
+    if (p.difficulty) difficultySelect.value = p.difficulty;
+    if (p.count) countSelect.value = String(p.count);
+    if (typeof p.timer === 'boolean') timerToggle.checked = p.timer;
+    if (typeof p.streak === 'boolean') streakToggle.checked = p.streak;
+  } catch {}
+}
+
 function updateMenuInfo(){
   const difficulty = difficultySelect.value;
   const count = Number(countSelect.value);
@@ -520,7 +543,11 @@ document.querySelectorAll('#menu button').forEach(b => {
 });
 
 [difficultySelect, countSelect, timerToggle, streakToggle].forEach(el => {
-  el.addEventListener('change', updateMenuInfo);
+  el.addEventListener('change', () => {
+    savePrefs();
+    updateMenuInfo();
+  });
 });
 
+loadPrefs();
 updateMenuInfo();
