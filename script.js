@@ -590,8 +590,7 @@ function start(mode, chapter){
     return;
   }
 
-  const requested = (config.mode === 'chapter') ? Math.max(20, config.count) : config.count;
-  const targetCount = Math.min(requested, src.length);
+  const targetCount = Math.min(config.count, src.length);
   if (config.mode === 'chapter' && config.chapter === 'kinematics') {
     const graphPool = src.filter(q => q.isGraph);
     const nonGraphPool = src.filter(q => !q.isGraph);
