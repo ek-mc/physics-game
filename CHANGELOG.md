@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.2] - 2026-03-04
+### Fixed
+- Correct-answer mapping bug in generated numeric questions (some items could highlight wrong option after answer shuffle).
+- Ensured correct option is preserved before UI-level shuffle.
+
 ## [0.2.1] - 2026-03-04
 ### Added
 - Home behavior: clicking `🎯 Physics Game` always returns to homepage/menu.

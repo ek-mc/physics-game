@@ -56,7 +56,7 @@ function genKinematics(){
           'kinematics',
           Math.abs(a) <= 2 ? 'easy' : 'medium',
           `Σε ευθύγραμμη κίνηση με σταθερή επιτάχυνση: v₀=${v0} m/s, a=${a} m/s², t=${t} s. Ποια είναι η τελική ταχύτητα v;`,
-          shuffle([v, v0 + a, v0 + t, v0 - a*t]).map(x => `${fmt(x)} m/s`),
+          [v, v0 + a, v0 + t, v0 - a*t].map(x => `${fmt(x)} m/s`),
           0,
           `Χρησιμοποιούμε v=v₀+at → v=${fmt(v)} m/s.`
         ));
@@ -82,7 +82,7 @@ function genKinematics(){
             'kinematics',
             'medium',
             `Δίνονται x₀=${x0} m, v₀=${v0} m/s, a=${a} m/s², t=${t} s. Ποια είναι η θέση x;`,
-            shuffle([x, x0 + v0*t, x0 + 0.5*a*t*t, v0 + a*t]).map(x => `${fmt(x)} m`),
+            [x, x0 + v0*t, x0 + 0.5*a*t*t, v0 + a*t].map(x => `${fmt(x)} m`),
             0,
             `x=x₀+v₀t+½at² = ${fmt(x)} m.`
           ));
@@ -101,7 +101,7 @@ function genKinematics(){
           'kinematics',
           'hard',
           `Χωρίς χρόνο t: v₀=${v0} m/s, a=${a} m/s², Δx=${dx} m. Ποια είναι η τελική ταχύτητα (μέτρο) v;`,
-          shuffle([v, Math.sqrt(Math.abs(v0*v0 + a*dx)), Math.sqrt(v0*v0 + 2*dx), Math.abs(v0 + a*dx)]).map(x => `${fmt(x)} m/s`),
+          [v, Math.sqrt(Math.abs(v0*v0 + a*dx)), Math.sqrt(v0*v0 + 2*dx), Math.abs(v0 + a*dx)].map(x => `${fmt(x)} m/s`),
           0,
           `Με v²=v₀²+2aΔx → v=${fmt(v)} m/s.`
         ));
@@ -122,7 +122,7 @@ function genDynamics(){
         'dynamics',
         a <= 3 ? 'easy' : 'medium',
         `Σε οριζόντιο επίπεδο χωρίς τριβή, σώμα m=${m} kg δέχεται οριζόντια δύναμη F=${F} N. Ποια είναι η επιτάχυνση;`,
-        shuffle([a, F*m, F/(m+1), m/F]).map(x => `${fmt(x)} m/s²`),
+        [a, F*m, F/(m+1), m/F].map(x => `${fmt(x)} m/s²`),
         0,
         `Σε οριζόντιο επίπεδο χωρίς τριβή: ΣF=ma ⇒ a=F/m=${fmt(a)} m/s².`
       ));
@@ -137,7 +137,7 @@ function genDynamics(){
           'dynamics',
           'medium',
           `Σε οριζόντιο επίπεδο χωρίς τριβή: m=${m} kg, F₁=${F1} N (δεξιά), F₂=${F2} N (αριστερά). Ποια είναι η επιτάχυνση;`,
-          shuffle([a, (F1 + F2)/m, F1/m, F2/m]).map(x => `${fmt(x)} m/s²`),
+          [a, (F1 + F2)/m, F1/m, F2/m].map(x => `${fmt(x)} m/s²`),
           0,
           `ΣF=F₁-F₂=${fmt(F1-F2)} N ⇒ a=${fmt(a)} m/s² (το πρόσημο δείχνει φορά).`
         ));
@@ -155,7 +155,7 @@ function genDynamics(){
         'dynamics',
         theta <= 25 ? 'medium' : 'hard',
         `Σε κεκλιμένο επίπεδο χωρίς τριβή (θ=${theta}°), ποια είναι η επιτάχυνση κατά μήκος του επιπέδου; (g=10 m/s²)`,
-        shuffle([a, 10*c, 10*Math.tan(theta*Math.PI/180), 10/theta]).map(x => `${fmt(x)} m/s²`),
+        [a, 10*c, 10*Math.tan(theta*Math.PI/180), 10/theta].map(x => `${fmt(x)} m/s²`),
         0,
         `a=g·sinθ=${fmt(a)} m/s².`
       ));
@@ -163,7 +163,7 @@ function genDynamics(){
         'dynamics',
         'hard',
         `Σε κεκλιμένο επίπεδο χωρίς τριβή: m=${m} kg, θ=${theta}°. Ποια είναι η κάθετη αντίδραση N; (g=10 m/s²)`,
-        shuffle([N, m*10*s, m*10, m*10*Math.tan(theta*Math.PI/180)]).map(x => `${fmt(x)} N`),
+        [N, m*10*s, m*10, m*10*Math.tan(theta*Math.PI/180)].map(x => `${fmt(x)} N`),
         0,
         `N=mg·cosθ=${fmt(N)} N.`
       ));
@@ -182,7 +182,7 @@ function genRotation(){
         'rotation',
         alpha <= 3 ? 'easy' : 'medium',
         `Για περιστροφή γύρω από σταθερό άξονα: I=${fmt(I)} kg·m² και α=${alpha} rad/s². Ποια ροπή τ απαιτείται;`,
-        shuffle([tau, I+alpha, alpha/I, I*alpha*alpha]).map(x => `${fmt(x)} N·m`),
+        [tau, I+alpha, alpha/I, I*alpha*alpha].map(x => `${fmt(x)} N·m`),
         0,
         `Στ=Iα ⇒ τ=${fmt(tau)} N·m.`
       ));
@@ -196,7 +196,7 @@ function genRotation(){
         'rotation',
         'medium',
         `Δίνεται ροπή τ=${tau} N·m και ροπή αδράνειας I=${fmt(I)} kg·m². Ποια είναι η γωνιακή επιτάχυνση α;`,
-        shuffle([alpha, tau*I, I/tau, tau+I]).map(x => `${fmt(x)} rad/s²`),
+        [alpha, tau*I, I/tau, tau+I].map(x => `${fmt(x)} rad/s²`),
         0,
         `α=τ/I=${fmt(alpha)} rad/s².`
       ));
@@ -210,7 +210,7 @@ function genRotation(){
         'rotation',
         'hard',
         `Για στερεό με I=${I} kg·m² και ω=${w} rad/s, ποια είναι η στροφορμή L (μέτρο);`,
-        shuffle([L, I*w*w, w/I, I+w]).map(x => `${fmt(x)} kg·m²/s`),
+        [L, I*w*w, w/I, I+w].map(x => `${fmt(x)} kg·m²/s`),
         0,
         `L=Iω=${fmt(L)} kg·m²/s.`
       ));
@@ -229,7 +229,7 @@ function genEnergy(){
         'energy',
         'easy',
         `Δύναμη F=${F} N παράλληλη στη μετατόπιση s=${s} m. Ποιο είναι το έργο W;`,
-        shuffle([W, F/s, F+s, F*s*s]).map(x => `${fmt(x)} J`),
+        [W, F/s, F+s, F*s*s].map(x => `${fmt(x)} J`),
         0,
         `W=F·s=${fmt(W)} J (εδώ θ=0°).`
       ));
@@ -244,7 +244,7 @@ function genEnergy(){
           'energy',
           'medium',
           `Δίνεται F=${F} N, s=${s} m, γωνία θ=${theta}°. Ποιο είναι το έργο W;`,
-          shuffle([W, F*s, F*s*Math.sin(theta*Math.PI/180), F*Math.cos(theta*Math.PI/180)]).map(x => `${fmt(x)} J`),
+          [W, F*s, F*s*Math.sin(theta*Math.PI/180), F*Math.cos(theta*Math.PI/180)].map(x => `${fmt(x)} J`),
           0,
           `W=F·s·cosθ=${fmt(W)} J.`
         ));
@@ -261,7 +261,7 @@ function genEnergy(){
           'energy',
           'hard',
           `Σώμα m=${m} kg αλλάζει ταχύτητα από vₐ=${va} m/s σε vᵦ=${vb} m/s. Ποιο είναι το συνολικό έργο;`,
-          shuffle([dK, 0.5*m*(vb-va), m*(vb-va), 0.5*(vb*vb-va*va)]).map(x => `${fmt(x)} J`),
+          [dK, 0.5*m*(vb-va), m*(vb-va), 0.5*(vb*vb-va*va)].map(x => `${fmt(x)} J`),
           0,
           `Θεώρημα έργου-ενέργειας: ΣW=ΔK=½m(vᵦ²-vₐ²)=${fmt(dK)} J.`
         ));
@@ -276,7 +276,7 @@ function genEnergy(){
         'energy',
         'medium',
         `Παράγεται έργο W=${W} J σε χρόνο t=${t} s. Ποια είναι η ισχύς P;`,
-        shuffle([P, W*t, t/W, W+t]).map(x => `${fmt(x)} W`),
+        [P, W*t, t/W, W+t].map(x => `${fmt(x)} W`),
         0,
         `P=W/t=${fmt(P)} W.`
       ));
@@ -308,7 +308,7 @@ function genGraphConcepts(){
         const v = v0 + a*t;
         out.push(makeQuestion('kinematics','medium',
           `Γραφικά: στο διάγραμμα v-t η γραμμή ξεκινά από v₀=${v0} m/s και έχει κλίση a=${a} m/s². Ποια είναι η v στο t=${t} s;`,
-          shuffle([v, v0+a, v0+t, a*t]).map(x=>`${fmt(x)} m/s`),0,
+          [v, v0+a, v0+t, a*t].map(x=>`${fmt(x)} m/s`),0,
           `Από το διάγραμμα: v=v₀+at=${fmt(v)} m/s.`
         ));
       }
@@ -320,7 +320,7 @@ function genGraphConcepts(){
       const dx = v0*t;
       out.push(makeQuestion('kinematics','easy',
         `Σε διάγραμμα v-t με σταθερή ταχύτητα v=${v0} m/s για t=${t} s, πόση είναι η μετατόπιση;`,
-        shuffle([dx, v0+t, v0/t, t/v0]).map(x=>`${fmt(x)} m`),0,
+        [dx, v0+t, v0/t, t/v0].map(x=>`${fmt(x)} m`),0,
         `Εμβαδό ορθογωνίου: Δx=v·t=${fmt(dx)} m.`
       ));
     }
