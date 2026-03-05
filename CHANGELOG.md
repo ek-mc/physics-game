@@ -4,6 +4,9 @@
 ### Added
 - Keyboard shortcut: pressing `Space` advances to the next question when the Next button is available.
 
+### Changed
+- Upgraded Dynamics `a–F` graph questions to include proper axis scales, ticks, and highlighted read-point, so values are truly read from graph (not just conceptual sketch).
+
 ## [0.3.6] - 2026-03-05
 ### Added
 - Expanded **Dynamics hard** pool with broader topics (resultant logic, force-mass scaling, tension-style setups), not only `N` / `f_k` patterns.

@@ -280,16 +280,37 @@ function genDynamicsVariety(){
 
 function genDynamicsGraphs(){
   const out = [];
-  const faSvg = `<svg viewBox="0 0 260 130" aria-label="F-a graph"><line x1="20" y1="110" x2="240" y2="110" stroke="#94a3b8"/><line x1="20" y1="110" x2="20" y2="20" stroke="#94a3b8"/><line x1="25" y1="105" x2="220" y2="35" stroke="#22c55e" stroke-width="3"/><text x="244" y="114" fill="#94a3b8" font-size="12">F</text><text x="8" y="18" fill="#94a3b8" font-size="12">a</text></svg>`;
-  const fmSvg = `<svg viewBox="0 0 260 130" aria-label="m-a graph"><line x1="20" y1="110" x2="240" y2="110" stroke="#94a3b8"/><line x1="20" y1="110" x2="20" y2="20" stroke="#94a3b8"/><path d="M30 35 Q90 65 220 98" fill="none" stroke="#22c55e" stroke-width="3"/><text x="244" y="114" fill="#94a3b8" font-size="12">m</text><text x="8" y="18" fill="#94a3b8" font-size="12">a</text></svg>`;
 
-  out.push(makeQuestion('dynamics','hard',
-    'Σε γράφημα a–F (σταθερή μάζα), τι δηλώνει το ότι η καμπύλη είναι ανοδική ευθεία;',
-    ['Όσο αυξάνει η F, αυξάνει γραμμικά και η a','Η a είναι ανεξάρτητη της F','Η a μειώνεται όταν αυξάνει η F','Η σχέση ισχύει μόνο σε κεκλιμένο'],
-    0,
-    'Από a=F/m για σταθερό m.',
-    {isGraph:true, graphSvg: faSvg}
-  ));
+  const makeScaledFAGraph = (m, Fmark) => {
+    const aMark = Fmark / m;
+    const Fmax = 24;
+    const Amax = Fmax / 2; // for m>=2 in our set
+    const x = 20 + (Fmark / Fmax) * 200;
+    const y = 110 - (aMark / Amax) * 80;
+    const tickF = [0, 6, 12, 18, 24].map(v => {
+      const tx = 20 + (v / Fmax) * 200;
+      return `<line x1="${tx}" y1="110" x2="${tx}" y2="114" stroke="#94a3b8"/><text x="${tx-6}" y="126" fill="#94a3b8" font-size="10">${v}</text>`;
+    }).join('');
+    const tickA = [0, 2, 4, 6, 8, 10, 12].map(v => {
+      const ty = 110 - (v / Amax) * 80;
+      return `<line x1="16" y1="${ty}" x2="20" y2="${ty}" stroke="#94a3b8"/><text x="2" y="${ty+3}" fill="#94a3b8" font-size="10">${v}</text>`;
+    }).join('');
+
+    return `<svg viewBox="0 0 260 130" aria-label="F-a graph with scale">
+      <line x1="20" y1="110" x2="240" y2="110" stroke="#94a3b8"/>
+      <line x1="20" y1="110" x2="20" y2="20" stroke="#94a3b8"/>
+      ${tickF}
+      ${tickA}
+      <line x1="20" y1="110" x2="220" y2="${110 - (Fmax/m)/Amax*80}" stroke="#22c55e" stroke-width="3"/>
+      <circle cx="${x}" cy="${y}" r="4" fill="#f59e0b"/>
+      <line x1="${x}" y1="110" x2="${x}" y2="${y}" stroke="#f59e0b" stroke-dasharray="3 2"/>
+      <line x1="20" y1="${y}" x2="${x}" y2="${y}" stroke="#f59e0b" stroke-dasharray="3 2"/>
+      <text x="244" y="114" fill="#94a3b8" font-size="12">F (N)</text>
+      <text x="4" y="18" fill="#94a3b8" font-size="12">a (m/s²)</text>
+    </svg>`;
+  };
+
+  const fmSvg = `<svg viewBox="0 0 260 130" aria-label="m-a graph"><line x1="20" y1="110" x2="240" y2="110" stroke="#94a3b8"/><line x1="20" y1="110" x2="20" y2="20" stroke="#94a3b8"/><path d="M30 35 Q90 65 220 98" fill="none" stroke="#22c55e" stroke-width="3"/><text x="244" y="114" fill="#94a3b8" font-size="12">m</text><text x="8" y="18" fill="#94a3b8" font-size="12">a</text></svg>`;
 
   out.push(makeQuestion('dynamics','hard',
     'Σε γράφημα a–m για σταθερή συνισταμένη, τι δείχνει η φθίνουσα καμπύλη;',
@@ -303,11 +324,11 @@ function genDynamicsGraphs(){
     for (const F of [8,10,12,15,18,20]){
       const a=F/m;
       out.push(makeQuestion('dynamics','hard',
-        `Γράφημα F–a για μάζα m=${m} kg: αν στο γράφημα διαβάζεις F=${F} N, ποια είναι η a;`,
+        `Γράφημα a–F με κλίμακα για μάζα m=${m} kg: στο σημείο F=${F} N, ποια τιμή επιτάχυνσης δείχνει ο κατακόρυφος άξονας;`,
         [a, F*m, m/F, F/(m+1)].map(x=>`${fmt(x)} m/s²`),
         0,
-        'Από τη σχέση a=F/m.',
-        {isGraph:true, graphSvg: faSvg}
+        'Διαβάζουμε το σημείο και ισοδύναμα εφαρμόζουμε a=F/m.',
+        {isGraph:true, graphSvg: makeScaledFAGraph(m, F)}
       ));
     }
   }
