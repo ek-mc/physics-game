@@ -794,12 +794,19 @@ function genGraphConcepts(){
 
   for (const v0 of [2,4,6,8,10,12]){
     for (const t of [2,3,4,5,6]){
-      const dx = v0*t;
-      out.push(makeQuestion('kinematics','easy',
-        `Σε διάγραμμα v-t με σταθερή ταχύτητα v=${v0} m/s για t=${t} s, πόση είναι η μετατόπιση;`,
-        [dx, v0+t, v0/t, t/v0].map(x=>`${fmt(x)} m`),0,
-        `Εμβαδό ορθογωνίου: Δx=v·t=${fmt(dx)} m.`,
-        {isGraph:true, graphSvg: makeVtGraph(v0, 0, t)}
+      const x = v0*t;
+      out.push(makeQuestion('kinematics','medium',
+        `Γράφημα ΔΕΣ (διάστημα-χρόνος): ευθεία x-t με σταθερή κλίση. Αν σε χρόνο t=${t} s το διάστημα είναι x=${x} m, ποια είναι η ταχύτητα;`,
+        [v0, x/t, t/x, x+v0].map(v=>`${fmt(v)} m/s`),0,
+        `Στο γράφημα x-t η κλίση είναι η ταχύτητα: v=Δx/Δt=${fmt(v0)} m/s.`,
+        {isGraph:true, graphSvg: xtSvg}
+      ));
+
+      out.push(makeQuestion('kinematics','medium',
+        `Γράφημα ΔΕΣ (x-t): αν η καμπύλη είναι ευθεία με θετική κλίση, τι συμπέρασμα βγάζεις;`,
+        ['Η ταχύτητα είναι σταθερή και θετική','Η επιτάχυνση είναι σταθερή και θετική','Η ταχύτητα είναι μηδέν','Η κίνηση είναι κυκλική'],0,
+        'Στο x-t ευθεία => σταθερή ταχύτητα. Θετική κλίση => θετική v.',
+        {isGraph:true, graphSvg: xtSvg}
       ));
     }
   }
@@ -932,7 +939,6 @@ const bank = uniqueQuestions([
   ...genKinematicsAdvanced(),
   ...genDynamics(),
   ...genDynamicsVariety(),
-  ...genDynamicsGraphs(),
   ...genRotation(),
   ...genEnergy(),
   ...genIdeaProblems(),

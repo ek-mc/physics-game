@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.6.6] - 2026-03-06
+### Changed
+- Switched graph focus toward **ΔΕΣ (x-t)** style questions in Kinematics.
+- Added more displacement-time interpretation items (slope -> velocity, straight-line meaning).
+- Removed dynamics `a-F` graph set from active question pool to reduce confusion.
+
 ## [Unreleased]
 
 ## [0.6.5] - 2026-03-06
