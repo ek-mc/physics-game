@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.6.7] - 2026-03-06
+### Added
+- Added unit-identification questions in **Τύποι (mixed)** (m, m/s, m/s², N, J, W, kg, rad/s, rad/s², N·m).
+
 ## [0.6.6] - 2026-03-06
 ### Changed
 - Switched graph focus toward **ΔΕΣ (x-t)** style questions in Kinematics.
