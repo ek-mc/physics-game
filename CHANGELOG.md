@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.3.3] - 2026-03-05
+### Changed
+- Minor Greek wording/grammar polish in multiple-choice options (e.g. "την αρχική ταχύτητα", clearer resultant-force phrasing).
+
 ## [0.3.2] - 2026-03-05
 ### Changed
 - Standardized friction notation to precise symbols in Greek prompts:
