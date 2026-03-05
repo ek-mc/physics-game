@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.7.2] - 2026-03-06
+### Added
+- Added new Dynamics worksheet-inspired question set based on provided exercise themes:
+  - incline equilibrium & friction coefficient,
+  - incline with applied force and constant speed,
+  - center of mass (discrete masses),
+  - recoil/momentum style,
+  - force from velocity change,
+  - linear drag model concept,
+  - ferris-wheel normal-force comparison.
+
 ## [0.7.1] - 2026-03-06
 ### Added
 - New difficulty level: **Πολύ δύσκολο** (`veryhard`) focused on multi-step problems (2+ operations).

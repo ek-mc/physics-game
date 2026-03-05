@@ -609,6 +609,102 @@ function genDynamicsGraphs(){
   return out;
 }
 
+
+function genDynamicsWorksheetStyle(){
+  const out = [];
+
+  // 1) Resultant from components / direction basics
+  out.push(makeQuestion('dynamics','hard',
+    'Άσκηση Δυναμικής (τύπου 1): Για να βρούμε τη συνισταμένη πολλών δυνάμεων στο επίπεδο, ποιο είναι το σωστό πρώτο βήμα;',
+    ['Ανάλυση κάθε δύναμης σε συνιστώσες x και y','Προσθέτουμε μόνο τα μέτρα τους','Κρατάμε μόνο τη μεγαλύτερη δύναμη','Θέτουμε κατευθείαν ΣF=0'],
+    0,
+    'Σωστή διαδικασία: συνιστώσες ανά άξονα και μετά άθροιση.'
+  ));
+
+  // 2) Incline static equilibrium / friction coefficient
+  for (const th of [20,30,37,45]){
+    const r=Math.PI*th/180;
+    const mu=Math.tan(r);
+    out.push(makeQuestion('dynamics','veryhard',
+      `Άσκηση Δυναμικής (τύπου 2): Σώμα ισορροπεί σε κεκλιμένο επίπεδο γωνίας φ=${th}°. Ποια είναι η ελάχιστη τιμή του συντελεστή στατικής τριβής μ_s ώστε να μην ολισθήσει;`,
+      [mu, Math.sin(r), Math.cos(r), 1/mu].map(z=>`${fmt(z)}`),
+      0,
+      'Ισορροπία στον παράλληλο άξονα: mg sinφ ≤ μ_s mg cosφ ⇒ μ_s,min = tanφ.'
+    ));
+  }
+
+  // 3) Incline moving with constant speed and applied force
+  for (const th of [45]){
+    const r=Math.PI*th/180;
+    const mu=0.3;
+    const F=15;
+    const B=F/(Math.sin(r)+mu*Math.cos(r));
+    const Fdown=B*(Math.sin(r)-mu*Math.cos(r));
+    out.push(makeQuestion('dynamics','veryhard',
+      'Άσκηση Δυναμικής (τύπου 3): Σώμα σε κεκλιμένο 45° κινείται προς τα πάνω με σταθερή ταχύτητα υπό δύναμη 15 N παράλληλη στο επίπεδο και μ_k=0.3. Ποιο είναι το βάρος του;',
+      [B, B/2, B*2, F].map(z=>`${fmt(z)} N`),
+      0,
+      'Σταθερή ταχύτητα ⇒ ΣF∥=0: F = B(sinφ + μ_k cosφ).'
+    ));
+    out.push(makeQuestion('dynamics','veryhard',
+      'Άσκηση Δυναμικής (τύπου 3): Στο ίδιο σώμα, ποια ελάχιστη δύναμη (παράλληλη στο επίπεδο) χρειάζεται για να κατεβαίνει με σταθερή ταχύτητα;',
+      [Fdown, Fdown/2, Fdown*2, F].map(z=>`${fmt(z)} N`),
+      0,
+      'Για οριακή σταθερή προς τα κάτω: ΣF∥=0 με αντίθετη φορά τριβής.'
+    ));
+  }
+
+  // 5) center of mass discrete masses
+  out.push(makeQuestion('dynamics','veryhard',
+    'Άσκηση Δυναμικής (τύπου 5): Μάζες 5 kg στο (0,0), 3 kg στο (0,4), 4 kg στο (3,0). Ποιο είναι το κέντρο μάζας x_cm;',
+    ['1.00','1.50','0.75','2.00'],
+    0,
+    'x_cm=(Σm_i x_i)/(Σm_i)=12/12=1.'
+  ));
+  out.push(makeQuestion('dynamics','veryhard',
+    'Άσκηση Δυναμικής (τύπου 5): Για το ίδιο σύστημα, ποιο είναι το y_cm;',
+    ['1.00','0.75','1.50','2.00'],
+    0,
+    'y_cm=(Σm_i y_i)/(Σm_i)=12/12=1.'
+  ));
+
+  // 7) recoil / momentum conservation
+  const vChild=(2*8)/40;
+  out.push(makeQuestion('dynamics','hard',
+    'Άσκηση Δυναμικής (τύπου 7): Παιδί 40 kg σε πάγο πετά πέτρα 2 kg με ταχύτητα 8 m/s προς τα δεξιά. Ποια είναι η ταχύτητα οπισθοχώρησης του παιδιού (χωρίς τριβή);',
+    [vChild, vChild/2, vChild*2, 8].map(z=>`${fmt(z)} m/s`),
+    0,
+    'Διατήρηση ορμής: m_π·v_π + m_παιδ·v_παιδ = 0.'
+  ));
+
+  // 8) force from Δv/Δt
+  const F8=2*(-6/4);
+  out.push(makeQuestion('dynamics','hard',
+    'Άσκηση Δυναμικής (τύπου 8): Σώμα 2 kg από ηρεμία έχει v=-6 m/s σε t=4 s υπό σταθερή δύναμη στον άξονα x. Ποια είναι η δύναμη στον x;',
+    [F8, -6/4, 2*6, 6/2].map(z=>`${fmt(z)} N`),
+    0,
+    'a=Δv/Δt και F=ma. Το αρνητικό πρόσημο δείχνει προς -x.'
+  ));
+
+  // 10) drag force proportional to v
+  out.push(makeQuestion('dynamics','veryhard',
+    'Άσκηση Δυναμικής (τύπου 10): Για κίνηση πλοίου με δύναμη αντίστασης F_d=-bv, ποια είναι η μορφή της ταχύτητας v(t) μετά τη βλάβη της μηχανής;',
+    ['v(t)=v_0 e^{-(b/m)t}','v(t)=v_0-(b/m)t','v(t)=v_0+(b/m)t','v(t)=σταθερή'],
+    0,
+    'Από m dv/dt = -bv προκύπτει εκθετική απομείωση.'
+  ));
+
+  // 11) ferris wheel top/bottom force trend
+  out.push(makeQuestion('dynamics','hard',
+    'Άσκηση Δυναμικής (τύπου 11): Σε κυκλική κίνηση επιβάτη σε ρόδα λούνα-παρκ, συγκριτικά με το κάτω σημείο, η δύναμη του καθίσματος στο πάνω σημείο είναι:',
+    ['Μικρότερη','Μεγαλύτερη','Ίση πάντα','Μηδενική πάντα'],
+    0,
+    'Στο πάνω σημείο η κεντρομόλος είναι προς τα κάτω, άρα N_top συνήθως μικρότερη από N_bottom.'
+  ));
+
+  return out;
+}
+
 function genRotation(){
   const out = [];
   for (const I of [0.5,1,1.5,2,2.5,3,4,5]){
@@ -1154,6 +1250,7 @@ const bank = uniqueQuestions([
   ...genKinematicsExamStyleSet(),
   ...genDynamics(),
   ...genDynamicsVariety(),
+  ...genDynamicsWorksheetStyle(),
   ...genRotation(),
   ...genEnergy(),
   ...genIdeaProblems(),
