@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.6.1] - 2026-03-05
+### Fixed
+- A/B/C/D keyboard answer shortcuts now work regardless of keyboard layout (uses physical key codes + Greek character fallback).
+
 ## [0.6.0] - 2026-03-05
 ### Changed
 - Upgraded kinematics `v-t` graph visuals (dark chart card, grid lines, highlighted endpoints, and clearer axis/point labels) for better readability.

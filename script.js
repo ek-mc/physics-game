@@ -1304,9 +1304,17 @@ document.addEventListener('keydown', (e) => {
     return;
   }
 
-  // A/B/C/D -> choose option 1/2/3/4 (when unanswered)
-  const k = (e.key || '').toLowerCase();
-  const idx = { a: 0, b: 1, c: 2, d: 3 }[k];
+  // A/B/C/D physical keys -> choose option 1/2/3/4 (layout-independent)
+  let idx;
+  if (e.code === 'KeyA') idx = 0;
+  else if (e.code === 'KeyB') idx = 1;
+  else if (e.code === 'KeyC') idx = 2;
+  else if (e.code === 'KeyD') idx = 3;
+  else {
+    // fallback by character (latin or greek letters)
+    const k = (e.key || '').toLowerCase();
+    idx = ({ a: 0, b: 1, c: 2, d: 3, 'α': 0, 'β': 1, 'γ': 2, 'δ': 3 })[k];
+  }
   if (idx === undefined) return;
   const btns = [...answersEl.querySelectorAll('button')];
   if (!btns.length) return;
