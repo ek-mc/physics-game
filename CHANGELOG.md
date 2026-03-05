@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.5.0] - 2026-03-05
+### Fixed
+- Reworded ambiguous kinematics prompt ("αλλάζει πορεία") to explicit straight-line motion wording.
+
 ## [0.4.9] - 2026-03-05
 ### Fixed
 - Corrected context mismatch in word-problem phrasing:
