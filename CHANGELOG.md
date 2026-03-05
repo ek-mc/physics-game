@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.4.5] - 2026-03-05
+### Added
+- Enriched **Τύποι (mixed)** with concept-symbol questions (e.g. `a` = επιτάχυνση, `v` = ταχύτητα, `x` = θέση, `t` = χρόνος, `g`, `m`, `W`, `P`, `U`).
+
 ## [0.4.4] - 2026-03-05
 ### Added
 - Expanded Kinematics question pool with new topics requested from lecture notes context:
