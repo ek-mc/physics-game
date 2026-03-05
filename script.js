@@ -752,10 +752,10 @@ function genGraphConcepts(){
       <text x="236" y="120" fill="#94a3b8" font-size="12">t</text>
       <text x="18" y="18" fill="#94a3b8" font-size="12">v</text>
       <text x="36" y="129" fill="#64748b" font-size="10">0</text>
-      <text x="8" y="${Math.max(20, Math.min(116, y0-6))}" fill="#64748b" font-size="10">v₀=${v0}</text>
-      <text x="206" y="128" fill="#64748b" font-size="10">t=${t}</text>
-      <text x="221" y="${Math.max(18, Math.min(116, yt-6))}" fill="#64748b" font-size="10">v(t)=${fmt(vt)}</text>
-      <text x="180" y="20" fill="#94a3b8" font-size="10">a=${a}</text>
+      <text x="8" y="${Math.max(20, Math.min(116, y0-6))}" fill="#64748b" font-size="10">v₀</text>
+      <text x="206" y="128" fill="#64748b" font-size="10">t</text>
+      <text x="221" y="${Math.max(18, Math.min(116, yt-6))}" fill="#64748b" font-size="10">v(t)</text>
+      <text x="180" y="20" fill="#94a3b8" font-size="10">a</text>
     </svg>`;
   };
 

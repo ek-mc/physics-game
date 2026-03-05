@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.6.3] - 2026-03-05
+### Changed
+- Simplified `v-t` graph labels to avoid revealing the numeric answer directly.
+- Kept only symbolic labels (`v₀`, `a`, `t`, `v(t)`) for cleaner exam-like visuals.
+
 ## [0.6.2] - 2026-03-05
 ### Fixed
 - `v-t` graph now reflects each question's actual parameters (`v₀`, `a`, `t`), including negative slope cases (`a<0`).
