@@ -202,16 +202,16 @@ function genKinematicsAdvanced(){
       const vx=v0*Math.cos(rad);
       const vy=v0*Math.sin(rad);
       out.push(makeQuestion('kinematics','hard',
-        `Πλάγια βολή: v₀=${v0} m/s, θ=${ang}°. Ποια είναι η οριζόντια συνιστώσα της αρχικής ταχύτητας (v₀x);`,
+        `Πλάγια βολή: v₀=${v0} m/s, θ=${ang}°. Ποια είναι η οριζόντια συνιστώσα της αρχικής ταχύτητας (v_0x);`,
         [vx, vy, v0, v0*Math.tan(rad)].map(x=>`${fmt(x)} m/s`),
         0,
-        'Ανάλυση αρχικής ταχύτητας: v₀x=v₀cosθ.'
+        'Ανάλυση αρχικής ταχύτητας: v_0x=v_0cosθ.'
       ));
       out.push(makeQuestion('kinematics','hard',
-        `Πλάγια βολή: v₀=${v0} m/s, θ=${ang}°. Ποια είναι η κατακόρυφη συνιστώσα της αρχικής ταχύτητας (v₀y);`,
+        `Πλάγια βολή: v₀=${v0} m/s, θ=${ang}°. Ποια είναι η κατακόρυφη συνιστώσα της αρχικής ταχύτητας (v_0y);`,
         [vy, vx, v0*Math.sin(rad/2), v0*Math.cos(rad/2)].map(x=>`${fmt(x)} m/s`),
         0,
-        'Ανάλυση αρχικής ταχύτητας: v₀y=v₀sinθ.'
+        'Ανάλυση αρχικής ταχύτητας: v_0y=v_0sinθ.'
       ));
     }
   }

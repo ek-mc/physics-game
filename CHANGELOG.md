@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.4.7] - 2026-03-05
+### Changed
+- Updated projectile-notation display to underscore style (`v_0x`, `v_0y`) in question text/explanations.
+
 ## [0.4.6] - 2026-03-05
 ### Changed
 - Improved Greek wording for projectile-motion component questions (more natural phrasing: "της αρχικής ταχύτητας").
