@@ -253,6 +253,33 @@ function genDynamicsVariety(){
     }
   }
 
+  // Inverse Newton problems (find mass or net force, not only acceleration)
+  for (const a of [1,2,3,4,5,6]){
+    for (const m of [2,3,4,5,6,8]){
+      const Fnet = a*m;
+      out.push(makeQuestion(
+        'dynamics','hard',
+        `Για σώμα με επιτάχυνση a=${a} m/s² και μάζα m=${m} kg, ποια είναι η συνισταμένη δύναμη;`,
+        [Fnet, a+m, a/m, m/a].map(x=>`${fmt(x)} N`),
+        0,
+        'Από τον 2ο νόμο: ΣF=ma.'
+      ));
+    }
+  }
+
+  for (const Fnet of [6,8,10,12,15,18,20,24]){
+    for (const a of [1,2,3,4,5,6]){
+      const m = Fnet/a;
+      out.push(makeQuestion(
+        'dynamics','hard',
+        `Σε σώμα ασκείται συνισταμένη δύναμη ΣF=${Fnet} N και αποκτά επιτάχυνση a=${a} m/s². Ποια είναι η μάζα;`,
+        [m, Fnet*a, a/Fnet, Fnet+a].map(x=>`${fmt(x)} kg`),
+        0,
+        'Από ΣF=ma ⇒ m=ΣF/a.'
+      ));
+    }
+  }
+
   // Two-force resultant with direction text
   for (const m of [3,4,5,6]){
     for (const F1 of [10,12,14,16,18]){

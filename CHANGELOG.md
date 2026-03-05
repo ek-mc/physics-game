@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.1] - 2026-03-05
+### Added
+- New inverse Dynamics question patterns:
+  - given `m` and `a` -> find resultant force `ΣF`
+  - given `ΣF` and `a` -> find mass `m`
+- Reduces over-focus on “find acceleration” only.
+
 ## [0.4.0] - 2026-03-05
 ### Fixed
 - Corrected typo in Greek prompt text: "ττη" -> "τη".
