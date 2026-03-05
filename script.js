@@ -995,3 +995,15 @@ document.querySelectorAll('#menu button').forEach(b => {
 
 loadPrefs();
 updateMenuInfo();
+
+
+document.addEventListener('keydown', (e) => {
+  if (e.code !== 'Space') return;
+  const tag = (document.activeElement && document.activeElement.tagName || '').toLowerCase();
+  if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
+  if (quiz.classList.contains('hidden')) return;
+  if (!nextBtn.disabled) {
+    e.preventDefault();
+    nextBtn.click();
+  }
+});

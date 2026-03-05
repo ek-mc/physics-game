@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.3.7] - 2026-03-05
+### Added
+- Keyboard shortcut: pressing `Space` advances to the next question when the Next button is available.
+
 ## [0.3.6] - 2026-03-05
 ### Added
 - Expanded **Dynamics hard** pool with broader topics (resultant logic, force-mass scaling, tension-style setups), not only `N` / `f_k` patterns.
