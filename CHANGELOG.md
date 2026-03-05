@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.6] - 2026-03-05
+### Added
+- Expanded **Dynamics hard** pool with broader topics (resultant logic, force-mass scaling, tension-style setups), not only `N` / `f_k` patterns.
+- Added Dynamics graph questions (a–F and a–m) with inline visual graph cards.
+
+### Changed
+- Dynamics chapter mode now guarantees graph presence (when available), like kinematics mode.
+
 ## [0.3.5] - 2026-03-05
 ### Added
 - New **hard** kinematics variety (method-selection, 2-step stopping-distance, and sign/interpretation questions), not only `v²=v₀²+2aΔx` patterns.

@@ -225,6 +225,96 @@ function genDynamics(){
   return out;
 }
 
+
+function genDynamicsVariety(){
+  const out = [];
+
+  // Conceptual dynamics variety (not only N and friction)
+  const concept = [
+    ['Σε οριζόντιο επίπεδο χωρίς τριβή, αν η συνισταμένη δύναμη διπλασιαστεί και η μάζα μείνει ίδια, τι γίνεται στην επιτάχυνση;', ['Διπλασιάζεται','Μειώνεται στο μισό','Μένει ίδια','Μηδενίζεται'],0,'Από a=ΣF/m.'],
+    ['Σε οριζόντιο επίπεδο χωρίς τριβή, αν η μάζα διπλασιαστεί και η συνισταμένη μείνει ίδια, η επιτάχυνση:', ['Μειώνεται στο μισό','Διπλασιάζεται','Μένει ίδια','Γίνεται μηδέν'],0,'Από a=ΣF/m.'],
+    ['Αν σε σώμα δρουν αντίθετες δυνάμεις 18N και 11N, η φορά της επιτάχυνσης είναι προς:', ['Τη δύναμη των 18N','Τη δύναμη των 11N','Δεν ξέρουμε','Πάντα προς τα δεξιά'],0,'Η φορά είναι της συνισταμένης.'],
+    ['Σε ισορροπία (a=0), η συνισταμένη δύναμη είναι:', ['0','mg','N','μN'],0,'Ορισμός ισορροπίας στη μεταφορική κίνηση.']
+  ];
+  for (const [q,a,c,e] of concept) out.push(makeQuestion('dynamics','hard',q,a,c,e));
+
+  // Tension-like one-body pulls
+  for (const m of [2,3,4,5,6,8]){
+    for (const T of [6,8,10,12,15,18]){
+      const a=T/m;
+      out.push(makeQuestion(
+        'dynamics','hard',
+        `Σώμα μάζας ${m} kg πάνω σε λείο οριζόντιο επίπεδο έλκεται από τεντωμένο νήμα με τάση T=${T} N. Ποια είναι η επιτάχυνση;`,
+        [a, T*m, m/T, T/(m+1)].map(x=>`${fmt(x)} m/s²`),
+        0,
+        'Σε λείο οριζόντιο: ΣF=T, άρα a=T/m.'
+      ));
+    }
+  }
+
+  // Two-force resultant with direction text
+  for (const m of [3,4,5,6]){
+    for (const F1 of [10,12,14,16,18]){
+      for (const F2 of [4,6,8,10,12]){
+        if (F1===F2) continue;
+        const a=(F1-F2)/m;
+        const dir = a>0 ? 'προς τη φορά της F1' : 'προς τη φορά της F2';
+        out.push(makeQuestion(
+          'dynamics','hard',
+          `Σε σώμα μάζας ${m} kg ασκούνται δύο αντίθετες οριζόντιες δυνάμεις F1=${F1} N και F2=${F2} N. Τι ισχύει για την επιτάχυνση;`,
+          [
+            `${fmt(Math.abs(a))} m/s², ${dir}`,
+            `${fmt((F1+F2)/m)} m/s², προς τη φορά της F1`,
+            `${fmt(F1/m)} m/s², προς τη φορά της F2`,
+            `0 m/s², ισορροπία`
+          ],
+          0,
+          'Πρώτα βρίσκουμε ΣF=F1−F2, μετά a=ΣF/m και φορά από το πρόσημο.'
+        ));
+      }
+    }
+  }
+
+  return out;
+}
+
+function genDynamicsGraphs(){
+  const out = [];
+  const faSvg = `<svg viewBox="0 0 260 130" aria-label="F-a graph"><line x1="20" y1="110" x2="240" y2="110" stroke="#94a3b8"/><line x1="20" y1="110" x2="20" y2="20" stroke="#94a3b8"/><line x1="25" y1="105" x2="220" y2="35" stroke="#22c55e" stroke-width="3"/><text x="244" y="114" fill="#94a3b8" font-size="12">F</text><text x="8" y="18" fill="#94a3b8" font-size="12">a</text></svg>`;
+  const fmSvg = `<svg viewBox="0 0 260 130" aria-label="m-a graph"><line x1="20" y1="110" x2="240" y2="110" stroke="#94a3b8"/><line x1="20" y1="110" x2="20" y2="20" stroke="#94a3b8"/><path d="M30 35 Q90 65 220 98" fill="none" stroke="#22c55e" stroke-width="3"/><text x="244" y="114" fill="#94a3b8" font-size="12">m</text><text x="8" y="18" fill="#94a3b8" font-size="12">a</text></svg>`;
+
+  out.push(makeQuestion('dynamics','hard',
+    'Σε γράφημα a–F (σταθερή μάζα), τι δηλώνει το ότι η καμπύλη είναι ανοδική ευθεία;',
+    ['Όσο αυξάνει η F, αυξάνει γραμμικά και η a','Η a είναι ανεξάρτητη της F','Η a μειώνεται όταν αυξάνει η F','Η σχέση ισχύει μόνο σε κεκλιμένο'],
+    0,
+    'Από a=F/m για σταθερό m.',
+    {isGraph:true, graphSvg: faSvg}
+  ));
+
+  out.push(makeQuestion('dynamics','hard',
+    'Σε γράφημα a–m για σταθερή συνισταμένη, τι δείχνει η φθίνουσα καμπύλη;',
+    ['Όσο αυξάνει η μάζα, η επιτάχυνση μειώνεται','Όσο αυξάνει η μάζα, η επιτάχυνση αυξάνει','Η μάζα δεν επηρεάζει την a','Η a είναι πάντα σταθερή'],
+    0,
+    'Από a=F/m για σταθερό F.',
+    {isGraph:true, graphSvg: fmSvg}
+  ));
+
+  for (const m of [2,3,4,5,6]){
+    for (const F of [8,10,12,15,18,20]){
+      const a=F/m;
+      out.push(makeQuestion('dynamics','hard',
+        `Γράφημα F–a για μάζα m=${m} kg: αν στο γράφημα διαβάζεις F=${F} N, ποια είναι η a;`,
+        [a, F*m, m/F, F/(m+1)].map(x=>`${fmt(x)} m/s²`),
+        0,
+        'Από τη σχέση a=F/m.',
+        {isGraph:true, graphSvg: faSvg}
+      ));
+    }
+  }
+
+  return out;
+}
+
 function genRotation(){
   const out = [];
   for (const I of [0.5,1,1.5,2,2.5,3,4,5]){
@@ -579,6 +669,8 @@ const bank = uniqueQuestions([
   ...genKinematics(),
   ...genKinematicsHardVariety(),
   ...genDynamics(),
+  ...genDynamicsVariety(),
+  ...genDynamicsGraphs(),
   ...genRotation(),
   ...genEnergy(),
   ...genIdeaProblems(),
@@ -711,7 +803,7 @@ function start(mode, chapter){
   }
 
   const targetCount = Math.min(config.count, src.length);
-  if (config.mode === 'chapter' && config.chapter === 'kinematics') {
+  if (config.mode === 'chapter' && (config.chapter === 'kinematics' || config.chapter === 'dynamics')) {
     const graphPool = src.filter(q => q.isGraph);
     const nonGraphPool = src.filter(q => !q.isGraph);
     const minGraphs = Math.min(3, graphPool.length, targetCount);
