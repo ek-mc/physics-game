@@ -1273,12 +1273,28 @@ updateMenuInfo();
 
 
 document.addEventListener('keydown', (e) => {
-  if (e.code !== 'Space') return;
   const tag = (document.activeElement && document.activeElement.tagName || '').toLowerCase();
   if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
   if (quiz.classList.contains('hidden')) return;
-  if (!nextBtn.disabled) {
+
+  // Space -> next question (when available)
+  if (e.code === 'Space') {
+    if (!nextBtn.disabled) {
+      e.preventDefault();
+      nextBtn.click();
+    }
+    return;
+  }
+
+  // A/B/C/D -> choose option 1/2/3/4 (when unanswered)
+  const k = (e.key || '').toLowerCase();
+  const idx = { a: 0, b: 1, c: 2, d: 3 }[k];
+  if (idx === undefined) return;
+  const btns = [...answersEl.querySelectorAll('button')];
+  if (!btns.length) return;
+  if (btns.some(b => b.disabled)) return; // already answered
+  if (idx < btns.length) {
     e.preventDefault();
-    nextBtn.click();
+    btns[idx].click();
   }
 });

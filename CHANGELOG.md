@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.7] - 2026-03-05
+### Added
+- Keyboard answer shortcuts: pressing `A` / `B` / `C` / `D` selects the corresponding choice.
+- Keeps existing `Space` shortcut for next question.
+
 ## [0.5.6] - 2026-03-05
 ### Changed
 - Rewrote no-time train prompt to a more problem-like Greek wording.
