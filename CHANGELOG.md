@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.7.0] - 2026-03-06
+### Added
+- Major kinematics enrichment with worksheet/exam-style problem families inspired by uploaded exercise screenshots:
+  - from-rest constant acceleration (v and distance subparts),
+  - `v-t` graph area/slope subparts,
+  - bridge encounter boundary-speed style,
+  - rotating drum speed + centripetal acceleration,
+  - projectile (45°) range + max height subparts.
+
 ## [0.6.9] - 2026-03-06
 ### Added
 - Added **worksheet-style kinematics questions** with subparts inspired by lecture exercise format:

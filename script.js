@@ -317,6 +317,99 @@ function genKinematicsWorksheetStyle(){
   return out;
 }
 
+
+function genKinematicsExamStyleSet(){
+  const out = [];
+
+  // (2) from rest with constant acceleration, two-part style
+  for (const a of [1,2,3,4]){
+    for (const t of [10,12,15,18]){
+      const v = a*t;
+      const x = 0.5*a*t*t;
+      out.push(makeQuestion('kinematics','hard',
+        `Άσκηση (τύπου 2): Μοτοσυκλέτα ξεκινά από ηρεμία με σταθερή επιτάχυνση a=${a} m/s². Ποια είναι η ταχύτητα μετά από t=${t} s;`,
+        [v, a+t, t/a, 0.5*a*t].map(z=>`${fmt(z)} m/s`),0,
+        'Από ηρεμία: v=at.'
+      ));
+      out.push(makeQuestion('kinematics','hard',
+        `Άσκηση (τύπου 2): Στην ίδια κίνηση, ποια απόσταση διανύεται σε t=${t} s;`,
+        [x, a*t, v*t, 0.5*v*t].map(z=>`${fmt(z)} m`),0,
+        'Από ηρεμία: Δx=½at².'
+      ));
+    }
+  }
+
+  // (3) vt graph area style
+  for (const vmax of [12,16,20,24]){
+    for (const tmax of [6,8,10,12]){
+      const a=vmax/tmax;
+      const x=(vmax*tmax)/2;
+      out.push(makeQuestion('kinematics','hard',
+        `Άσκηση (τύπου 3): Σε γράφημα v-t η ταχύτητα αυξάνει γραμμικά από 0 σε ${vmax} m/s μέχρι t=${tmax} s. Ποιο είναι το διάστημα μέχρι t=${tmax} s;`,
+        [x, vmax*tmax, vmax+tmax, a*tmax].map(z=>`${fmt(z)} m`),0,
+        'Εμβαδό τριγώνου στο v-t: Δx=½·base·height.'
+      ));
+      out.push(makeQuestion('kinematics','hard',
+        `Άσκηση (τύπου 3): Στο ίδιο γράφημα, ποια είναι η επιτάχυνση;`,
+        [a, vmax*tmax, tmax/vmax, vmax+tmax].map(z=>`${fmt(z)} m/s²`),0,
+        'Κλίση στο v-t: a=Δv/Δt.'
+      ));
+    }
+  }
+
+  // (4) bridge meeting style simplified
+  for (const l of [200,300,400]){
+    const v0=20, a=2, d=80;
+    const tBridgeEnd = (-v0 + Math.sqrt(v0*v0 + 2*a*l))/a;
+    const vmax = (d+l)/tBridgeEnd;
+    out.push(makeQuestion('kinematics','hard',
+      `Άσκηση (τύπου 4): Αυτοκίνητο κινείται με v₀=${v0} m/s και a=${a} m/s² σε γέφυρα μήκους ${l} m. Φορτηγάκι απέχει ${d} m από το άλλο άκρο και κατευθύνεται προς τη γέφυρα. Ποια μέγιστη σταθερή ταχύτητα πρέπει να έχει ώστε η συνάντηση να μη γίνει πάνω στη γέφυρα;`,
+      [vmax, vmax+10, vmax/2, vmax*1.5].map(z=>`${fmt(z)} m/s`),0,
+      'Οριακή περίπτωση: συναντιούνται στο άκρο. Χρόνος αυτοκινήτου μέχρι άκρο και μετά v_max=(d+l)/t.'
+    ));
+  }
+
+  // (5) rotating dryer drum style
+  for (const rpm of [600,720,780,900]){
+    for (const diam of [0.5,0.66,0.8]){
+      const r=diam/2;
+      const f=rpm/60;
+      const w=2*Math.PI*f;
+      const v=w*r;
+      const ac=v*v/r;
+      out.push(makeQuestion('kinematics','hard',
+        `Άσκηση (τύπου 5): Κάδος στύψεως εκτελεί ${rpm} rpm και έχει διάμετρο ${diam} m. Ποια είναι η ταχύτητα σημείου στο τοίχωμα;`,
+        [v, w, r, f].map(z=>`${fmt(z)} m/s`),0,
+        'v=ωr, με ω=2πf και f=rpm/60.'
+      ));
+      out.push(makeQuestion('kinematics','hard',
+        `Άσκηση (τύπου 5): Στην ίδια κίνηση, ποια είναι η κεντρομόλος επιτάχυνση;`,
+        [ac, v/r, w/r, r*v].map(z=>`${fmt(z)} m/s²`),0,
+        'a_c=v²/r (ή ω²r).'
+      ));
+    }
+  }
+
+  // (6) projectile 45° style
+  for (const v0 of [10,12,14,16]){
+    const g=10;
+    const R=(v0*v0)/g;
+    const H=(v0*v0)/(4*g);
+    out.push(makeQuestion('kinematics','hard',
+      `Άσκηση (τύπου 6): Βολή από το έδαφος με φ=45° και v₀=${v0} m/s (g=10). Ποιο είναι το βεληνεκές;`,
+      [R, R/2, 2*R, H].map(z=>`${fmt(z)} m`),0,
+      'Για 45°: R=v₀²/g.'
+    ));
+    out.push(makeQuestion('kinematics','hard',
+      `Άσκηση (τύπου 6): Στην ίδια βολή, ποιο είναι το μέγιστο ύψος;`,
+      [H, R, R/4, v0/10].map(z=>`${fmt(z)} m`),0,
+      'Για 45°: H=v₀²/(4g).'
+    ));
+  }
+
+  return out;
+}
+
 function genDynamics(){
   const out = [];
 
@@ -1004,6 +1097,7 @@ const bank = uniqueQuestions([
   ...genKinematicsHardVariety(),
   ...genKinematicsAdvanced(),
   ...genKinematicsWorksheetStyle(),
+  ...genKinematicsExamStyleSet(),
   ...genDynamics(),
   ...genDynamicsVariety(),
   ...genRotation(),
