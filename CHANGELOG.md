@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.7.3] - 2026-03-06
+### Added
+- Added **Rotation worksheet-inspired** question set from provided exercise themes:
+  - Earth angular/linear speed,
+  - time-varying angular acceleration integration forms,
+  - angular momentum components,
+  - torque vs dL/dt,
+  - comparative moments of inertia by axis,
+  - constant-torque motion laws,
+  - composite-body inertia composition.
+
 ## [0.7.2] - 2026-03-06
 ### Added
 - Added new Dynamics worksheet-inspired question set based on provided exercise themes:
