@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.8] - 2026-03-05
+### Changed
+- Replaced vague phrase "Στην ίδια κίνηση" with explicit problem-style circular-motion wording.
+- Polished paired uniform-rotation prompts for consistency and clarity.
+
 ## [0.5.7] - 2026-03-05
 ### Added
 - Keyboard answer shortcuts: pressing `A` / `B` / `C` / `D` selects the corresponding choice.
