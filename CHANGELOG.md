@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.7.1] - 2026-03-06
+### Added
+- New difficulty level: **Πολύ δύσκολο** (`veryhard`) focused on multi-step problems (2+ operations).
+- Added mixed very-hard pool across kinematics, dynamics, and energy.
+
+### Changed
+- Projectile-motion questions are now generalized for multiple launch angles (not only 45°).
+
 ## [0.7.0] - 2026-03-06
 ### Added
 - Major kinematics enrichment with worksheet/exam-style problem families inspired by uploaded exercise screenshots:

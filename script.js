@@ -6,8 +6,8 @@ const chapters = {
   formulas: 'Τύποι (mixed)'
 };
 
-const DIFFS = ['easy', 'medium', 'hard'];
-const DIFF_LABEL = { easy: 'Easy', medium: 'Medium', hard: 'Hard', mixed: 'Μικτή' };
+const DIFFS = ['easy', 'medium', 'hard', 'veryhard'];
+const DIFF_LABEL = { easy: 'Easy', medium: 'Medium', hard: 'Hard', veryhard: 'Πολύ δύσκολο', mixed: 'Μικτή' };
 const DEFAULT_TIMER_SECONDS = 45;
 const PREFS_KEY = 'physics-game-prefs-v1';
 
@@ -390,21 +390,24 @@ function genKinematicsExamStyleSet(){
     }
   }
 
-  // (6) projectile 45° style
+  // (6) projectile style (general launch angle)
   for (const v0 of [10,12,14,16]){
     const g=10;
-    const R=(v0*v0)/g;
-    const H=(v0*v0)/(4*g);
-    out.push(makeQuestion('kinematics','hard',
-      `Άσκηση (τύπου 6): Βολή από το έδαφος με φ=45° και v₀=${v0} m/s (g=10). Ποιο είναι το βεληνεκές;`,
-      [R, R/2, 2*R, H].map(z=>`${fmt(z)} m`),0,
-      'Για 45°: R=v₀²/g.'
-    ));
-    out.push(makeQuestion('kinematics','hard',
-      `Άσκηση (τύπου 6): Στην ίδια βολή, ποιο είναι το μέγιστο ύψος;`,
-      [H, R, R/4, v0/10].map(z=>`${fmt(z)} m`),0,
-      'Για 45°: H=v₀²/(4g).'
-    ));
+    for (const ang of [30,37,45,53,60]) {
+      const r = Math.PI*ang/180;
+      const R=(v0*v0*Math.sin(2*r))/g;
+      const H=(v0*v0*Math.sin(r)*Math.sin(r))/(2*g);
+      out.push(makeQuestion('kinematics','hard',
+        `Άσκηση (τύπου 6): Βολή από το έδαφος με φ=${ang}° και v₀=${v0} m/s (g=10). Ποιο είναι το βεληνεκές;`,
+        [R, R/2, 2*R, H].map(z=>`${fmt(z)} m`),0,
+        'Γενικά: R=(v₀²·sin2φ)/g.'
+      ));
+      out.push(makeQuestion('kinematics','hard',
+        `Άσκηση (τύπου 6): Στην ίδια βολή (φ=${ang}°), ποιο είναι το μέγιστο ύψος;`,
+        [H, R, H/2, v0/10].map(z=>`${fmt(z)} m`),0,
+        'Γενικά: H=(v₀²·sin²φ)/(2g).'
+      ));
+    }
   }
 
   return out;
@@ -1011,6 +1014,57 @@ function genFormulaQuiz(){
   return out;
 }
 
+
+function genVeryHardMixed(){
+  const out = [];
+
+  // Multi-step kinematics (2+ operations)
+  for (const v0 of [12,14,16,18]){
+    for (const a of [-2,-3,-4]){
+      const t=-v0/a;
+      const x=v0*t+0.5*a*t*t;
+      if (t<=0||x<=0) continue;
+      out.push(makeQuestion('kinematics','veryhard',
+        `Πολύ δύσκολο: Σώμα με v₀=${v0} m/s και a=${a} m/s² επιβραδύνεται μέχρι να σταματήσει. Ποια απόσταση διανύει μέχρι την ακινητοποίηση;`,
+        [x, v0*t, 0.5*Math.abs(a)*t*t, x/2].map(z=>`${fmt(z)} m`),
+        0,
+        'Βήματα: 1) t_stop από 0=v₀+at, 2) Δx=v₀t+½at².'
+      ));
+    }
+  }
+
+  // Multi-step dynamics incline with friction
+  for (const th of [30,37,45]){
+    const r=Math.PI*th/180;
+    for (const mu of [0.1,0.2,0.3]){
+      const a=10*(Math.sin(r)-mu*Math.cos(r));
+      out.push(makeQuestion('dynamics','veryhard',
+        `Πολύ δύσκολο: Κεκλιμένο επίπεδο θ=${th}° με τριβή ολίσθησης μ_k=${mu}. Ποια είναι η επιτάχυνση κατά μήκος (g=10);`,
+        [a, 10*Math.sin(r), 10*Math.cos(r), 10*(Math.sin(r)+mu*Math.cos(r))].map(z=>`${fmt(z)} m/s²`),
+        0,
+        'Βήματα: N=mgcosθ, f_k=μ_kN, μετά ΣF∥=mgsinθ−f_k=ma.'
+      ));
+    }
+  }
+
+  // Mixed energy + kinematics
+  for (const m of [2,3,4]){
+    for (const va of [2,3,4]){
+      for (const vb of [7,8,9]){
+        const dK=0.5*m*(vb*vb-va*va);
+        out.push(makeQuestion('energy','veryhard',
+          `Πολύ δύσκολο: Σώμα μάζας ${m} kg αυξάνει ταχύτητα από ${va} σε ${vb} m/s. Ποιο είναι το συνολικό έργο που απαιτείται;`,
+          [dK, m*(vb-va), 0.5*(vb*vb-va*va), dK/2].map(z=>`${fmt(z)} J`),
+          0,
+          'ΘΜΚΕ: ΣW=ΔK=½m(v_b²−v_a²).'
+        ));
+      }
+    }
+  }
+
+  return out;
+}
+
 function uniqueQuestions(list){
   const seen = new Set();
   const out = [];
@@ -1105,7 +1159,8 @@ const bank = uniqueQuestions([
   ...genIdeaProblems(),
   ...genWordProblems(),
   ...genGraphConcepts(),
-  ...genFormulaQuiz()
+  ...genFormulaQuiz(),
+  ...genVeryHardMixed()
 ]).map(ensureUniqueAnswerOptions);
 
 let quizSet = [];
