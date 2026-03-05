@@ -757,6 +757,26 @@ function setBest(cfg, resultObj){
   return better;
 }
 
+function getGlobalBest(){
+  const prefix = 'physics-game-best-v';
+  let best = { score: 0, total: 0, streak: 0 };
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (!k || !k.startsWith(prefix)) continue;
+      const raw = localStorage.getItem(k);
+      if (!raw) continue;
+      const v = JSON.parse(raw);
+      const vPct = v.total ? v.score / v.total : 0;
+      const bPct = best.total ? best.score / best.total : 0;
+      if (vPct > bPct || (vPct === bPct && (v.score > best.score || (v.streak || 0) > (best.streak || 0)))) {
+        best = { score: v.score || 0, total: v.total || 0, streak: v.streak || 0 };
+      }
+    }
+  } catch {}
+  return best;
+}
+
 function filterBank(mode, chapter, difficulty){
   let src = mode === 'random' ? bank : bank.filter(q => q.chapter === chapter);
   if (difficulty !== 'mixed') src = src.filter(q => q.difficulty === difficulty);
@@ -831,7 +851,8 @@ function updateMenuInfo(){
   bankInfo.textContent = `Σύνολο ερωτήσεων: ${bank.length} | ${byChapter}`;
   const cfg = { mode: 'random', chapter: null, difficulty, count, timer, timerSeconds, streakMode };
   const b = getBest(cfg);
-  bestInfo.textContent = `Best (τελευταίες ρυθμίσεις random): ${b.score}/${b.total} | καλύτερο streak: ${b.streak || 0}`;
+  const g = getGlobalBest();
+  bestInfo.textContent = `Best (τρέχουσες ρυθμίσεις random): ${b.score}/${b.total} | streak: ${b.streak || 0} • Global best: ${g.score}/${g.total || '-'} | streak: ${g.streak || 0}`;
 }
 
 function start(mode, chapter){

@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.3.9] - 2026-03-05
+### Fixed
+- Best-score panel now also shows a **Global best** across all saved modes/settings, so progress remains visible even when current random settings differ.
+
 ## [0.3.8] - 2026-03-05
 ### Added
 - New chapter: **Τύποι (mixed)** with randomized formula-identification questions across all sections (kinematics, dynamics, rotation, energy).
