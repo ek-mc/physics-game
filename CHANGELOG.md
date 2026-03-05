@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.7.5] - 2026-03-06
+### Changed
+- Added automatic difficulty fallback when selected level has no questions (e.g. `Πολύ δύσκολο` -> `hard` -> `medium` -> `easy`) instead of stopping with an alert.
+
 ## [0.7.4] - 2026-03-06
 ### Added
 - Added **Energy worksheet-inspired** question set based on uploaded exercise themes:

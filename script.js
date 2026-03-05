@@ -1606,8 +1606,30 @@ function start(mode, chapter){
 
   let src = filterBank(mode, chapter, config.difficulty);
   if (src.length === 0) {
-    alert('Δεν υπάρχουν ερωτήσεις για αυτές τις ρυθμίσεις. Δοκίμασε άλλη δυσκολία.');
-    return;
+    // Graceful fallback: if selected level has no items, step down difficulty automatically
+    const fallbackOrder = config.difficulty === 'veryhard'
+      ? ['hard', 'medium', 'easy']
+      : config.difficulty === 'hard'
+      ? ['medium', 'easy']
+      : config.difficulty === 'medium'
+      ? ['easy']
+      : [];
+
+    for (const d of fallbackOrder) {
+      const alt = filterBank(mode, chapter, d);
+      if (alt.length > 0) {
+        config.difficulty = d;
+        difficultySelect.value = d;
+        savePrefs();
+        src = alt;
+        break;
+      }
+    }
+
+    if (src.length === 0) {
+      alert('Δεν υπάρχουν διαθέσιμες ερωτήσεις για αυτή την ενότητα αυτή τη στιγμή.');
+      return;
+    }
   }
 
   const targetCount = Math.min(config.count, src.length);
