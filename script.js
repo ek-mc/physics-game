@@ -262,6 +262,61 @@ function genKinematicsAdvanced(){
   return out;
 }
 
+
+function genKinematicsWorksheetStyle(){
+  const out = [];
+
+  // Style inspired by worksheet sub-questions (i, ii, iii...)
+  for (const v of [4,5,6,8,10,12]){
+    for (const dt of [5,8,10,12]){
+      const dx = v*dt;
+      out.push(makeQuestion('kinematics','medium',
+        `Άσκηση (i): Αυτοκίνητο κινείται ευθύγραμμα με σταθερή ταχύτητα v=${v} m/s. Τι είδος κίνησης κάνει;`,
+        ['Ευθύγραμμη ομαλή κίνηση','Ευθύγραμμη ομαλά επιταχυνόμενη','Κυκλική ομαλή','Ταλάντωση'],
+        0,
+        'Σταθερή ταχύτητα σε ευθεία => ευθύγραμμη ομαλή κίνηση.'
+      ));
+      out.push(makeQuestion('kinematics','medium',
+        `Άσκηση (ii): Για v=${v} m/s, πόση απόσταση διανύει σε Δt=${dt} s;`,
+        [dx, v+dt, v/dt, dt/v].map(x=>`${fmt(x)} m`),
+        0,
+        'Σε ομαλή κίνηση: Δx=v·Δt.'
+      ));
+      out.push(makeQuestion('kinematics','medium',
+        `Άσκηση (iii): Στην ίδια κίνηση (σταθερό v), ποια είναι η επιτάχυνση;`,
+        ['0 m/s²','1 m/s²','v m/s²','Δt m/s²'],
+        0,
+        'Σταθερή ταχύτητα => a=0.'
+      ));
+    }
+  }
+
+  for (const v of [5,6,8,10]){
+    for (const t1 of [1,2,3]){
+      for (const t2 of [7,10,13]){
+        if (t2 <= t1) continue;
+        const dt=t2-t1;
+        const dx=v*dt;
+        out.push(makeQuestion('kinematics','hard',
+          `Άσκηση (iv): Σε διάστημα από t=${t1} s έως t'=${t2} s, με σταθερή ταχύτητα v=${v} m/s, ποια απόσταση διανύεται;`,
+          [dx, v*t2, v*t1, dt/v].map(x=>`${fmt(x)} m`),
+          0,
+          `Χρησιμοποιούμε Δt=t'-t=${fmt(dt)} s και Δx=v·Δt=${fmt(dx)} m.`
+        ));
+      }
+    }
+  }
+
+  out.push(makeQuestion('kinematics','hard',
+    'Άσκηση (v): Σε γράφημα απόστασης-χρόνου (x-t), η κλίση της ευθείας αντιστοιχεί σε ποιο μέγεθος;',
+    ['Ταχύτητα','Επιτάχυνση','Δύναμη','Ισχύ'],
+    0,
+    'Η κλίση στο x-t δίνει την ταχύτητα.'
+  ));
+
+  return out;
+}
+
 function genDynamics(){
   const out = [];
 
@@ -948,6 +1003,7 @@ const bank = uniqueQuestions([
   ...genKinematics(),
   ...genKinematicsHardVariety(),
   ...genKinematicsAdvanced(),
+  ...genKinematicsWorksheetStyle(),
   ...genDynamics(),
   ...genDynamicsVariety(),
   ...genRotation(),

@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.6.9] - 2026-03-06
+### Added
+- Added **worksheet-style kinematics questions** with subparts inspired by lecture exercise format:
+  - (i) identify motion type,
+  - (ii) compute distance in given time,
+  - (iii) infer acceleration in uniform motion,
+  - (iv) interval-distance from t to t',
+  - (v) slope meaning in x-t graph.
+- Focused on non-graph prompt style for these items, matching PDF exercise flow.
+
 ## [0.6.8] - 2026-03-06
 ### Changed
 - Result screen now clarifies counting context:
