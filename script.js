@@ -165,6 +165,90 @@ function genKinematicsHardVariety(){
   return out;
 }
 
+
+function genKinematicsAdvanced(){
+  const out = [];
+
+  // Κατακόρυφη κίνηση στο πεδίο βαρύτητας
+  out.push(makeQuestion('kinematics','hard',
+    'Κατακόρυφη κίνηση: αν διαλέξουμε προς τα πάνω θετική φορά, η επιτάχυνση βαρύτητας g έχει πρόσημο:',
+    ['Αρνητικό (a=-g)','Θετικό (a=+g)','Μηδέν','Εξαρτάται από τη μάζα'],
+    0,
+    'Με θετική φορά προς τα πάνω, η βαρύτητα είναι προς τα κάτω => a=-g.'
+  ));
+
+  for (const v0 of [10,12,14,16,18,20]){
+    const h = (v0*v0)/(2*10);
+    out.push(makeQuestion('kinematics','hard',
+      `Κατακόρυφη βολή προς τα πάνω με v₀=${v0} m/s (g=10). Ποιο είναι το μέγιστο ύψος;`,
+      [h, v0/10, v0*v0/10, 2*h].map(x=>`${fmt(x)} m`),
+      0,
+      'Στο ανώτερο σημείο v=0 και v²=v₀²-2gh => h=v₀²/(2g).'
+    ));
+
+    const ttop = v0/10;
+    out.push(makeQuestion('kinematics','hard',
+      `Κατακόρυφη βολή προς τα πάνω με v₀=${v0} m/s (g=10). Σε πόσο χρόνο φτάνει στο ανώτερο σημείο;`,
+      [ttop, v0/5, v0, v0*v0/20].map(x=>`${fmt(x)} s`),
+      0,
+      'Στο ανώτερο σημείο 0=v₀-gt => t=v₀/g.'
+    ));
+  }
+
+  // Πλάγια βολή
+  for (const v0 of [20,25,30,35]){
+    for (const ang of [30,37,45,53,60]){
+      const rad=Math.PI*ang/180;
+      const vx=v0*Math.cos(rad);
+      const vy=v0*Math.sin(rad);
+      out.push(makeQuestion('kinematics','hard',
+        `Πλάγια βολή: v₀=${v0} m/s, θ=${ang}°. Ποια είναι η οριζόντια συνιστώσα v₀x;`,
+        [vx, vy, v0, v0*Math.tan(rad)].map(x=>`${fmt(x)} m/s`),
+        0,
+        'Ανάλυση αρχικής ταχύτητας: v₀x=v₀cosθ.'
+      ));
+      out.push(makeQuestion('kinematics','hard',
+        `Πλάγια βολή: v₀=${v0} m/s, θ=${ang}°. Ποια είναι η κατακόρυφη συνιστώσα v₀y;`,
+        [vy, vx, v0*Math.sin(rad/2), v0*Math.cos(rad/2)].map(x=>`${fmt(x)} m/s`),
+        0,
+        'Ανάλυση αρχικής ταχύτητας: v₀y=v₀sinθ.'
+      ));
+    }
+  }
+
+  // Κυκλική κίνηση / Ομαλή κυκλική κίνηση
+  out.push(makeQuestion('kinematics','hard',
+    'Στην ομαλή κυκλική κίνηση, ποιο μέγεθος μένει σταθερό;',
+    ['Το μέτρο της ταχύτητας','Το διάνυσμα ταχύτητας','Η επιτάχυνση (ως διάνυσμα) = 0','Η ακτίνα και η ταχύτητα αλλάζουν τυχαία'],
+    0,
+    'Το μέτρο v μένει σταθερό, αλλά η κατεύθυνση της ταχύτητας αλλάζει.'
+  ));
+
+  for (const v of [4,6,8,10,12]){
+    for (const r of [1,2,3,4,5]){
+      const ac = v*v/r;
+      out.push(makeQuestion('kinematics','hard',
+        `Ομαλή κυκλική κίνηση: v=${v} m/s, r=${r} m. Ποιο είναι το κεντρομόλο μέτρο επιτάχυνσης;`,
+        [ac, v/r, r/v, 2*v*v/r].map(x=>`${fmt(x)} m/s²`),
+        0,
+        'Κεντρομόλος επιτάχυνση: a_c=v²/r.'
+      ));
+    }
+  }
+
+  for (const T of [1,2,3,4,5]){
+    const w=2*Math.PI/T;
+    out.push(makeQuestion('kinematics','hard',
+      `Ομαλή κυκλική κίνηση με περίοδο T=${T} s. Ποια είναι η γωνιακή ταχύτητα ω;`,
+      [w, Math.PI/T, 2*T, T/(2*Math.PI)].map(x=>`${fmt(x)} rad/s`),
+      0,
+      'ω=2π/T.'
+    ));
+  }
+
+  return out;
+}
+
 function genDynamics(){
   const out = [];
 
@@ -787,6 +871,7 @@ function ensureUniqueAnswerOptions(q){
 const bank = uniqueQuestions([
   ...genKinematics(),
   ...genKinematicsHardVariety(),
+  ...genKinematicsAdvanced(),
   ...genDynamics(),
   ...genDynamicsVariety(),
   ...genDynamicsGraphs(),

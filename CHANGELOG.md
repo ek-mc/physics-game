@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.4] - 2026-03-05
+### Added
+- Expanded Kinematics question pool with new topics requested from lecture notes context:
+  - Κατακόρυφη κίνηση στο πεδίο βαρύτητας
+  - Πλάγια βολή
+  - Κυκλική κίνηση
+  - Ομαλή κυκλική κίνηση
+
 ## [0.4.3] - 2026-03-05
 ### Fixed
 - Favicon path changed to relative (`favicon.svg`) for correct loading on GitHub Pages subpath.
