@@ -932,6 +932,22 @@ function setBest(cfg, resultObj){
   return better;
 }
 
+function getGlobalMaxStreak(){
+  const prefix = 'physics-game-best-v';
+  let mx = 0;
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (!k || !k.startsWith(prefix)) continue;
+      const raw = localStorage.getItem(k);
+      if (!raw) continue;
+      const v = JSON.parse(raw);
+      mx = Math.max(mx, Number(v.streak || 0));
+    }
+  } catch {}
+  return mx;
+}
+
 function getGlobalBest(){
   const prefix = 'physics-game-best-v';
   let best = { score: 0, total: 0, streak: 0 };
