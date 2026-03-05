@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.4.6] - 2026-03-05
+### Changed
+- Improved Greek wording for projectile-motion component questions (more natural phrasing: "της αρχικής ταχύτητας").
+
 ## [0.4.5] - 2026-03-05
 ### Added
 - Enriched **Τύποι (mixed)** with concept-symbol questions (e.g. `a` = επιτάχυνση, `v` = ταχύτητα, `x` = θέση, `t` = χρόνος, `g`, `m`, `W`, `P`, `U`).
