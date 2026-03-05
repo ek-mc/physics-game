@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.6.4] - 2026-03-05
+### Added
+- Home-screen keyboard shortcuts for chapter buttons:
+  - `K` Κινηματική, `D` Δυναμική, `P` Περιστροφή, `E` Έργο & Ενέργεια, `T` Τύποι, `M` Τυχαίο
+  - includes Greek key fallback (`κ,δ,π,ε,τ,μ`).
+- Result-screen `Space` shortcut now triggers **Νέο Quiz**.
+
+### Changed
+- Added letter hints directly in chapter button labels (e.g. `K) Κινηματική`).
+
 ## [0.6.3] - 2026-03-05
 ### Changed
 - Simplified `v-t` graph labels to avoid revealing the numeric answer directly.

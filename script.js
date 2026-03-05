@@ -35,6 +35,12 @@ const timerSecondsSelect = document.getElementById('timerSecondsSelect');
 const streakToggle = document.getElementById('streakToggle');
 const bankInfo = document.getElementById('bankInfo');
 const bestInfo = document.getElementById('bestInfo');
+const btnK = document.getElementById('btnK');
+const btnD = document.getElementById('btnD');
+const btnP = document.getElementById('btnP');
+const btnE = document.getElementById('btnE');
+const btnT = document.getElementById('btnT');
+const btnM = document.getElementById('btnM');
 
 function shuffle(arr){ return [...arr].sort(()=>Math.random()-0.5); }
 function fmt(n){ return Number.isInteger(n) ? String(n) : n.toFixed(2).replace(/\.00$/, ''); }
@@ -1308,16 +1314,51 @@ updateMenuInfo();
 document.addEventListener('keydown', (e) => {
   const tag = (document.activeElement && document.activeElement.tagName || '').toLowerCase();
   if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
-  if (quiz.classList.contains('hidden')) return;
 
-  // Space -> next question (when available)
+  const inQuiz = !quiz.classList.contains('hidden');
+  const inMenu = !menu.classList.contains('hidden');
+  const inResult = !result.classList.contains('hidden');
+
+  // Space behavior by screen
   if (e.code === 'Space') {
-    if (!nextBtn.disabled) {
+    if (inQuiz && !nextBtn.disabled) {
       e.preventDefault();
       nextBtn.click();
+      return;
     }
-    return;
+    if (inResult) {
+      e.preventDefault();
+      restartBtn.click();
+      return;
+    }
   }
+
+  // Menu shortcuts: K/D/P/E/T/M
+  if (inMenu) {
+    const key = (e.key || '').toLowerCase();
+    const map = {
+      k: btnK,
+      d: btnD,
+      p: btnP,
+      e: btnE,
+      t: btnT,
+      m: btnM,
+      'κ': btnK,
+      'δ': btnD,
+      'π': btnP,
+      'ε': btnE,
+      'τ': btnT,
+      'μ': btnM
+    };
+    const target = map[key];
+    if (target) {
+      e.preventDefault();
+      target.click();
+      return;
+    }
+  }
+
+  if (!inQuiz) return;
 
   // A/B/C/D physical keys -> choose option 1/2/3/4 (layout-independent)
   let idx;
