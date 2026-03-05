@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.3.2] - 2026-03-05
+### Changed
+- Standardized friction notation to precise symbols in Greek prompts:
+  - kinetic friction as `f_k = μ_k N` (instead of ambiguous shorthand `f = μN`).
+
 ## [0.3.1] - 2026-03-05
 ### Changed
 - Reworded dynamics conceptual prompt to sound more natural and problem-like in Greek.
