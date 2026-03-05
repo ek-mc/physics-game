@@ -1220,10 +1220,12 @@ function finishRun(reason = ''){
 
   const answered = reason === 'end' ? quizSet.length : Math.min(idx + 1, quizSet.length);
   const safeTotal = clampPositive(answered);
+  const selectedTotal = quizSet.length;
   const pct = Math.round((score / safeTotal) * 100);
   const modeLabel = config.mode === 'random' ? 'Τυχαίο' : chapters[config.chapter];
+  const early = config.streakMode && reason !== 'end';
 
-  resultText.textContent = `${modeLabel} | ${DIFF_LABEL[config.difficulty]} | Σκορ: ${score}/${safeTotal} (${pct}%). Καλύτερο streak run: ${bestStreakRun}.`;
+  resultText.textContent = `${modeLabel} | ${DIFF_LABEL[config.difficulty]} | Σκορ: ${score}/${safeTotal} (${pct}%).${early ? ` (Streak mode: σταμάτησε νωρίς στο ${safeTotal}/${selectedTotal})` : ` (Συνολικές ερωτήσεις: ${selectedTotal})`} Καλύτερο streak run: ${bestStreakRun}.`;
 
   const improved = setBest(config, { score, total: safeTotal, streak: bestStreakRun });
   const b = getBest(config);

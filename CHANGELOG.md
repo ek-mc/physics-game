@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.6.8] - 2026-03-06
+### Changed
+- Result screen now clarifies counting context:
+  - shows selected total questions,
+  - explicitly indicates early stop when Streak mode ends a run before full count.
+
 ## [0.6.7] - 2026-03-06
 ### Added
 - Added unit-identification questions in **Τύποι (mixed)** (m, m/s, m/s², N, J, W, kg, rad/s, rad/s², N·m).
