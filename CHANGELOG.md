@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.3.1] - 2026-03-05
+### Changed
+- Reworded dynamics conceptual prompt to sound more natural and problem-like in Greek.
+- Improved option wording for acceleration-direction logic (resultant/prevailing force phrasing).
+
 ## [0.3.0] - 2026-03-05
 ### Changed
 - Improved Greek phrasing for question prompts (e.g. "Σε οριζόντιο επίπεδο χωρίς τριβή" instead of abbreviated wording).
