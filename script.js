@@ -664,7 +664,6 @@ function genWordProblems(){
     'Ένα όχημα σε ευθεία λεωφόρο',
     'Ένα διαστημόπλοιο σε δοκιμή κινητήρα',
     'Ένα καροτσάκι σε οριζόντια τροχιά',
-    'Ένας ανελκυστήρας σε κτίριο',
     'Ένα τρένο σε γραμμή προαστιακού',
     'Ένας ποδηλάτης σε ευθεία διαδρομή'
   ];
@@ -751,7 +750,8 @@ function genGraphConcepts(){
         out.push(makeQuestion('kinematics','medium',
           `Γραφικά: στο διάγραμμα v-t η γραμμή ξεκινά από v₀=${v0} m/s και έχει κλίση a=${a} m/s². Ποια είναι η v στο t=${t} s;`,
           [v, v0+a, v0+t, a*t].map(x=>`${fmt(x)} m/s`),0,
-          `Από το διάγραμμα: v=v₀+at=${fmt(v)} m/s.`
+          `Από το διάγραμμα: v=v₀+at=${fmt(v)} m/s.`,
+          {isGraph:true, graphSvg: vtSvg}
         ));
       }
     }
@@ -763,7 +763,8 @@ function genGraphConcepts(){
       out.push(makeQuestion('kinematics','easy',
         `Σε διάγραμμα v-t με σταθερή ταχύτητα v=${v0} m/s για t=${t} s, πόση είναι η μετατόπιση;`,
         [dx, v0+t, v0/t, t/v0].map(x=>`${fmt(x)} m`),0,
-        `Εμβαδό ορθογωνίου: Δx=v·t=${fmt(dx)} m.`
+        `Εμβαδό ορθογωνίου: Δx=v·t=${fmt(dx)} m.`,
+        {isGraph:true, graphSvg: vtSvg}
       ));
     }
   }

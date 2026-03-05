@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.9] - 2026-03-05
+### Fixed
+- Added actual graph visuals to numeric kinematics graph questions (`v-t`) so "Γραφικά" prompts always display a chart.
+- Removed elevator context from linear-kinematics word-problem pool to keep scenarios more natural.
+
 ## [0.5.8] - 2026-03-05
 ### Changed
 - Replaced vague phrase "Στην ίδια κίνηση" with explicit problem-style circular-motion wording.
