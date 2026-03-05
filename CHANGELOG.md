@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.4.9] - 2026-03-05
+### Fixed
+- Corrected context mismatch in word-problem phrasing:
+  - removed rotating-disk context from linear-kinematics (`v = v₀ + at`) questions.
+  - clarified wording to explicitly state straight-line motion.
+
 ## [0.4.8] - 2026-03-05
 ### Changed
 - Improved Greek phrasing for the position-with-time kinematics formula prompt.
