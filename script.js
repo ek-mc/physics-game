@@ -456,6 +456,75 @@ function uniqueQuestions(list){
   return out;
 }
 
+function ensureUniqueAnswerOptions(q){
+  const options = (q.a || []).map(x => String(x));
+  if (options.length === 0) return q;
+
+  const originalCorrectText = options[q.c] ?? options[0];
+  const seen = new Set();
+  const uniq = [];
+  let correctIndex = -1;
+
+  options.forEach((opt, i) => {
+    if (!seen.has(opt)) {
+      seen.add(opt);
+      if (i === q.c) correctIndex = uniq.length;
+      uniq.push(opt);
+    } else if (i === q.c && correctIndex === -1) {
+      correctIndex = uniq.indexOf(opt);
+    }
+  });
+
+  if (correctIndex === -1) {
+    if (!seen.has(originalCorrectText)) {
+      uniq.unshift(originalCorrectText);
+      correctIndex = 0;
+      seen.add(originalCorrectText);
+    } else {
+      correctIndex = uniq.indexOf(originalCorrectText);
+    }
+  }
+
+  const m = originalCorrectText.match(/-?\d+(?:\.\d+)?/);
+  const base = m ? Number(m[0]) : null;
+  const unit = m ? originalCorrectText.slice((m.index ?? 0) + m[0].length).trim() : '';
+
+  const fnum = (x) => Number.isInteger(x) ? String(x) : x.toFixed(2).replace(/\.00$/, '');
+
+  let tries = 0;
+  while (uniq.length < 4 && tries < 40) {
+    tries++;
+    let candidate;
+    if (base !== null && Number.isFinite(base)) {
+      const mult = [0.5, 0.75, 1.25, 1.5, 2, 3][Math.floor(Math.random() * 6)];
+      const sign = Math.random() < 0.5 ? 1 : -1;
+      const bump = [0.1, 0.2, 0.5, 1][Math.floor(Math.random() * 4)];
+      const val = Math.abs(base * mult + sign * bump);
+      candidate = `${fnum(val)}${unit ? ' ' + unit : ''}`;
+    } else {
+      candidate = `Επιλογή ${uniq.length + 1}`;
+    }
+    if (!seen.has(candidate)) {
+      seen.add(candidate);
+      uniq.push(candidate);
+    }
+  }
+
+  // Keep exactly 4 options, preserving the correct one
+  let finalOpts = uniq;
+  if (finalOpts.length > 4) {
+    if (correctIndex >= 4) {
+      const correctText = finalOpts[correctIndex];
+      finalOpts = [correctText, ...finalOpts.filter((_, i) => i !== correctIndex).slice(0, 3)];
+      correctIndex = 0;
+    } else {
+      finalOpts = finalOpts.slice(0, 4);
+    }
+  }
+
+  return { ...q, a: finalOpts, c: correctIndex };
+}
+
 const bank = uniqueQuestions([
   ...genKinematics(),
   ...genDynamics(),
@@ -464,7 +533,7 @@ const bank = uniqueQuestions([
   ...genIdeaProblems(),
   ...genWordProblems(),
   ...genGraphConcepts()
-]);
+]).map(ensureUniqueAnswerOptions);
 
 let quizSet = [];
 let idx = 0;

@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.2.9] - 2026-03-05
+### Fixed
+- Eliminated duplicate answer options within the same question (e.g. same numeric value appearing twice).
+- Added option sanitization so each question keeps 4 unique choices while preserving the correct answer mapping.
+
 All notable changes to this project will be documented in this file.
 
 ## [0.2.8] - 2026-03-04
