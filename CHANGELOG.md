@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.3.0] - 2026-03-05
+### Changed
+- Improved Greek phrasing for question prompts (e.g. "Σε οριζόντιο επίπεδο χωρίς τριβή" instead of abbreviated wording).
+- Clarified conceptual wording in normal-force question text.
+
 ## [0.2.9] - 2026-03-05
 ### Fixed
 - Eliminated duplicate answer options within the same question (e.g. same numeric value appearing twice).
