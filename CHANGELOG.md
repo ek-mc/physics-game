@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.5.2] - 2026-03-05
+### Changed
+- Improved Greek phrasing for no-time kinematics prompt (train scenario) to sound natural and explicit.
+
 ## [0.5.1] - 2026-03-05
 ### Changed
 - Rewrote awkward circular-motion wording in natural Greek.
