@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.4.3] - 2026-03-05
+### Fixed
+- Favicon path changed to relative (`favicon.svg`) for correct loading on GitHub Pages subpath.
+
 ## [0.4.2] - 2026-03-05
 ### Added
 - Added explicit ΘΜΚΕ and ΑΔΜΕ questions in Energy and Formulas sections.
