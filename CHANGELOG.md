@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [0.6.5] - 2026-03-06
+### Changed
+- Removed highlighted marker/guides from Dynamics `a–F` graphs to avoid visually revealing the answer.
+- Updated graph-question wording to match the cleaner chart style.
+
 ## [0.6.4] - 2026-03-05
 ### Added
 - Home-screen keyboard shortcuts for chapter buttons:

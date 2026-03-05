@@ -427,10 +427,7 @@ function genDynamicsGraphs(){
       ${tickF}
       ${tickA}
       <line x1="20" y1="110" x2="220" y2="${110 - (Fmax/m)/Amax*80}" stroke="#22c55e" stroke-width="3"/>
-      <circle cx="${x}" cy="${y}" r="4" fill="#f59e0b"/>
-      <line x1="${x}" y1="110" x2="${x}" y2="${y}" stroke="#f59e0b" stroke-dasharray="3 2"/>
-      <line x1="20" y1="${y}" x2="${x}" y2="${y}" stroke="#f59e0b" stroke-dasharray="3 2"/>
-      <text x="244" y="114" fill="#94a3b8" font-size="12">F (N)</text>
+            <text x="244" y="114" fill="#94a3b8" font-size="12">F (N)</text>
       <text x="4" y="18" fill="#94a3b8" font-size="12">a (m/s²)</text>
     </svg>`;
   };
@@ -449,7 +446,7 @@ function genDynamicsGraphs(){
     for (const F of [8,10,12,15,18,20]){
       const a=F/m;
       out.push(makeQuestion('dynamics','hard',
-        `Γράφημα a–F με κλίμακα για μάζα m=${m} kg: στο σημείο F=${F} N, ποια τιμή επιτάχυνσης δείχνει ο κατακόρυφος άξονας;`,
+        `Γράφημα a–F με κλίμακα για μάζα m=${m} kg: για F=${F} N, ποια τιμή επιτάχυνσης αντιστοιχεί στη γραμμή;`,
         [a, F*m, m/F, F/(m+1)].map(x=>`${fmt(x)} m/s²`),
         0,
         'Διαβάζουμε το σημείο και ισοδύναμα εφαρμόζουμε a=F/m.',
