@@ -1141,6 +1141,103 @@ function genGraphConcepts(){
 }
 
 
+
+function genEnergyWorksheetStyle(){
+  const out = [];
+
+  // 1) book on table (work by force and friction)
+  out.push(makeQuestion('energy','hard',
+    'Άσκηση Ενέργειας (τύπου 1): Βιβλίο μετατοπίζεται 1.5 m σε οριζόντιο τραπέζι από οριζόντια δύναμη F=2 N. Ποιο είναι το έργο της F;',
+    ['3 J','2 J','1.5 J','0 J'],
+    0,
+    'W_F=F·s=2·1.5=3 J.'
+  ));
+  out.push(makeQuestion('energy','hard',
+    'Άσκηση Ενέργειας (τύπου 1): Αν η τριβή είναι T=0.4 N, ποιο είναι το έργο της τριβής για την ίδια μετατόπιση;',
+    ['-0.6 J','+0.6 J','-3 J','0 J'],
+    0,
+    'W_τριβής=-T·s=-0.4·1.5=-0.6 J.'
+  ));
+
+  // 2) variable force from graph idea (piecewise area)
+  out.push(makeQuestion('energy','veryhard',
+    'Άσκηση (τύπου 2): Σε γράφημα F-x, το έργο από x1 σε x2 ισούται με:',
+    ['Το εμβαδό κάτω από τη F(x)','Την κλίση της F(x)','Το μέγιστο της F','Το x2-x1 μόνο'],
+    0,
+    'W=∫F dx = γεωμετρικό εμβαδό στο διάγραμμα F-x.'
+  ));
+
+  // 3) dot product force-displacement
+  out.push(makeQuestion('energy','hard',
+    'Άσκηση (τύπου 3): Αν F=(6i−2j) N και s=(3i+1j) m, ποιο είναι το έργο;',
+    ['16 J','20 J','12 J','10 J'],
+    0,
+    'W=F·s=6·3+(-2)·1=16 J.'
+  ));
+
+  // 4) cart + rope + friction + angle
+  out.push(makeQuestion('energy','veryhard',
+    'Άσκηση (τύπου 4): Καρότσι κινείται με σταθερή ταχύτητα σε οριζόντιο επίπεδο. Για την τάση T του σχοινιού ισχύει στον x άξονα:',
+    ['T cosθ = f_k','T sinθ = f_k','T = mg','T cosθ = mg'],
+    0,
+    'Σταθερή ταχύτητα => ΣFx=0 => Tcosθ=f_k.'
+  ));
+  out.push(makeQuestion('energy','veryhard',
+    'Άσκηση (τύπου 4): Το έργο του σχοινιού σε οριζόντια μετατόπιση s είναι:',
+    ['W_T=T cosθ · s','W_T=T sinθ · s','W_T=Ts','W_T=0'],
+    0,
+    'Μόνο η οριζόντια συνιστώσα παράγει έργο στην οριζόντια μετατόπιση.'
+  ));
+
+  // 5) x(t)=t+2t^3 style
+  out.push(makeQuestion('energy','veryhard',
+    'Άσκηση (τύπου 5): Αν x(t)=t+2t^3, τότε v(t)= ;',
+    ['1+6t²','1+2t²','t+6t²','6t'],
+    0,
+    'v=dx/dt=1+6t².'
+  ));
+  out.push(makeQuestion('energy','veryhard',
+    'Άσκηση (τύπου 5): Για μάζα m, η κινητική ενέργεια είναι:',
+    ['K=½m v²','K=mv','K=ma','K=F·x'],
+    0,
+    'Ορισμός κινητικής ενέργειας.'
+  ));
+
+  // 6) gravity path independence
+  out.push(makeQuestion('energy','hard',
+    'Άσκηση (τύπου 6): Για το βάρος, το έργο από O σε C σε διαφορετικές διαδρομές είναι:',
+    ['Ίδιο, εξαρτάται μόνο από τα άκρα','Διαφορετικό σε κάθε διαδρομή','Μηδέν πάντα','Ίσο με την τριβή'],
+    0,
+    'Το βάρος είναι διατηρητική δύναμη (path independent).' 
+  ));
+
+  // 7) pendulum bottom speed/tension idea
+  out.push(makeQuestion('energy','veryhard',
+    'Άσκηση (τύπου 7): Απλό εκκρεμές που αφήνεται από γωνία θ0. Στο χαμηλότερο σημείο η ταχύτητα υπολογίζεται κυρίως από:',
+    ['Διατήρηση μηχανικής ενέργειας','2ο νόμο μόνο στον εφαπτομενικό','Ορισμό ισχύος','Στατική τριβή'],
+    0,
+    'Μετατροπή δυναμικής σε κινητική ενέργεια.'
+  ));
+
+  // 8) ramp then rough horizontal
+  out.push(makeQuestion('energy','veryhard',
+    'Άσκηση (τύπου 8): Σε λείο κεκλιμένο και μετά τραχύ οριζόντιο, η ταχύτητα στη βάση του κεκλιμένου προκύπτει από:',
+    ['Διατήρηση μηχανικής ενέργειας στο λείο τμήμα','ΘΜΚΕ με τριβή στο λείο','N=mg','P=Fv'],
+    0,
+    'Στο λείο τμήμα δεν υπάρχει απώλεια από τριβή.'
+  ));
+
+  // 9) power with constant speed and friction
+  out.push(makeQuestion('energy','hard',
+    'Άσκηση (τύπου 9): Κιβώτιο κινείται με σταθερή ταχύτητα v σε οριζόντιο με τριβή f_k. Ποια ισχύς απαιτείται από τη μηχανή;',
+    ['P=f_k·v','P=mg·v','P=f_k/v','P=0'],
+    0,
+    'Σε σταθερή ταχύτητα, η μηχανή αντισταθμίζει την τριβή: P=F·v=f_k v.'
+  ));
+
+  return out;
+}
+
 function genFormulaQuiz(){
   const out = [];
   const items = [
@@ -1333,6 +1430,7 @@ const bank = uniqueQuestions([
   ...genRotation(),
   ...genRotationWorksheetStyle(),
   ...genEnergy(),
+  ...genEnergyWorksheetStyle(),
   ...genIdeaProblems(),
   ...genWordProblems(),
   ...genGraphConcepts(),

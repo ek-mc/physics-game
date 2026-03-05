@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.7.4] - 2026-03-06
+### Added
+- Added **Energy worksheet-inspired** question set based on uploaded exercise themes:
+  - work by applied force/friction,
+  - variable-force work from F-x area,
+  - vector dot-product work,
+  - rope+tension+friction work setup,
+  - x(t)->v(t)->K(t) chain,
+  - conservative gravity path-independence,
+  - pendulum energy method,
+  - smooth-ramp + rough-surface transitions,
+  - power under constant-speed drag/friction.
+
 ## [0.7.3] - 2026-03-06
 ### Added
 - Added **Rotation worksheet-inspired** question set from provided exercise themes:
