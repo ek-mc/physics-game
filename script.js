@@ -2,7 +2,8 @@ const chapters = {
   kinematics: 'Κινηματική',
   dynamics: 'Δυναμική',
   rotation: 'Περιστροφή',
-  energy: 'Έργο & Ενέργεια'
+  energy: 'Έργο & Ενέργεια',
+  formulas: 'Τύποι (mixed)'
 };
 
 const DIFFS = ['easy', 'medium', 'hard'];
@@ -605,6 +606,32 @@ function genGraphConcepts(){
   return out;
 }
 
+
+function genFormulaQuiz(){
+  const out = [];
+  const items = [
+    ['Για τελική ταχύτητα με γνωστά v₀, a, t, ποιος τύπος είναι σωστός;', ['v=v₀+at','x=x₀+v₀t+½at²','v²=v₀²+2aΔx','P=dW/dt'],0,'Κινηματική σταθερής επιτάχυνσης.'],
+    ['Για θέση με γνωστά x₀, v₀, a, t, ποιος τύπος είναι σωστός;', ['x=x₀+v₀t+½at²','v=v₀+at','x=x₀+vt','L=Iω'],0,'Κινηματική σταθερής επιτάχυνσης.'],
+    ['Όταν δεν δίνεται χρόνος t και ζητείται v, ποιος τύπος βοηθά;', ['v²=v₀²+2aΔx','v=v₀+at','x=x₀+v₀t+½at²','a=Δx/Δt'],0,'Χωρίς t.'],
+    ['2ος νόμος Newton:', ['ΣF=ma','ΣF=0','Στ=Iα','ΣW=ΔK'],0,'Βασικός νόμος δυναμικής.'],
+    ['Κάθετη αντίδραση σε κεκλιμένο χωρίς τριβή:', ['N=mgcosθ','N=mgsinθ','N=mg','N=μN'],0,'Κάθετη συνιστώσα βάρους.'],
+    ['Επιτάχυνση σε κεκλιμένο χωρίς τριβή:', ['a=gsinθ','a=gcosθ','a=μg','a=τ/I'],0,'Παράλληλη συνιστώσα βάρους.'],
+    ['Τριβή ολίσθησης:', ['f_k=μ_kN','f_s=μ_sN πάντα','f=ma','f=mg'],0,'Μοντέλο ολίσθησης.'],
+    ['Στροφορμή στερεού:', ['L=Iω','L=mv','L=Iα','L=τt μόνο'],0,'Περιστροφή.'],
+    ['Νόμος περιστροφικής δυναμικής:', ['Στ=Iα','ΣF=Iα','W=FΔx','P=Fv'],0,'Ανάλογο του ΣF=ma.'],
+    ['Έργο δύναμης:', ['W=FΔxcosθ','W=F/Δx','W=ma','W=Pt²'],0,'Ορισμός έργου.'],
+    ['Θεώρημα έργου–ενέργειας:', ['ΣW=ΔK','ΣW=ΔU','ΣW=0','K+U=0'],0,'Συνολικό έργο και κινητική ενέργεια.'],
+    ['Ισχύς:', ['P=dW/dt','P=W·t','P=F/a','P=ma'],0,'Ρυθμός παραγωγής έργου.']
+  ];
+
+  for (let r=0; r<12; r++) {
+    for (const [q,a,c,e] of items) {
+      out.push(makeQuestion('formulas', r<4?'easy':(r<8?'medium':'hard'), q, a, c, e));
+    }
+  }
+  return out;
+}
+
 function uniqueQuestions(list){
   const seen = new Set();
   const out = [];
@@ -696,7 +723,8 @@ const bank = uniqueQuestions([
   ...genEnergy(),
   ...genIdeaProblems(),
   ...genWordProblems(),
-  ...genGraphConcepts()
+  ...genGraphConcepts(),
+  ...genFormulaQuiz()
 ]).map(ensureUniqueAnswerOptions);
 
 let quizSet = [];
