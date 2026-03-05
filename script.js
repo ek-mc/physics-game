@@ -727,24 +727,39 @@ function genWordProblems(){
 
 function genGraphConcepts(){
   const out = [];
-  const vtSvg = `<svg viewBox="0 0 260 140" aria-label="v-t graph with grid">
-    <rect x="0" y="0" width="260" height="140" fill="#020817" rx="8"/>
-    <g stroke="#1e293b" stroke-width="1">
-      <line x1="40" y1="30" x2="40" y2="115"/><line x1="80" y1="30" x2="80" y2="115"/><line x1="120" y1="30" x2="120" y2="115"/><line x1="160" y1="30" x2="160" y2="115"/><line x1="200" y1="30" x2="200" y2="115"/>
-      <line x1="30" y1="35" x2="235" y2="35"/><line x1="30" y1="55" x2="235" y2="55"/><line x1="30" y1="75" x2="235" y2="75"/><line x1="30" y1="95" x2="235" y2="95"/>
-    </g>
-    <line x1="30" y1="115" x2="235" y2="115" stroke="#94a3b8" stroke-width="2"/>
-    <line x1="30" y1="115" x2="30" y2="20" stroke="#94a3b8" stroke-width="2"/>
-    <line x1="30" y1="98" x2="215" y2="42" stroke="#22c55e" stroke-width="4"/>
-    <circle cx="30" cy="98" r="3.5" fill="#22c55e"/>
-    <circle cx="215" cy="42" r="3.5" fill="#22c55e"/>
-    <text x="236" y="120" fill="#94a3b8" font-size="12">t</text>
-    <text x="18" y="18" fill="#94a3b8" font-size="12">v</text>
-    <text x="36" y="129" fill="#64748b" font-size="10">0</text>
-    <text x="12" y="100" fill="#64748b" font-size="10">v₀</text>
-    <text x="206" y="128" fill="#64748b" font-size="10">t</text>
-    <text x="221" y="44" fill="#64748b" font-size="10">v(t)</text>
-  </svg>`;
+
+  const makeVtGraph = (v0 = 6, a = 1, t = 4) => {
+    const vt = v0 + a * t;
+    const vMin = Math.min(0, v0, vt) - 1;
+    const vMax = Math.max(v0, vt, 0) + 1;
+    const y = (v) => 115 - ((v - vMin) / (vMax - vMin || 1)) * 85;
+    const x0 = 30;
+    const xt = 215;
+    const y0 = y(v0);
+    const yt = y(vt);
+
+    return `<svg viewBox="0 0 260 140" aria-label="v-t graph with scale">
+      <rect x="0" y="0" width="260" height="140" fill="#020817" rx="8"/>
+      <g stroke="#1e293b" stroke-width="1">
+        <line x1="40" y1="30" x2="40" y2="115"/><line x1="80" y1="30" x2="80" y2="115"/><line x1="120" y1="30" x2="120" y2="115"/><line x1="160" y1="30" x2="160" y2="115"/><line x1="200" y1="30" x2="200" y2="115"/>
+        <line x1="30" y1="35" x2="235" y2="35"/><line x1="30" y1="55" x2="235" y2="55"/><line x1="30" y1="75" x2="235" y2="75"/><line x1="30" y1="95" x2="235" y2="95"/>
+      </g>
+      <line x1="30" y1="115" x2="235" y2="115" stroke="#94a3b8" stroke-width="2"/>
+      <line x1="30" y1="115" x2="30" y2="20" stroke="#94a3b8" stroke-width="2"/>
+      <line x1="${x0}" y1="${y0}" x2="${xt}" y2="${yt}" stroke="#22c55e" stroke-width="4"/>
+      <circle cx="${x0}" cy="${y0}" r="3.5" fill="#22c55e"/>
+      <circle cx="${xt}" cy="${yt}" r="3.5" fill="#22c55e"/>
+      <text x="236" y="120" fill="#94a3b8" font-size="12">t</text>
+      <text x="18" y="18" fill="#94a3b8" font-size="12">v</text>
+      <text x="36" y="129" fill="#64748b" font-size="10">0</text>
+      <text x="8" y="${Math.max(20, Math.min(116, y0-6))}" fill="#64748b" font-size="10">v₀=${v0}</text>
+      <text x="206" y="128" fill="#64748b" font-size="10">t=${t}</text>
+      <text x="221" y="${Math.max(18, Math.min(116, yt-6))}" fill="#64748b" font-size="10">v(t)=${fmt(vt)}</text>
+      <text x="180" y="20" fill="#94a3b8" font-size="10">a=${a}</text>
+    </svg>`;
+  };
+
+  const vtSvg = makeVtGraph();
   const xtSvg = `<svg viewBox="0 0 240 120" aria-label="x-t graph"><line x1="20" y1="100" x2="220" y2="100" stroke="#94a3b8"/><line x1="20" y1="100" x2="20" y2="20" stroke="#94a3b8"/><path d="M20 95 Q90 70 200 25" fill="none" stroke="#22c55e" stroke-width="3"/><text x="210" y="110" fill="#94a3b8" font-size="12">t</text><text x="8" y="18" fill="#94a3b8" font-size="12">x</text></svg>`;
   out.push(makeQuestion('kinematics','easy',
     'Σε διάγραμμα v-t, η κλίση της ευθείας τι εκφράζει;',
@@ -768,7 +783,7 @@ function genGraphConcepts(){
           `Γραφικά: στο διάγραμμα v-t η γραμμή ξεκινά από v₀=${v0} m/s και έχει κλίση a=${a} m/s². Ποια είναι η v στο t=${t} s;`,
           [v, v0+a, v0+t, a*t].map(x=>`${fmt(x)} m/s`),0,
           `Από το διάγραμμα: v=v₀+at=${fmt(v)} m/s.`,
-          {isGraph:true, graphSvg: vtSvg}
+          {isGraph:true, graphSvg: makeVtGraph(v0, a, t)}
         ));
       }
     }
@@ -781,7 +796,7 @@ function genGraphConcepts(){
         `Σε διάγραμμα v-t με σταθερή ταχύτητα v=${v0} m/s για t=${t} s, πόση είναι η μετατόπιση;`,
         [dx, v0+t, v0/t, t/v0].map(x=>`${fmt(x)} m`),0,
         `Εμβαδό ορθογωνίου: Δx=v·t=${fmt(dx)} m.`,
-        {isGraph:true, graphSvg: vtSvg}
+        {isGraph:true, graphSvg: makeVtGraph(v0, 0, t)}
       ));
     }
   }

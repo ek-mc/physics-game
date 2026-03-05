@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.6.2] - 2026-03-05
+### Fixed
+- `v-t` graph now reflects each question's actual parameters (`v₀`, `a`, `t`), including negative slope cases (`a<0`).
+- Added dynamic labels on graph (`v₀`, `t`, `v(t)`, `a`) for better correspondence with prompt text.
+
 ## [0.6.1] - 2026-03-05
 ### Fixed
 - A/B/C/D keyboard answer shortcuts now work regardless of keyboard layout (uses physical key codes + Greek character fallback).
