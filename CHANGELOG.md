@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.4] - 2026-03-05
+### Fixed
+- Removed remaining old circular-motion prompt variant from idea-question set.
+- Replaced with the new precise pair (constant non-zero `ω` and zero `α`).
+
 ## [0.5.3] - 2026-03-05
 ### Fixed
 - Global best logic now prioritizes highest **correct answers count** (e.g. 19/20 beats 10/10 in global panel), then accuracy, then streak.
