@@ -941,10 +941,21 @@ function getGlobalBest(){
       const raw = localStorage.getItem(k);
       if (!raw) continue;
       const v = JSON.parse(raw);
-      const vPct = v.total ? v.score / v.total : 0;
-      const bPct = best.total ? best.score / best.total : 0;
-      if (vPct > bPct || (vPct === bPct && (v.score > best.score || (v.streak || 0) > (best.streak || 0)))) {
-        best = { score: v.score || 0, total: v.total || 0, streak: v.streak || 0 };
+      const vScore = Number(v.score || 0);
+      const vTotal = Number(v.total || 0);
+      const vStreak = Number(v.streak || 0);
+      const bScore = Number(best.score || 0);
+      const bTotal = Number(best.total || 0);
+      const bStreak = Number(best.streak || 0);
+      const vPct = vTotal ? vScore / vTotal : 0;
+      const bPct = bTotal ? bScore / bTotal : 0;
+
+      // Priority: absolute score first, then accuracy, then streak.
+      if (
+        vScore > bScore ||
+        (vScore === bScore && (vPct > bPct || (vPct === bPct && vStreak > bStreak)))
+      ) {
+        best = { score: vScore, total: vTotal, streak: vStreak };
       }
     }
   } catch {}

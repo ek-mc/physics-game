@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.3] - 2026-03-05
+### Fixed
+- Global best logic now prioritizes highest **correct answers count** (e.g. 19/20 beats 10/10 in global panel), then accuracy, then streak.
+- Clarified global-best label text in UI.
+
 ## [0.5.2] - 2026-03-05
 ### Changed
 - Improved Greek phrasing for no-time kinematics prompt (train scenario) to sound natural and explicit.
