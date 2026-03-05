@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.1] - 2026-03-05
+### Changed
+- Rewrote awkward circular-motion wording in natural Greek.
+- Split ambiguous item into two precise questions:
+  1) which quantity is constant and non-zero,
+  2) which quantity is zero in uniform rotation.
+
 ## [0.5.0] - 2026-03-05
 ### Fixed
 - Reworded ambiguous kinematics prompt ("αλλάζει πορεία") to explicit straight-line motion wording.
