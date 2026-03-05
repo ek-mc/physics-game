@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.6] - 2026-03-05
+### Changed
+- Rewrote no-time train prompt to a more problem-like Greek wording.
+
+### Added
+- Added opposite-sign kinematics variant: `v<0, a>0` -> behavior of `|v|`.
+
 ## [0.5.5] - 2026-03-05
 ### Changed
 - Stats panel now shows **Global max streak** independently from global-best score record, to avoid confusion when a high-score run has lower streak.
