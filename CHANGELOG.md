@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.3.4] - 2026-03-05
+### Fixed
+- Corrected Greek grammar in dynamics option wording to nominative subject form:
+  - "Η συνισταμένη των δυνάμεων ..."
+
 ## [0.3.3] - 2026-03-05
 ### Changed
 - Minor Greek wording/grammar polish in multiple-choice options (e.g. "την αρχική ταχύτητα", clearer resultant-force phrasing).
