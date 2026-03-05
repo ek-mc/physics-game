@@ -114,6 +114,56 @@ function genKinematics(){
   return out;
 }
 
+
+function genKinematicsHardVariety(){
+  const out = [];
+
+  const methodQs = [
+    ['Κινηματική (δύσκολο): Δίνονται x₀, v₀, a, t και ζητείται x. Ποια εξίσωση ξεκινάς πρώτα;', ['x=x₀+v₀t+½at²','v=v₀+at','v²=v₀²+2aΔx','a=Δv/Δt'],0,'Για θέση με γνωστό χρόνο: x=x₀+v₀t+½at².'],
+    ['Κινηματική (δύσκολο): Δεν δίνεται χρόνος t και ζητείται τελική ταχύτητα. Ποια εξίσωση είναι η σωστή βάση;', ['v²=v₀²+2aΔx','v=v₀+at','x=x₀+vt','v=Δx/Δt'],0,'Χωρίς χρόνο: v²=v₀²+2aΔx.'],
+    ['Κινηματική (δύσκολο): Για χρόνο ακινητοποίησης με σταθερή επιτάχυνση, ποια σχέση χρησιμοποιείς;', ['0=v₀+at','x=x₀+v₀t+½at²','v²=v₀²+2aΔx','a=0'],0,'Θέτουμε v=0 στην v=v₀+at.']
+  ];
+  for (const [q,a,c,e] of methodQs) out.push(makeQuestion('kinematics','hard',q,a,c,e));
+
+  for (const v0 of [12,14,16,18,20,22]){
+    for (const a of [-2,-3,-4,-5]){
+      const t = -v0/a;
+      const dx = v0*t + 0.5*a*t*t;
+      if (t<=0 || dx<=0) continue;
+      out.push(makeQuestion(
+        'kinematics','hard',
+        `Κινηματική (2 βήματα): v₀=${v0} m/s, a=${a} m/s². Ποια απόσταση διανύει μέχρι να σταματήσει;`,
+        [dx, v0*t, Math.abs(a)*t, 0.5*Math.abs(a)*t*t].map(x=>`${fmt(x)} m`),
+        0,
+        `Πρώτα t_stop=-v₀/a, μετά Δx=v₀t+½at².`
+      ));
+    }
+  }
+
+  for (const v0 of [8,10,12,14]){
+    for (const a of [-3,-2,2,3]){
+      for (const t of [2,3,4]){
+        const v=v0+a*t;
+        const trend = Math.abs(v)>Math.abs(v0) ? 'αυξάνεται' : (Math.abs(v)<Math.abs(v0) ? 'μειώνεται' : 'μένει σταθερό');
+        out.push(makeQuestion(
+          'kinematics','hard',
+          `Κινηματική (πρόσημα): v₀=${v0} m/s, a=${a} m/s², t=${t} s. Ποια είναι η v και τι συμβαίνει στο |v|;`,
+          [
+            `${fmt(v)} m/s, ${trend}`,
+            `${fmt(v0-a*t)} m/s, αυξάνεται`,
+            `${fmt(v0+a)} m/s, μειώνεται`,
+            `${fmt(v)} m/s, μένει σταθερό`
+          ],
+          0,
+          `Υπολογίζουμε v=v₀+at και συγκρίνουμε |v| με |v₀|.`
+        ));
+      }
+    }
+  }
+
+  return out;
+}
+
 function genDynamics(){
   const out = [];
 
@@ -527,6 +577,7 @@ function ensureUniqueAnswerOptions(q){
 
 const bank = uniqueQuestions([
   ...genKinematics(),
+  ...genKinematicsHardVariety(),
   ...genDynamics(),
   ...genRotation(),
   ...genEnergy(),

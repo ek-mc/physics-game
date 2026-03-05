@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.3.5] - 2026-03-05
+### Added
+- New **hard** kinematics variety (method-selection, 2-step stopping-distance, and sign/interpretation questions), not only `v²=v₀²+2aΔx` patterns.
+
 ## [0.3.4] - 2026-03-05
 ### Fixed
 - Corrected Greek grammar in dynamics option wording to nominative subject form:
