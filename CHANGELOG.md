@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.4.8] - 2026-03-05
+### Changed
+- Improved Greek phrasing for the position-with-time kinematics formula prompt.
+
 ## [0.4.7] - 2026-03-05
 ### Changed
 - Updated projectile-notation display to underscore style (`v_0x`, `v_0y`) in question text/explanations.
