@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.4.2] - 2026-03-05
+### Added
+- Added explicit ΘΜΚΕ and ΑΔΜΕ questions in Energy and Formulas sections.
+- Included both conceptual-use questions and direct formula-identification items.
+
 ## [0.4.1] - 2026-03-05
 ### Added
 - New inverse Dynamics question patterns:
