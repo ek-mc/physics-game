@@ -1,5 +1,7 @@
 # Changelog
 
+## [Unreleased]
+
 ## [0.6.4] - 2026-03-05
 ### Added
 - Home-screen keyboard shortcuts for chapter buttons:

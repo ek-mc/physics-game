@@ -23,3 +23,10 @@
 
 ## UI
 - Includes a site favicon (`/favicon.svg`).
+
+
+## Changelog
+See [CHANGELOG.md](CHANGELOG.md).
+
+## License
+See [LICENSE](LICENSE).
