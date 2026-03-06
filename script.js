@@ -831,10 +831,10 @@ function genRotationWorksheetStyle(){
   'ω=2π/T.'
  ));
  out.push(makeQuestion('rotation','hard',
-  'Ποια είναι η γραμμική ταχύτητα σημείου στον ισημερινό; (R=6.4×10^6 m)',
+  'Ποια είναι η γραμμική ταχύτητα σημείου στον ισημερινό; (R=6.4×10^6 m, μία περιστροφή σε 24 h)',
   [vEq, Re/T, 2*Math.PI*Re*T, w/Re].map(x=>`${fmt(x)} m/s`),
   0,
-  'v=ωR.'
+  'Χρησιμοποιούμε ω=2π/T με T=24 h και μετά v=ωR.'
  ));
 
  // 2) alpha(t) -> omega(t), theta(t) forms

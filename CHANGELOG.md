@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.8.13] - 2026-03-06
+### Fixed
+- Made Earth-equator linear-speed question self-contained by explicitly including period data (`T=24 h`).
+
 ## [0.8.12] - 2026-03-06
 ### Changed
 - Improved in-quiz physics text rendering (no raw pseudo-LaTeX style):
