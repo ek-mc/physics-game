@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.8.1] - 2026-03-06
+### Added
+- Added more kinematics ideas from user screenshots:
+  - projectile-to-cup **angle-finding** questions (given speed and target distance/height),
+  - two-body **meeting-point** relative-motion questions (start from opposite ends).
+
 ## [0.8.0] - 2026-03-06
 ### Added
 - Added new kinematics projectile-from-height problems (ping-pong/cup along table style), including two-step solving (`y(t)` then `x(t)`).
