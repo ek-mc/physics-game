@@ -151,18 +151,17 @@ function genKinematicsHardVariety(){
   for (const a of [-3,-2,2,3]){
    for (const t of [2,3,4]){
     const v=v0+a*t;
-    const trend = Math.abs(v)>Math.abs(v0) ? 'αυξάνεται' : (Math.abs(v)<Math.abs(v0) ? 'μειώνεται' : 'μένει σταθερό');
     out.push(makeQuestion(
      'kinematics','hard',
-     `Κινηματική (πρόσημα): v₀=${v0} m/s, a=${a} m/s², t=${t} s. Ποια είναι η v και τι συμβαίνει στο |v|;`,
+     `Δίνονται v₀=${v0} m/s, a=${a} m/s² και t=${t} s. Ποια είναι η τελική ταχύτητα v;`,
      [
-      `${fmt(v)} m/s, ${trend}`,
-      `${fmt(v0-a*t)} m/s, αυξάνεται`,
-      `${fmt(v0+a)} m/s, μειώνεται`,
-      `${fmt(v)} m/s, μένει σταθερό`
+      `${fmt(v)} m/s`,
+      `${fmt(v0-a*t)} m/s`,
+      `${fmt(v0+a)} m/s`,
+      `${fmt(v)} m/s²`
      ],
      0,
-     `Υπολογίζουμε v=v₀+at και συγκρίνουμε |v| με |v₀|.`
+     `Υπολογίζουμε από τον τύπο v=v₀+at.`
     ));
    }
   }
@@ -357,15 +356,21 @@ function genKinematicsExamStyleSet(){
   }
  }
 
- // (4) bridge meeting style simplified
- for (const l of [200,300,400]){
-  const v0=20, a=2, d=80;
+ // (4) bridge/meeting style with varied parameters
+ const bridgeCases = [
+  {l:180, v0:16, a:1.8, d:70},
+  {l:260, v0:18, a:2.2, d:90},
+  {l:340, v0:20, a:1.6, d:110},
+  {l:420, v0:22, a:2.0, d:95}
+ ];
+ for (const c of bridgeCases){
+  const {l,v0,a,d} = c;
   const tBridgeEnd = (-v0 + Math.sqrt(v0*v0 + 2*a*l))/a;
   const vmax = (d+l)/tBridgeEnd;
   out.push(makeQuestion('kinematics','hard',
-   `Αυτοκίνητο κινείται με v₀=${v0} m/s και a=${a} m/s² σε γέφυρα μήκους ${l} m. Φορτηγάκι απέχει ${d} m από το άλλο άκρο και κατευθύνεται προς τη γέφυρα. Ποια μέγιστη σταθερή ταχύτητα πρέπει να έχει ώστε η συνάντηση να μη γίνει πάνω στη γέφυρα;`,
-   [vmax, vmax+10, vmax/2, vmax*1.5].map(z=>`${fmt(z)} m/s`),0,
-   'Οριακή περίπτωση: συναντιούνται στο άκρο. Χρόνος αυτοκινήτου μέχρι άκρο και μετά v_max=(d+l)/t.'
+   `ΙΧ εισέρχεται σε γέφυρα μήκους ${l} m με αρχική ταχύτητα v₀=${v0} m/s και σταθερή επιτάχυνση a=${a} m/s². Από το απέναντι άκρο ξεκινά φορτηγάκι σε απόσταση ${d} m από τη γέφυρα με σταθερή ταχύτητα. Ποια είναι η μέγιστη επιτρεπτή ταχύτητα του φορτηγού ώστε να μη συναντηθούν πάνω στη γέφυρα;`,
+   [vmax, vmax+8, vmax/2, vmax*1.35].map(z=>`${fmt(z)} m/s`),0,
+   'Οριακή περίπτωση: συναντιούνται ακριβώς στην έξοδο της γέφυρας.'
   ));
  }
 
@@ -1297,7 +1302,7 @@ function genVeryHardMixed(){
    const x=v0*t+0.5*a*t*t;
    if (t<=0||x<=0) continue;
    out.push(makeQuestion('kinematics','veryhard',
-    `Πολύ δύσκολο: Σώμα με v₀=${v0} m/s και a=${a} m/s² επιβραδύνεται μέχρι να σταματήσει. Ποια απόσταση διανύει μέχρι την ακινητοποίηση;`,
+    `Σώμα με v₀=${v0} m/s και a=${a} m/s² επιβραδύνεται μέχρι να σταματήσει. Ποια απόσταση διανύει μέχρι την ακινητοποίηση;`,
     [x, v0*t, 0.5*Math.abs(a)*t*t, x/2].map(z=>`${fmt(z)} m`),
     0,
     'Βήματα: 1) t_stop από 0=v₀+at, 2) Δx=v₀t+½at².'
@@ -1311,7 +1316,7 @@ function genVeryHardMixed(){
   for (const mu of [0.1,0.2,0.3]){
    const a=10*(Math.sin(r)-mu*Math.cos(r));
    out.push(makeQuestion('dynamics','veryhard',
-    `Πολύ δύσκολο: Κεκλιμένο επίπεδο θ=${th}° με τριβή ολίσθησης μ_k=${mu}. Ποια είναι η επιτάχυνση κατά μήκος (g=10);`,
+    `Κεκλιμένο επίπεδο θ=${th}° με τριβή ολίσθησης μ_k=${mu}. Ποια είναι η επιτάχυνση κατά μήκος (g=10);`,
     [a, 10*Math.sin(r), 10*Math.cos(r), 10*(Math.sin(r)+mu*Math.cos(r))].map(z=>`${fmt(z)} m/s²`),
     0,
     'Βήματα: N=mgcosθ, f_k=μ_kN, μετά ΣF∥=mgsinθ−f_k=ma.'
@@ -1325,7 +1330,7 @@ function genVeryHardMixed(){
    for (const vb of [7,8,9]){
     const dK=0.5*m*(vb*vb-va*va);
     out.push(makeQuestion('energy','veryhard',
-     `Πολύ δύσκολο: Σώμα μάζας ${m} kg αυξάνει ταχύτητα από ${va} σε ${vb} m/s. Ποιο είναι το συνολικό έργο που απαιτείται;`,
+     `Σώμα μάζας ${m} kg αυξάνει ταχύτητα από ${va} σε ${vb} m/s. Ποιο είναι το συνολικό έργο που απαιτείται;`,
      [dK, m*(vb-va), 0.5*(vb*vb-va*va), dK/2].map(z=>`${fmt(z)} J`),
      0,
      'ΘΜΚΕ: ΣW=ΔK=½m(v_b²−v_a²).'
@@ -1334,6 +1339,48 @@ function genVeryHardMixed(){
   }
  }
 
+
+
+ // three-stage velocity profile (more diverse Nightmare kinematics)
+ for (const v0 of [6,8,10]){
+  for (const a1 of [2,3]){
+   for (const t1 of [2,3,4]){
+    for (const t2 of [2,3]){
+     for (const a3 of [-1,-2]){
+      const v1=v0+a1*t1;
+      const v2=v1; // middle stage constant speed
+      const v3=v2+a3*t2;
+      out.push(makeQuestion('kinematics','veryhard',
+       `Κίνηση 3 φάσεων: από v₀=${v0} m/s επιταχύνεται με a₁=${a1} m/s² για ${t1} s, μετά κινείται με σταθερή ταχύτητα για ${t2} s, και τέλος για ${t2} s με a₃=${a3} m/s². Ποια είναι η τελική ταχύτητα;`,
+       [v3, v2, v0, v2+Math.abs(a3)*t2].map(z=>`${fmt(z)} m/s`),
+       0,
+       'Υπολογισμός ανά φάση με διαδοχική εφαρμογή v=v₀+at.'
+      ));
+     }
+    }
+   }
+  }
+ }
+
+ // target-distance with two acceleration phases
+ for (const v0 of [8,10,12]){
+  for (const a1 of [1,2,3]){
+   for (const t1 of [3,4,5]){
+    for (const a2 of [-1,-2,-3]){
+     const v1=v0+a1*t1;
+     const dx1=v0*t1+0.5*a1*t1*t1;
+     const t2=2;
+     const dx2=v1*t2+0.5*a2*t2*t2;
+     out.push(makeQuestion('kinematics','veryhard',
+      `Σώμα κινείται σε 2 φάσεις: v₀=${v0} m/s, a₁=${a1} m/s² για t₁=${t1} s και μετά a₂=${a2} m/s² για t₂=${t2} s. Ποια είναι η συνολική μετατόπιση;`,
+      [dx1+dx2, dx1, dx2, Math.abs(dx1-dx2)].map(z=>`${fmt(z)} m`),
+      0,
+      'Υπολογίζουμε Δx₁ και Δx₂ χωριστά και τα αθροίζουμε.'
+     ));
+    }
+   }
+  }
+ }
 
  // Extra veryhard kinematics stems (to avoid same-template repetition)
  for (const v0 of [8,10,12,14]){
