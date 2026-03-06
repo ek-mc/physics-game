@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.8.16] - 2026-03-06
+### Changed
+- Replaced multiple fixed-constant word problems with parameterized variants (multiple value sets) to reduce repetition:
+  - recoil/momentum problems,
+  - force from `Δv/Δt` problems,
+  - incline-with-friction constant-speed pair,
+  - football-field meeting-point problem,
+  - ping-pong launch-angle-to-cup problem.
+- Improved Greek phrasing in these updated prompts.
+
 ## [0.8.15] - 2026-03-06
 ### Added
 - Added the `x(t)=t+2t^3 -> v(t)` derivative question to **Kinematics** as well (it already existed in Energy).
