@@ -7,7 +7,7 @@ const chapters = {
 };
 
 const DIFFS = ['easy', 'medium', 'hard', 'veryhard'];
-const DIFF_LABEL = { easy: 'Easy', medium: 'Medium', hard: 'Hard', veryhard: 'Πολύ δύσκολο', mixed: 'Μικτή' };
+const DIFF_LABEL = { easy: 'Easy', medium: 'Medium', hard: 'Hard', veryhard: 'Nightmare', mixed: 'Μικτή' };
 const DEFAULT_TIMER_SECONDS = 45;
 const PREFS_KEY = 'physics-game-prefs-v1';
 
@@ -1334,6 +1334,34 @@ function genVeryHardMixed(){
     }
   }
 
+
+  // Extra veryhard kinematics stems (to avoid same-template repetition)
+  for (const v0 of [8,10,12,14]){
+    for (const a1 of [2,3,4]){
+      for (const t1 of [3,4,5]){
+        const v1=v0+a1*t1;
+        const dx1=v0*t1+0.5*a1*t1*t1;
+        for (const a2 of [-2,-3]){
+          const t2=Math.max(1, Math.ceil(v1/Math.abs(a2))/2);
+          const v2=v1+a2*t2;
+          const dx2=v1*t2+0.5*a2*t2*t2;
+          out.push(makeQuestion('kinematics','veryhard',
+            `Πολύ δύσκολο (κινηματική): Σώμα επιταχύνεται για t₁=${t1}s με a₁=${a1} και μετά επιβραδύνεται για t₂=${t2}s με a₂=${a2}. Ποια είναι η τελική ταχύτητα;`,
+            [v2, v1, v0, v1+Math.abs(a2)*t2].map(z=>`${fmt(z)} m/s`),
+            0,
+            'Δύο στάδια: πρώτα v₁=v₀+a₁t₁, μετά v₂=v₁+a₂t₂.'
+          ));
+          out.push(makeQuestion('kinematics','veryhard',
+            `Πολύ δύσκολο (κινηματική): Στο ίδιο δι-στάδιο σενάριο, ποια είναι η συνολική απόσταση;`,
+            [dx1+dx2, dx1, dx2, Math.abs(dx1-dx2)].map(z=>`${fmt(z)} m`),
+            0,
+            'Συνολικά: Δx=Δx₁+Δx₂.'
+          ));
+        }
+      }
+    }
+  }
+
   return out;
 }
 
@@ -1529,6 +1557,10 @@ function stemSignature(text){
     .trim();
 }
 
+function countUniqueStems(src){
+  return new Set((src||[]).map(q => stemSignature(q.q))).size;
+}
+
 function pickDiverseQuestions(src, targetCount){
   const shuffled = shuffle(src);
   const used = new Set();
@@ -1629,6 +1661,17 @@ function start(mode, chapter){
     if (src.length === 0) {
       alert('Δεν υπάρχουν διαθέσιμες ερωτήσεις για αυτή την ενότητα αυτή τη στιγμή.');
       return;
+    }
+  }
+
+  // If veryhard chapter pool is too repetitive, supplement from lower levels for variety
+  if (config.mode === 'chapter' && config.difficulty === 'veryhard') {
+    const need = config.count;
+    const uniq = countUniqueStems(src);
+    if (uniq < need) {
+      const hardPool = filterBank('chapter', config.chapter, 'hard');
+      const medPool = filterBank('chapter', config.chapter, 'medium');
+      src = uniqueQuestions([...src, ...hardPool, ...medPool]).map(ensureUniqueAnswerOptions);
     }
   }
 

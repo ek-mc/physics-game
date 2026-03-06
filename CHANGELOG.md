@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.6] - 2026-03-06
+### Changed
+- Renamed difficulty label from `Πολύ δύσκολο` to `Nightmare`.
+- Fixed repetitive Nightmare runs in chapter mode by:
+  - adding more veryhard kinematics multi-step stems,
+  - auto-supplementing with `hard`/`medium` chapter pools when veryhard variety is too low.
+
 ## [0.7.5] - 2026-03-06
 ### Changed
 - Added automatic difficulty fallback when selected level has no questions (e.g. `Πολύ δύσκολο` -> `hard` -> `medium` -> `easy`) instead of stopping with an alert.
