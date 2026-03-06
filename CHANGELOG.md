@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.8.15] - 2026-03-06
+### Added
+- Added the `x(t)=t+2t^3 -> v(t)` derivative question to **Kinematics** as well (it already existed in Energy).
+
 ## [0.8.14] - 2026-03-06
 ### Fixed
 - Fixed runtime error `prettifyPhysicsText is not defined` by restoring helper functions in global scope.
