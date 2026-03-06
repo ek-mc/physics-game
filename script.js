@@ -436,36 +436,42 @@ function genKinematicsExamStyleSet(){
   ));
  }
 
- {
-  const v0 = 5;
-  const x = 1.0;
-  const y0 = 0.6;
-  const y = 0.2;
+ for (const cfg of [
+  {v0:4.5, x:0.9, y0:0.55, y:0.2},
+  {v0:5.0, x:1.0, y0:0.6, y:0.2},
+  {v0:5.5, x:1.1, y0:0.65, y:0.25},
+  {v0:6.0, x:1.2, y0:0.6, y:0.2}
+ ]) {
+  const {v0,x,y0,y}=cfg;
   const g = 10;
   const A = g*x*x/(2*v0*v0);
   const C = A + (y - y0);
   const D = x*x - 4*A*C;
+  if (D <= 0) continue;
   const u1 = (x + Math.sqrt(D)) / (2*A);
   const u2 = (x - Math.sqrt(D)) / (2*A);
   const th1 = Math.atan(u1)*180/Math.PI;
   const th2 = Math.atan(u2)*180/Math.PI;
   const th = (th1 > 10 && th1 < 80) ? th1 : th2;
   out.push(makeQuestion('kinematics','hard',
-   'Μπαλάκι πινγκ-πονγκ εκτοξεύεται από ύψος 0,6 m με ταχύτητα 5 m/s και πρέπει να πέσει σε κύπελλο ύψους 20 cm που βρίσκεται 1,0 m μακριά οριζόντια. Σε ποια γωνία ως προς τον ορίζοντα πρέπει να γίνει η ρίψη; (g=10 m/s²)',
+   `Μπαλάκι πινγκ-πονγκ εκτοξεύεται από ύψος ${fmt(y0)} m με ταχύτητα ${fmt(v0)} m/s και πρέπει να πέσει σε κύπελλο ύψους ${fmt(y)} m που βρίσκεται ${fmt(x)} m μακριά οριζόντια. Σε ποια γωνία ως προς τον ορίζοντα πρέπει να γίνει η ρίψη; (g=10 m/s²)`,
    [th, th+7, th-7, 45].map(z=>`${fmt(z)}°`),
    0,
    'Χρησιμοποιούμε την εξίσωση τροχιάς και λύνουμε ως προς tanφ.'
   ));
  }
 
- {
-  const L = 100; // meters
-  const v1 = 5;  // m/s
-  const v2 = 1;  // m/s
+ for (const cfg of [
+  {L:100, v1:5, v2:1},
+  {L:90, v1:4, v2:2},
+  {L:105, v1:6, v2:2},
+  {L:110, v1:5.5, v2:1.5}
+ ]) {
+  const {L,v1,v2} = cfg;
   const xMeet = L * v1/(v1+v2);
   out.push(makeQuestion('kinematics','hard',
-   'Σε γήπεδο ποδοσφαίρου μήκους 100 m, δύο άτομα ξεκινούν ταυτόχρονα από τα δύο τέρματα και κινούνται το ένα προς το άλλο. Το πρώτο κινείται με 5 m/s και το δεύτερο με 1 m/s. Σε ποια απόσταση από το πρώτο τέρμα συναντιούνται;',
-   [xMeet, 100-xMeet, 50, L/(v1+v2)].map(z=>`${fmt(z)} m`),
+   `Σε γήπεδο ποδοσφαίρου μήκους ${fmt(L)} m, δύο άτομα ξεκινούν ταυτόχρονα από τα δύο τέρματα και κινούνται το ένα προς το άλλο. Το πρώτο κινείται με ${fmt(v1)} m/s και το δεύτερο με ${fmt(v2)} m/s. Σε ποια απόσταση από το πρώτο τέρμα συναντιούνται;`,
+   [xMeet, L-xMeet, L/2, L/(v1+v2)].map(z=>`${fmt(z)} m`),
    0,
    'Η θέση συνάντησης από την πλευρά του πρώτου είναι x=L·v1/(v1+v2).'
   ));
@@ -715,23 +721,27 @@ function genDynamicsWorksheetStyle(){
  }
 
  // 3) Incline moving with constant speed and applied force
- for (const th of [45]){
+ for (const cfg of [
+  {th:30, mu:0.2, F:12},
+  {th:37, mu:0.25, F:14},
+  {th:45, mu:0.3, F:15},
+  {th:40, mu:0.2, F:16}
+ ]){
+  const {th,mu,F}=cfg;
   const r=Math.PI*th/180;
-  const mu=0.3;
-  const F=15;
   const B=F/(Math.sin(r)+mu*Math.cos(r));
   const Fdown=B*(Math.sin(r)-mu*Math.cos(r));
   out.push(makeQuestion('dynamics','hard',
-   'Σώμα σε κεκλιμένο 45° κινείται προς τα πάνω με σταθερή ταχύτητα υπό δύναμη 15 N παράλληλη στο επίπεδο και μ_k=0.3. Ποιο είναι το βάρος του;',
+   `Σώμα σε κεκλιμένο ${th}° κινείται προς τα πάνω με σταθερή ταχύτητα υπό δύναμη ${fmt(F)} N παράλληλη στο επίπεδο και μ_k=${fmt(mu)}. Ποιο είναι το βάρος του;`,
    [B, B/2, B*2, F].map(z=>`${fmt(z)} N`),
    0,
    'Σταθερή ταχύτητα ⇒ ΣF∥=0: F = B(sinφ + μ_k cosφ).'
   ));
   out.push(makeQuestion('dynamics','hard',
-   'Σώμα σε κεκλιμένο 45° έχει μ_k=0.3 και βάρος ίσο με αυτό που προκύπτει όταν προς τα πάνω κινείται με σταθερή ταχύτητα υπό δύναμη 15 N. Ποια ελάχιστη παράλληλη δύναμη χρειάζεται ώστε να κατεβαίνει με σταθερή ταχύτητα;',
+   `Σώμα σε κεκλιμένο ${th}° με μ_k=${fmt(mu)} έχει το ίδιο βάρος με το προηγούμενο ερώτημα. Ποια ελάχιστη παράλληλη δύναμη χρειάζεται ώστε να κατεβαίνει με σταθερή ταχύτητα;`,
    [Fdown, Fdown/2, Fdown*2, F].map(z=>`${fmt(z)} N`),
    0,
-   'Για οριακή σταθερή προς τα κάτω: ΣF∥=0 με αντίθετη φορά τριβής.'
+   'Για σταθερή προς τα κάτω κίνηση: ΣF∥=0 με αντίθετη φορά τριβής.'
   ));
  }
 
@@ -750,22 +760,38 @@ function genDynamicsWorksheetStyle(){
  ));
 
  // 7) recoil / momentum conservation
- const vChild=(2*8)/40;
- out.push(makeQuestion('dynamics','hard',
-  'Παιδί 40 kg σε πάγο πετά πέτρα 2 kg με ταχύτητα 8 m/s προς τα δεξιά. Ποια είναι η ταχύτητα οπισθοχώρησης του παιδιού (χωρίς τριβή);',
-  [vChild, vChild/2, vChild*2, 8].map(z=>`${fmt(z)} m/s`),
-  0,
-  'Διατήρηση ορμής: m_π·v_π + m_παιδ·v_παιδ = 0.'
- ));
+ for (const cfg of [
+  {mChild:40, mStone:2, vStone:8},
+  {mChild:35, mStone:1.5, vStone:10},
+  {mChild:50, mStone:2.5, vStone:7},
+  {mChild:45, mStone:3, vStone:6}
+ ]) {
+  const {mChild,mStone,vStone}=cfg;
+  const vChild=(mStone*vStone)/mChild;
+  out.push(makeQuestion('dynamics','hard',
+   `Άτομο μάζας ${fmt(mChild)} kg πάνω σε πάγο πετά αντικείμενο μάζας ${fmt(mStone)} kg με ταχύτητα ${fmt(vStone)} m/s προς τα δεξιά. Ποιο είναι το μέτρο της ταχύτητας οπισθοχώρησης (χωρίς τριβή);`,
+   [vChild, vChild/2, vChild*2, vStone].map(z=>`${fmt(z)} m/s`),
+   0,
+   'Διατήρηση ορμής: m_αντικ·v_αντικ = m_ατόμου·v_οπισθοχώρησης.'
+  ));
+ }
 
  // 8) force from Δv/Δt
- const F8=2*(-6/4);
- out.push(makeQuestion('dynamics','hard',
-  'Σώμα 2 kg από ηρεμία έχει v=-6 m/s σε t=4 s υπό σταθερή δύναμη στον άξονα x. Ποια είναι η δύναμη στον x;',
-  [F8, -6/4, 2*6, 6/2].map(z=>`${fmt(z)} N`),
-  0,
-  'a=Δv/Δt και F=ma. Το αρνητικό πρόσημο δείχνει προς -x.'
- ));
+ for (const cfg of [
+  {m:2, v:-6, t:4},
+  {m:3, v:-9, t:3},
+  {m:4, v:-8, t:2},
+  {m:5, v:-10, t:5}
+ ]) {
+  const {m,v,t}=cfg;
+  const F=m*(v/t);
+  out.push(makeQuestion('dynamics','hard',
+   `Σώμα μάζας ${fmt(m)} kg ξεκινά από ηρεμία και αποκτά ταχύτητα v=${fmt(v)} m/s σε χρόνο t=${fmt(t)} s υπό σταθερή δύναμη στον άξονα x. Ποια είναι η δύναμη στον x;`,
+   [F, v/t, m*Math.abs(v)/t, Math.abs(v)/m].map(z=>`${fmt(z)} N`),
+   0,
+   'Υπολογίζουμε a=Δv/Δt και μετά F=ma (το πρόσημο δείχνει φορά).'
+  ));
+ }
 
  // 10) drag force proportional to v
  out.push(makeQuestion('dynamics','hard',
