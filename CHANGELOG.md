@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.8.4] - 2026-03-06
+### Fixed
+- Made a previously context-dependent kinematics prompt self-contained (removed ambiguous "Στο ίδιο δι-στάδιο σενάριο").
+
 ## [0.8.3] - 2026-03-06
 ### Changed
 - Nightmare chapter runs now prioritize `veryhard` questions (target ~80%+ when available), then fill remainder from lower levels only if needed.
