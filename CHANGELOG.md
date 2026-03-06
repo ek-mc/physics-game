@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.8.7] - 2026-03-06
+### Changed
+- Removed `Nightmare` / `veryhard` difficulty tier.
+- Moved all former `veryhard` questions into `hard`.
+- Removed `veryhard`-specific runtime selection logic and normalized saved preference to `hard` when needed.
+
 ## [0.8.6] - 2026-03-06
 ### Changed
 - Kinematics Nightmare significantly diversified with additional multi-phase motion families (beyond stop-distance and two-stage templates).

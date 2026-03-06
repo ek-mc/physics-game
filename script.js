@@ -6,8 +6,8 @@ const chapters = {
  formulas: 'Τύποι (mixed)'
 };
 
-const DIFFS = ['easy', 'medium', 'hard', 'veryhard'];
-const DIFF_LABEL = { easy: 'Easy', medium: 'Medium', hard: 'Hard', veryhard: 'Nightmare', mixed: 'Μικτή' };
+const DIFFS = ['easy', 'medium', 'hard'];
+const DIFF_LABEL = { easy: 'Easy', medium: 'Medium', hard: 'Hard', mixed: 'Μικτή' };
 const DEFAULT_TIMER_SECONDS = 45;
 const PREFS_KEY = 'physics-game-prefs-v1';
 
@@ -630,7 +630,7 @@ function genDynamicsWorksheetStyle(){
  for (const th of [20,30,37,45]){
   const r=Math.PI*th/180;
   const mu=Math.tan(r);
-  out.push(makeQuestion('dynamics','veryhard',
+  out.push(makeQuestion('dynamics','hard',
    `Άσκηση Δυναμικής (τύπου 2): Σώμα ισορροπεί σε κεκλιμένο επίπεδο γωνίας φ=${th}°. Ποια είναι η ελάχιστη τιμή του συντελεστή στατικής τριβής μ_s ώστε να μην ολισθήσει;`,
    [mu, Math.sin(r), Math.cos(r), 1/mu].map(z=>`${fmt(z)}`),
    0,
@@ -645,13 +645,13 @@ function genDynamicsWorksheetStyle(){
   const F=15;
   const B=F/(Math.sin(r)+mu*Math.cos(r));
   const Fdown=B*(Math.sin(r)-mu*Math.cos(r));
-  out.push(makeQuestion('dynamics','veryhard',
+  out.push(makeQuestion('dynamics','hard',
    'Άσκηση Δυναμικής (τύπου 3): Σώμα σε κεκλιμένο 45° κινείται προς τα πάνω με σταθερή ταχύτητα υπό δύναμη 15 N παράλληλη στο επίπεδο και μ_k=0.3. Ποιο είναι το βάρος του;',
    [B, B/2, B*2, F].map(z=>`${fmt(z)} N`),
    0,
    'Σταθερή ταχύτητα ⇒ ΣF∥=0: F = B(sinφ + μ_k cosφ).'
   ));
-  out.push(makeQuestion('dynamics','veryhard',
+  out.push(makeQuestion('dynamics','hard',
    'Σώμα σε κεκλιμένο 45° έχει μ_k=0.3 και βάρος ίσο με αυτό που προκύπτει όταν προς τα πάνω κινείται με σταθερή ταχύτητα υπό δύναμη 15 N. Ποια ελάχιστη παράλληλη δύναμη χρειάζεται ώστε να κατεβαίνει με σταθερή ταχύτητα;',
    [Fdown, Fdown/2, Fdown*2, F].map(z=>`${fmt(z)} N`),
    0,
@@ -660,13 +660,13 @@ function genDynamicsWorksheetStyle(){
  }
 
  // 5) center of mass discrete masses
- out.push(makeQuestion('dynamics','veryhard',
+ out.push(makeQuestion('dynamics','hard',
   'Άσκηση Δυναμικής (τύπου 5): Μάζες 5 kg στο (0,0), 3 kg στο (0,4), 4 kg στο (3,0). Ποιο είναι το κέντρο μάζας x_cm;',
   ['1.00','1.50','0.75','2.00'],
   0,
   'x_cm=(Σm_i x_i)/(Σm_i)=12/12=1.'
  ));
- out.push(makeQuestion('dynamics','veryhard',
+ out.push(makeQuestion('dynamics','hard',
   'Για μάζες 5 kg στο (0,0), 3 kg στο (0,4), 4 kg στο (3,0), ποιο είναι το y_cm;',
   ['1.00','0.75','1.50','2.00'],
   0,
@@ -692,7 +692,7 @@ function genDynamicsWorksheetStyle(){
  ));
 
  // 10) drag force proportional to v
- out.push(makeQuestion('dynamics','veryhard',
+ out.push(makeQuestion('dynamics','hard',
   'Άσκηση Δυναμικής (τύπου 10): Για κίνηση πλοίου με δύναμη αντίστασης F_d=-bv, ποια είναι η μορφή της ταχύτητας v(t) μετά τη βλάβη της μηχανής;',
   ['v(t)=v_0 e^{-(b/m)t}','v(t)=v_0-(b/m)t','v(t)=v_0+(b/m)t','v(t)=σταθερή'],
   0,
@@ -780,13 +780,13 @@ function genRotationWorksheetStyle(){
  ));
 
  // 2) alpha(t) -> omega(t), theta(t) forms
- out.push(makeQuestion('rotation','veryhard',
+ out.push(makeQuestion('rotation','hard',
   'Αν α(t)=4bt^3−3ct^2 και ω(0)=ω₀, ποια μορφή έχει η ω(t);',
   ['ω(t)=ω₀+bt^4−ct^3','ω(t)=ω₀+4bt^3−3ct^2','ω(t)=ω₀+2bt^2−ct','ω(t)=ω₀+bt^5−ct^4'],
   0,
   'Ολοκλήρωση της α(t) ως προς t.'
  ));
- out.push(makeQuestion('rotation','veryhard',
+ out.push(makeQuestion('rotation','hard',
   'Αν α(t)=4bt^3−3ct^2, ω(0)=ω₀ και θ(0)=θ₀, ποια μορφή έχει η θ(t);',
   ['θ(t)=θ₀+ω₀t+(b/5)t^5−(c/4)t^4','θ(t)=θ₀+ω₀t+bt^4−ct^3','θ(t)=θ₀+ω₀t+(b/4)t^4−(c/3)t^3','θ(t)=θ₀+ω₀t+(b/6)t^6−(c/5)t^5'],
   0,
@@ -818,7 +818,7 @@ function genRotationWorksheetStyle(){
  ));
 
  // 7) net torque direction and motion equations
- out.push(makeQuestion('rotation','veryhard',
+ out.push(makeQuestion('rotation','hard',
   'Αν η συνολική ροπή στον δίσκο είναι σταθερή και θετική, ποια ποιοτική πρόταση είναι σωστή;',
   ['Η ω αυξάνει γραμμικά και η θ είναι παραβολική συνάρτηση του t','Η ω είναι σταθερή και η θ γραμμική','Η α είναι μηδέν','Η θ είναι σταθερή'],
   0,
@@ -1165,7 +1165,7 @@ function genEnergyWorksheetStyle(){
  ));
 
  // 2) variable force from graph idea (piecewise area)
- out.push(makeQuestion('energy','veryhard',
+ out.push(makeQuestion('energy','hard',
   'Σε γράφημα F-x, το έργο από x1 σε x2 ισούται με:',
   ['Το εμβαδό κάτω από τη F(x)','Την κλίση της F(x)','Το μέγιστο της F','Το x2-x1 μόνο'],
   0,
@@ -1181,13 +1181,13 @@ function genEnergyWorksheetStyle(){
  ));
 
  // 4) cart + rope + friction + angle
- out.push(makeQuestion('energy','veryhard',
+ out.push(makeQuestion('energy','hard',
   'Καρότσι κινείται με σταθερή ταχύτητα σε οριζόντιο επίπεδο. Για την τάση T του σχοινιού ισχύει στον x άξονα:',
   ['T cosθ = f_k','T sinθ = f_k','T = mg','T cosθ = mg'],
   0,
   'Σταθερή ταχύτητα => ΣFx=0 => Tcosθ=f_k.'
  ));
- out.push(makeQuestion('energy','veryhard',
+ out.push(makeQuestion('energy','hard',
   'Το έργο του σχοινιού σε οριζόντια μετατόπιση s είναι:',
   ['W_T=T cosθ · s','W_T=T sinθ · s','W_T=Ts','W_T=0'],
   0,
@@ -1195,13 +1195,13 @@ function genEnergyWorksheetStyle(){
  ));
 
  // 5) x(t)=t+2t^3 style
- out.push(makeQuestion('energy','veryhard',
+ out.push(makeQuestion('energy','hard',
   'Αν x(t)=t+2t^3, τότε v(t)= ;',
   ['1+6t²','1+2t²','t+6t²','6t'],
   0,
   'v=dx/dt=1+6t².'
  ));
- out.push(makeQuestion('energy','veryhard',
+ out.push(makeQuestion('energy','hard',
   'Για μάζα m, η κινητική ενέργεια είναι:',
   ['K=½m v²','K=mv','K=ma','K=F·x'],
   0,
@@ -1217,7 +1217,7 @@ function genEnergyWorksheetStyle(){
  ));
 
  // 7) pendulum bottom speed/tension idea
- out.push(makeQuestion('energy','veryhard',
+ out.push(makeQuestion('energy','hard',
   'Απλό εκκρεμές που αφήνεται από γωνία θ0. Στο χαμηλότερο σημείο η ταχύτητα υπολογίζεται κυρίως από:',
   ['Διατήρηση μηχανικής ενέργειας','2ο νόμο μόνο στον εφαπτομενικό','Ορισμό ισχύος','Στατική τριβή'],
   0,
@@ -1225,7 +1225,7 @@ function genEnergyWorksheetStyle(){
  ));
 
  // 8) ramp then rough horizontal
- out.push(makeQuestion('energy','veryhard',
+ out.push(makeQuestion('energy','hard',
   'Σε λείο κεκλιμένο και μετά τραχύ οριζόντιο, η ταχύτητα στη βάση του κεκλιμένου προκύπτει από:',
   ['Διατήρηση μηχανικής ενέργειας στο λείο τμήμα','ΘΜΚΕ με τριβή στο λείο','N=mg','P=Fv'],
   0,
@@ -1301,7 +1301,7 @@ function genVeryHardMixed(){
    const t=-v0/a;
    const x=v0*t+0.5*a*t*t;
    if (t<=0||x<=0) continue;
-   out.push(makeQuestion('kinematics','veryhard',
+   out.push(makeQuestion('kinematics','hard',
     `Σώμα με v₀=${v0} m/s και a=${a} m/s² επιβραδύνεται μέχρι να σταματήσει. Ποια απόσταση διανύει μέχρι την ακινητοποίηση;`,
     [x, v0*t, 0.5*Math.abs(a)*t*t, x/2].map(z=>`${fmt(z)} m`),
     0,
@@ -1315,7 +1315,7 @@ function genVeryHardMixed(){
   const r=Math.PI*th/180;
   for (const mu of [0.1,0.2,0.3]){
    const a=10*(Math.sin(r)-mu*Math.cos(r));
-   out.push(makeQuestion('dynamics','veryhard',
+   out.push(makeQuestion('dynamics','hard',
     `Κεκλιμένο επίπεδο θ=${th}° με τριβή ολίσθησης μ_k=${mu}. Ποια είναι η επιτάχυνση κατά μήκος (g=10);`,
     [a, 10*Math.sin(r), 10*Math.cos(r), 10*(Math.sin(r)+mu*Math.cos(r))].map(z=>`${fmt(z)} m/s²`),
     0,
@@ -1329,7 +1329,7 @@ function genVeryHardMixed(){
   for (const va of [2,3,4]){
    for (const vb of [7,8,9]){
     const dK=0.5*m*(vb*vb-va*va);
-    out.push(makeQuestion('energy','veryhard',
+    out.push(makeQuestion('energy','hard',
      `Σώμα μάζας ${m} kg αυξάνει ταχύτητα από ${va} σε ${vb} m/s. Ποιο είναι το συνολικό έργο που απαιτείται;`,
      [dK, m*(vb-va), 0.5*(vb*vb-va*va), dK/2].map(z=>`${fmt(z)} J`),
      0,
@@ -1350,7 +1350,7 @@ function genVeryHardMixed(){
       const v1=v0+a1*t1;
       const v2=v1; // middle stage constant speed
       const v3=v2+a3*t2;
-      out.push(makeQuestion('kinematics','veryhard',
+      out.push(makeQuestion('kinematics','hard',
        `Κίνηση 3 φάσεων: από v₀=${v0} m/s επιταχύνεται με a₁=${a1} m/s² για ${t1} s, μετά κινείται με σταθερή ταχύτητα για ${t2} s, και τέλος για ${t2} s με a₃=${a3} m/s². Ποια είναι η τελική ταχύτητα;`,
        [v3, v2, v0, v2+Math.abs(a3)*t2].map(z=>`${fmt(z)} m/s`),
        0,
@@ -1371,7 +1371,7 @@ function genVeryHardMixed(){
      const dx1=v0*t1+0.5*a1*t1*t1;
      const t2=2;
      const dx2=v1*t2+0.5*a2*t2*t2;
-     out.push(makeQuestion('kinematics','veryhard',
+     out.push(makeQuestion('kinematics','hard',
       `Σώμα κινείται σε 2 φάσεις: v₀=${v0} m/s, a₁=${a1} m/s² για t₁=${t1} s και μετά a₂=${a2} m/s² για t₂=${t2} s. Ποια είναι η συνολική μετατόπιση;`,
       [dx1+dx2, dx1, dx2, Math.abs(dx1-dx2)].map(z=>`${fmt(z)} m`),
       0,
@@ -1392,13 +1392,13 @@ function genVeryHardMixed(){
      const t2=Math.max(1, Math.ceil(v1/Math.abs(a2))/2);
      const v2=v1+a2*t2;
      const dx2=v1*t2+0.5*a2*t2*t2;
-     out.push(makeQuestion('kinematics','veryhard',
+     out.push(makeQuestion('kinematics','hard',
       `Σώμα ξεκινά με v₀=${v0} m/s, επιταχύνεται για t₁=${t1} s με a₁=${a1} m/s² και μετά επιβραδύνεται για t₂=${t2} s με a₂=${a2} m/s². Ποια είναι η τελική ταχύτητα;`,
       [v2, v1, v0, v1+Math.abs(a2)*t2].map(z=>`${fmt(z)} m/s`),
       0,
       'Δύο στάδια: πρώτα v₁=v₀+a₁t₁, μετά v₂=v₁+a₂t₂.'
      ));
-     out.push(makeQuestion('kinematics','veryhard',
+     out.push(makeQuestion('kinematics','hard',
       `Σώμα ξεκινά με v₀=${v0} m/s, κινείται για t₁=${t1} s με a₁=${a1} m/s² και μετά για t₂=${t2} s με a₂=${a2} m/s². Ποια είναι η συνολική μετατόπιση;`,
       [dx1+dx2, dx1, dx2, Math.abs(dx1-dx2)].map(z=>`${fmt(z)} m`),
       0,
@@ -1686,7 +1686,7 @@ function start(mode, chapter){
  let src = filterBank(mode, chapter, config.difficulty);
  if (src.length === 0) {
   // Graceful fallback: if selected level has no items, step down difficulty automatically
-  const fallbackOrder = config.difficulty === 'veryhard'
+  const fallbackOrder = config.difficulty === 'hard'
    ? ['hard', 'medium', 'easy']
    : config.difficulty === 'hard'
    ? ['medium', 'easy']
@@ -1711,33 +1711,8 @@ function start(mode, chapter){
   }
  }
 
- // If veryhard chapter pool is too repetitive, supplement from lower levels for variety,
- // but keep Nightmare meaningfully hard (prioritize veryhard items first).
- if (config.mode === 'chapter' && config.difficulty === 'veryhard') {
-  const need = config.count;
-  const uniq = countUniqueStems(src);
-  if (uniq < need) {
-   const hardPool = filterBank('chapter', config.chapter, 'hard');
-   const medPool = filterBank('chapter', config.chapter, 'medium');
-   src = uniqueQuestions([...src, ...hardPool, ...medPool]).map(ensureUniqueAnswerOptions);
-  }
- }
-
  const targetCount = Math.min(config.count, src.length);
- if (config.mode === 'chapter' && config.difficulty === 'veryhard') {
-  const vhPool = filterBank('chapter', config.chapter, 'veryhard');
-  const desiredVH = Math.min(targetCount, Math.ceil(targetCount * 0.8));
-  const pickedVH = pickDiverseQuestions(vhPool, Math.min(desiredVH, vhPool.length));
-
-  if (pickedVH.length < targetCount) {
-   const pickedSet = new Set(pickedVH.map(q => q.q));
-   const restPool = src.filter(q => !pickedSet.has(q.q));
-   const rest = pickDiverseQuestions(restPool, targetCount - pickedVH.length);
-   quizSet = shuffle([...pickedVH, ...rest]);
-  } else {
-   quizSet = shuffle(pickedVH);
-  }
- } else if (config.mode === 'chapter' && config.chapter === 'dynamics') {
+ if (config.mode === 'chapter' && config.chapter === 'dynamics') {
   // Keep graph-mix support only in dynamics chapter.
   const graphPool = src.filter(q => q.isGraph);
   const nonGraphPool = src.filter(q => !q.isGraph);
