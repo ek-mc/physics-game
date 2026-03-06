@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.8.0] - 2026-03-06
+### Added
+- Added new kinematics projectile-from-height problems (ping-pong/cup along table style), including two-step solving (`y(t)` then `x(t)`).
+
 ## [0.7.9] - 2026-03-06
 ### Added
 - Added multiple extra rotation idea questions (not just one):
