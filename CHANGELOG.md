@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.7.9] - 2026-03-06
+### Added
+- Added multiple extra rotation idea questions (not just one):
+  - period/frequency/ω relations,
+  - rpm -> Hz / rad·s⁻¹ conversions,
+  - centripetal scaling with v and r,
+  - linear speed from ωr,
+  - qualitative effects when T changes.
+
 ## [0.7.8] - 2026-03-06
 ### Added
 - Added new rotation questions based on clock-hand angular velocity ideas (second hand/minute hand, `ω=2π/T`).
