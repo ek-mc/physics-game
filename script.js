@@ -395,6 +395,29 @@ function genKinematicsExamStyleSet(){
   }
  }
 
+ // Extra fixed scenario from worksheet idea (ping-pong to cup)
+ {
+  const v0 = 3;
+  const ang = 35;
+  const y0 = 0.5;
+  const yCup = 0.2;
+  const g = 10;
+  const r = Math.PI * ang / 180;
+  const vy = v0 * Math.sin(r);
+  const a = -0.5 * g;
+  const b = vy;
+  const c = y0 - yCup;
+  const D = b*b - 4*a*c;
+  const t = Math.max(( -b + Math.sqrt(D) )/(2*a), ( -b - Math.sqrt(D) )/(2*a));
+  const x = v0 * Math.cos(r) * t;
+  out.push(makeQuestion('kinematics','hard',
+   'Πετάς μπαλάκι πινγκ-πονγκ από ύψος 0,5 m πάνω από τραπέζι με ταχύτητα 3 m/s και γωνία 35° ως προς τον ορίζοντα, προς κύπελλο ύψους 20 cm. Σε ποια οριζόντια απόσταση πρέπει να είναι το κύπελλο; (g=10 m/s²)',
+   [x, x+0.25, x-0.25, x*1.4].map(z=>`${fmt(z)} m`),
+   0,
+   'Λύνουμε από την κατακόρυφη κίνηση τον χρόνο που το μπαλάκι βρίσκεται στο ύψος του χείλους και μετά βρίσκουμε x=v₀cosφ·t.'
+  ));
+ }
+
  // (6) projectile style (general launch angle)
  for (const v0 of [10,12,14,16]){
   const g=10;

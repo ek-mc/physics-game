@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.8.8] - 2026-03-06
+### Added
+- Added the specific ping-pong/cup projectile question in Greek:
+  - launch from 0.5 m, speed 3 m/s, angle 35°, cup height 20 cm, ask table distance.
+
 ## [0.8.7] - 2026-03-06
 ### Changed
 - Removed `Nightmare` / `veryhard` difficulty tier.
