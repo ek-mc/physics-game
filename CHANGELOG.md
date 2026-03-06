@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.8.10] - 2026-03-06
+### Changed
+- Reworded the meeting-point problem to metric/football-field context:
+  - 100 m field, start from opposite goals, speeds in m/s,
+  - asks distance from the first goal (instead of yard-line wording).
+
 ## [0.8.9] - 2026-03-06
 ### Added
 - Added Greek versions of the additional screenshot ideas in Kinematics:
