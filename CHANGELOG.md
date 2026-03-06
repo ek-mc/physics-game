@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.8.2] - 2026-03-06
+### Changed
+- Corrected terminology in kinematics prompts: removed misuse of "ΔΕΣ" for `x-t` graphs.
+- Prompts now consistently refer to these as `διάγραμμα x-t`.
+
 ## [0.8.1] - 2026-03-06
 ### Added
 - Added more kinematics ideas from user screenshots:
