@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.12] - 2026-03-06
+### Changed
+- Improved in-quiz physics text rendering (no raw pseudo-LaTeX style):
+  - `_` notation now displays as subscripts (e.g. `l_z` -> `l₍z₎` visual subscript),
+  - `^` exponents now display as superscripts (e.g. `m/s^2` -> `m/s²`).
+- Applied rendering to question text, answer options, and feedback explanations.
+
 ## [0.8.11] - 2026-03-06
 ### Changed
 - Reworded a rotation prompt to simpler Greek (removed unclear "επίπεδο xy" wording).

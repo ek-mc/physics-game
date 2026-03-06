@@ -1824,7 +1824,7 @@ function render(){
  progressEl.textContent = `Ερώτηση ${idx+1}/${quizSet.length}`;
  scoreEl.textContent = `Σκορ: ${score}`;
  streakEl.textContent = `Streak: ${streak}`;
- questionEl.textContent = q.q;
+ questionEl.innerHTML = prettifyPhysicsText(q.q);
  if (q.graphSvg) {
   graphBoxEl.style.display = 'block';
   graphBoxEl.innerHTML = q.graphSvg;
@@ -1844,7 +1844,7 @@ function render(){
  shuffledOptions.forEach((opt, i) => {
   const b = document.createElement('button');
   b.className='answer-btn';
-  b.textContent = `${String.fromCharCode(65+i)}) ${opt.text}`;
+  b.innerHTML = `${String.fromCharCode(65+i)}) ${prettifyPhysicsText(opt.text)}`;
   b.onclick = () => answer(i, renderedCorrectIndex, b);
   answersEl.appendChild(b);
  });
@@ -1902,7 +1902,7 @@ function answer(clickedIndex, correctIndex, btn){
   streakEl.textContent = `Streak: ${streak}`;
  }
 
- feedbackEl.textContent = q.e;
+ feedbackEl.innerHTML = prettifyPhysicsText(q.e);
  nextBtn.disabled = false;
 
  if (!correct && config.streakMode) {
