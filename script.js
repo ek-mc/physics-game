@@ -46,6 +46,24 @@ function shuffle(arr){ return [...arr].sort(()=>Math.random()-0.5); }
 function fmt(n){ return Number.isInteger(n) ? String(n) : n.toFixed(2).replace(/\.00$/, ''); }
 function clampPositive(x){ return x <= 0 ? 1 : x; }
 
+function escapeHtml(str){
+ return String(str)
+  .replace(/&/g, '&amp;')
+  .replace(/</g, '&lt;')
+  .replace(/>/g, '&gt;')
+  .replace(/"/g, '&quot;')
+  .replace(/'/g, '&#39;');
+}
+
+function prettifyPhysicsText(text){
+ let t = escapeHtml(text);
+ // l_z, p_x, v_0 -> subscript rendering
+ t = t.replace(/\b([A-Za-zΑ-Ωα-ω])_([A-Za-zΑ-Ωα-ω0-9]+)/g, '$1<sub>$2</sub>');
+ // x^2, m/s^2 -> superscript rendering
+ t = t.replace(/\^([0-9]+)/g, '<sup>$1</sup>');
+ return t;
+}
+
 function makeQuestion(chapter, difficulty, q, answers, correctIndex, explanation, meta = {}){
  return { chapter, difficulty, q, a: answers, c: correctIndex, e: explanation, ...meta };
 }
