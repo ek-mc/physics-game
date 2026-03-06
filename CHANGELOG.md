@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.8.3] - 2026-03-06
+### Changed
+- Nightmare chapter runs now prioritize `veryhard` questions (target ~80%+ when available), then fill remainder from lower levels only if needed.
+- Removed forced graph quota from Kinematics chapter (graph-mix rule remains for Dynamics only).
+
 ## [0.8.2] - 2026-03-06
 ### Changed
 - Corrected terminology in kinematics prompts: removed misuse of "ΔΕΣ" for `x-t` graphs.

@@ -1664,7 +1664,8 @@ function start(mode, chapter){
   }
  }
 
- // If veryhard chapter pool is too repetitive, supplement from lower levels for variety
+ // If veryhard chapter pool is too repetitive, supplement from lower levels for variety,
+ // but keep Nightmare meaningfully hard (prioritize veryhard items first).
  if (config.mode === 'chapter' && config.difficulty === 'veryhard') {
   const need = config.count;
   const uniq = countUniqueStems(src);
@@ -1676,7 +1677,21 @@ function start(mode, chapter){
  }
 
  const targetCount = Math.min(config.count, src.length);
- if (config.mode === 'chapter' && (config.chapter === 'kinematics' || config.chapter === 'dynamics')) {
+ if (config.mode === 'chapter' && config.difficulty === 'veryhard') {
+  const vhPool = filterBank('chapter', config.chapter, 'veryhard');
+  const desiredVH = Math.min(targetCount, Math.ceil(targetCount * 0.8));
+  const pickedVH = pickDiverseQuestions(vhPool, Math.min(desiredVH, vhPool.length));
+
+  if (pickedVH.length < targetCount) {
+   const pickedSet = new Set(pickedVH.map(q => q.q));
+   const restPool = src.filter(q => !pickedSet.has(q.q));
+   const rest = pickDiverseQuestions(restPool, targetCount - pickedVH.length);
+   quizSet = shuffle([...pickedVH, ...rest]);
+  } else {
+   quizSet = shuffle(pickedVH);
+  }
+ } else if (config.mode === 'chapter' && config.chapter === 'dynamics') {
+  // Keep graph-mix support only in dynamics chapter.
   const graphPool = src.filter(q => q.isGraph);
   const nonGraphPool = src.filter(q => !q.isGraph);
   const minGraphs = Math.min(3, graphPool.length, targetCount);
