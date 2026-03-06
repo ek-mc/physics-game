@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.8.5] - 2026-03-06
+### Fixed
+- Added missing initial-speed data (`v₀`) in two-stage kinematics final-velocity prompt.
+
 ## [0.8.4] - 2026-03-06
 ### Fixed
 - Made a previously context-dependent kinematics prompt self-contained (removed ambiguous "Στο ίδιο δι-στάδιο σενάριο").
