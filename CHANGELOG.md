@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.8.11] - 2026-03-06
+### Changed
+- Reworded a rotation prompt to simpler Greek (removed unclear "επίπεδο xy" wording).
+
 ## [0.8.10] - 2026-03-06
 ### Changed
 - Reworded the meeting-point problem to metric/football-field context:
