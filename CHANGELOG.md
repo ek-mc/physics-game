@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.8.6] - 2026-03-06
+### Changed
+- Kinematics Nightmare significantly diversified with additional multi-phase motion families (beyond stop-distance and two-stage templates).
+- Removed remaining "hint-like" wording from one kinematics prompt (`πρόσημα` phrasing removed).
+- Removed worksheet item previously labeled as `(iv)` from kinematics set.
+- Varied bridge/meeting scenario parameters and wording to reduce repetition.
+- Removed leftover `Πολύ δύσκολο:` prefix from prompt text.
+
 ## [0.8.5] - 2026-03-06
 ### Fixed
 - Added missing initial-speed data (`v₀`) in two-stage kinematics final-velocity prompt.
