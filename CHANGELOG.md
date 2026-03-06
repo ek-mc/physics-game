@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.7.7] - 2026-03-06
+### Changed
+- Removed labels like "Άσκηση (τύπου X)" and similar prefixes from prompts.
+- Prompts now start directly with the scenario text (cleaner exam-like wording).
+
 ## [0.7.6] - 2026-03-06
 ### Changed
 - Renamed difficulty label from `Πολύ δύσκολο` to `Nightmare`.
