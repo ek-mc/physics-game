@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.7.8] - 2026-03-06
+### Added
+- Added new rotation questions based on clock-hand angular velocity ideas (second hand/minute hand, `ω=2π/T`).
+
 ## [0.7.7] - 2026-03-06
 ### Changed
 - Removed labels like "Άσκηση (τύπου X)" and similar prefixes from prompts.
