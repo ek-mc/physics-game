@@ -30,3 +30,5 @@ See [CHANGELOG.md](CHANGELOG.md).
 
 ## License
 See [LICENSE](LICENSE).
+
+License: MIT
