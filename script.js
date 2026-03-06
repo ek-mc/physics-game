@@ -395,7 +395,7 @@ function genKinematicsExamStyleSet(){
   }
  }
 
- // Extra fixed scenario from worksheet idea (ping-pong to cup)
+ // Extra fixed scenarios from worksheet ideas (ping-pong + relative motion)
  {
   const v0 = 3;
   const ang = 35;
@@ -415,6 +415,41 @@ function genKinematicsExamStyleSet(){
    [x, x+0.25, x-0.25, x*1.4].map(z=>`${fmt(z)} m`),
    0,
    'Λύνουμε από την κατακόρυφη κίνηση τον χρόνο που το μπαλάκι βρίσκεται στο ύψος του χείλους και μετά βρίσκουμε x=v₀cosφ·t.'
+  ));
+ }
+
+ {
+  const v0 = 5;
+  const x = 1.0;
+  const y0 = 0.6;
+  const y = 0.2;
+  const g = 10;
+  const A = g*x*x/(2*v0*v0);
+  const C = A + (y - y0);
+  const D = x*x - 4*A*C;
+  const u1 = (x + Math.sqrt(D)) / (2*A);
+  const u2 = (x - Math.sqrt(D)) / (2*A);
+  const th1 = Math.atan(u1)*180/Math.PI;
+  const th2 = Math.atan(u2)*180/Math.PI;
+  const th = (th1 > 10 && th1 < 80) ? th1 : th2;
+  out.push(makeQuestion('kinematics','hard',
+   'Μπαλάκι πινγκ-πονγκ εκτοξεύεται από ύψος 0,6 m με ταχύτητα 5 m/s και πρέπει να πέσει σε κύπελλο ύψους 20 cm που βρίσκεται 1,0 m μακριά οριζόντια. Σε ποια γωνία ως προς τον ορίζοντα πρέπει να γίνει η ρίψη; (g=10 m/s²)',
+   [th, th+7, th-7, 45].map(z=>`${fmt(z)}°`),
+   0,
+   'Χρησιμοποιούμε την εξίσωση τροχιάς και λύνουμε ως προς tanφ.'
+  ));
+ }
+
+ {
+  const L = 100; // yards
+  const v1 = 5;  // ft/s
+  const v2 = 1;  // ft/s
+  const xMeet = L * v1/(v1+v2);
+  out.push(makeQuestion('kinematics','hard',
+   'Δύο μουσικοί μπάντας ξεκινούν ταυτόχρονα από αντίθετες goal lines που απέχουν 100 yards. Ο πρώτος κινείται με 5 ft/s και ο δεύτερος με 1 ft/s ο ένας προς τον άλλο. Σε ποια yard line συναντιούνται (μετρώντας από την πλευρά του πρώτου);',
+   [xMeet, 100-xMeet, 50, L/(v1+v2)].map(z=>`${fmt(z)} yards`),
+   0,
+   'Η θέση συνάντησης από την πλευρά του πρώτου είναι x=L·v1/(v1+v2).'
   ));
  }
 

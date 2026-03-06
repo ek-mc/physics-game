@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.8.9] - 2026-03-06
+### Added
+- Added Greek versions of the additional screenshot ideas in Kinematics:
+  - ping-pong throw from 0.6 m, 5 m/s, angle-to-cup at 1.0 m,
+  - marching-toward-each-other meeting-line problem (100 yards, 5 ft/s and 1 ft/s).
+
 ## [0.8.8] - 2026-03-06
 ### Added
 - Added the specific ping-pong/cup projectile question in Greek:
