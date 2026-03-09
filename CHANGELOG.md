@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.8.17] - 2026-03-10
+### Added
+- Added new **Ταλαντώσεις** chapter based on Lecture 5 notes.
+- Included core questions on:
+  - Hooke's law
+  - differential equation of SHM
+  - amplitude, phase, period, angular frequency
+  - velocity and acceleration in SHM
+  - interpretation of x(t), v(t), a(t)
+
 ## [0.8.16] - 2026-03-06
 ### Changed
 - Replaced multiple fixed-constant word problems with parameterized variants (multiple value sets) to reduce repetition:

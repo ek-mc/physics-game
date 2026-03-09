@@ -3,6 +3,7 @@ const chapters = {
  dynamics: 'Δυναμική',
  rotation: 'Περιστροφή',
  energy: 'Έργο & Ενέργεια',
+ oscillations: 'Ταλαντώσεις',
  formulas: 'Τύποι (mixed)'
 };
 
@@ -39,6 +40,7 @@ const btnK = document.getElementById('btnK');
 const btnD = document.getElementById('btnD');
 const btnP = document.getElementById('btnP');
 const btnE = document.getElementById('btnE');
+const btnO = document.getElementById('btnO');
 const btnT = document.getElementById('btnT');
 const btnM = document.getElementById('btnM');
 
@@ -1345,6 +1347,120 @@ function genEnergyWorksheetStyle(){
  return out;
 }
 
+function genOscillations(){
+ const out = [];
+
+ out.push(makeQuestion('oscillations','easy',
+  'Σύμφωνα με τον νόμο του Hooke, ποια είναι η δύναμη επαναφοράς ενός ελατηρίου;',
+  ['F = -k x','F = m a','F = k/x','F = kx^2'],
+  0,
+  'Στον γραμμικό αρμονικό ταλαντωτή ισχύει F=-kx: η δύναμη είναι ανάλογη της απομάκρυνσης και αντίθετης φοράς.'
+ ));
+
+ out.push(makeQuestion('oscillations','easy',
+  'Το αρνητικό πρόσημο στη σχέση F = -k x δηλώνει ότι:',
+  ['η δύναμη έχει αντίθετη φορά από την απομάκρυνση','η σταθερά k είναι αρνητική','η μάζα είναι αρνητική','η δύναμη μηδενίζεται πάντα'],
+  0,
+  'Το πρόσημο δείχνει ότι η δύναμη είναι δύναμη επαναφοράς, δηλαδή δείχνει προς τη θέση ισορροπίας.'
+ ));
+
+ for (const m of [1,2,4,5]) {
+  for (const k of [25,50,100,200]) {
+   const omega = Math.sqrt(k/m);
+   const T = 2*Math.PI/omega;
+   out.push(makeQuestion('oscillations', k/m <= 25 ? 'easy' : 'medium',
+    `Για μάζα m=${m} kg και σταθερά ελατηρίου k=${k} N/m, ποια είναι η κυκλική συχνότητα ω;`,
+    [`${fmt(omega)} rad/s`, `${fmt(k/m)} rad/s`, `${fmt(2*Math.PI*omega)} rad/s`, `${fmt(Math.sqrt(m/k))} rad/s`],
+    0,
+    'Ισχύει ω=√(k/m).'
+   ));
+   out.push(makeQuestion('oscillations','medium',
+    `Για μάζα m=${m} kg και σταθερά ελατηρίου k=${k} N/m, ποια είναι η περίοδος T;`,
+    [`${fmt(T)} s`, `${fmt(omega)} s`, `${fmt(2*Math.PI*Math.sqrt(k/m))} s`, `${fmt(Math.sqrt(k/m))} s`],
+    0,
+    'Η περίοδος είναι T=2π/ω = 2π√(m/k).'
+   ));
+  }
+ }
+
+ out.push(makeQuestion('oscillations','easy',
+  'Στη σχέση x(t)=A sin(ωt+φ), το A είναι:',
+  ['το πλάτος της ταλάντωσης','η περίοδος','η αρχική ταχύτητα','η επιτάχυνση'],
+  0,
+  'Το A είναι η μέγιστη απομάκρυνση από τη θέση ισορροπίας.'
+ ));
+
+ out.push(makeQuestion('oscillations','easy',
+  'Στη σχέση x(t)=A sin(ωt+φ), το φ είναι:',
+  ['η αρχική φάση','η περίοδος','η σταθερά ελατηρίου','η μάζα'],
+  0,
+  'Η ποσότητα φ δείχνει σε ποια φάση βρίσκεται ο ταλαντωτής τη στιγμή t=0.'
+ ));
+
+ for (const A of [0.1,0.2,0.4,0.5]) {
+  for (const omega of [2,4,5,10]) {
+   const vmax = omega*A;
+   const amax = omega*omega*A;
+   out.push(makeQuestion('oscillations','medium',
+    `Σε ΑΑΤ με πλάτος A=${fmt(A)} m και ω=${omega} rad/s, ποια είναι η μέγιστη ταχύτητα;`,
+    [`${fmt(vmax)} m/s`, `${fmt(amax)} m/s`, `${fmt(A/omega)} m/s`, `${fmt(2*Math.PI/omega)} m/s`],
+    0,
+    'Η μέγιστη ταχύτητα είναι v_max = ωA.'
+   ));
+   out.push(makeQuestion('oscillations','medium',
+    `Σε ΑΑΤ με πλάτος A=${fmt(A)} m και ω=${omega} rad/s, ποια είναι η μέγιστη επιτάχυνση;`,
+    [`${fmt(amax)} m/s^2`, `${fmt(vmax)} m/s^2`, `${fmt(omega/A)} m/s^2`, `${fmt(omega*omega/A)} m/s^2`],
+    0,
+    'Η μέγιστη επιτάχυνση είναι a_max = ω²A.'
+   ));
+  }
+ }
+
+ out.push(makeQuestion('oscillations','medium',
+  'Σε ποια θέση η ταχύτητα στην ΑΑΤ έχει μέγιστο μέτρο;',
+  ['στη θέση ισορροπίας','στις ακραίες θέσεις','σε τυχαία θέση','εκεί όπου x=A/2 πάντα'],
+  0,
+  'Από τη v(t)=ωA cos(ωt+φ), το μέγιστο μέτρο της ταχύτητας εμφανίζεται όταν περνά από τη θέση ισορροπίας.'
+ ));
+
+ out.push(makeQuestion('oscillations','medium',
+  'Σε ποια θέση το μέτρο της επιτάχυνσης είναι μέγιστο στην ΑΑΤ;',
+  ['στις ακραίες θέσεις','στη θέση ισορροπίας','όταν v είναι μέγιστη','είναι πάντα σταθερό'],
+  0,
+  'Αφού a=-ω²x, το μέτρο |a| είναι μέγιστο όταν |x|=A, δηλαδή στις ακραίες θέσεις.'
+ ));
+
+ out.push(makeQuestion('oscillations','hard',
+  'Ποια διαφορική εξίσωση ικανοποιεί ο γραμμικός αρμονικός ταλαντωτής;',
+  ['x¨ = -ω²x','x¨ = ωx','x˙ = -ω²x','x = -ω²x'],
+  0,
+  'Από m x¨ = -kx και ω=√(k/m) προκύπτει x¨ = -ω²x.'
+ ));
+
+ out.push(makeQuestion('oscillations','hard',
+  'Αν διπλασιαστεί η μάζα m ενός ταλαντωτή και το k μείνει σταθερό, η περίοδος T:',
+  ['αυξάνεται κατά παράγοντα √2','διπλασιάζεται','μένει ίδια','μειώνεται στο μισό'],
+  0,
+  'Ισχύει T=2π√(m/k), άρα αν m→2m τότε T→√2·T.'
+ ));
+
+ out.push(makeQuestion('oscillations','hard',
+  'Αν διπλασιαστεί η σταθερά ελατηρίου k και η μάζα μείνει σταθερή, η περίοδος T:',
+  ['μειώνεται κατά παράγοντα √2','διπλασιάζεται','μένει ίδια','αυξάνεται κατά παράγοντα √2'],
+  0,
+  'Από T=2π√(m/k), αν k→2k τότε T→T/√2.'
+ ));
+
+ out.push(makeQuestion('oscillations','hard',
+  'Ποιο μέγεθος ΔΕΝ επηρεάζει την περίοδο T του ιδανικού οριζόντιου ελατηρίου;',
+  ['το πλάτος A','η μάζα m','η σταθερά k','ο λόγος m/k'],
+  0,
+  'Η περίοδος εξαρτάται μόνο από m και k, όχι από το πλάτος ή την αρχική φάση.'
+ ));
+
+ return out;
+}
+
 function genFormulaQuiz(){
  const out = [];
  const items = [
@@ -1608,6 +1724,7 @@ const bank = uniqueQuestions([
  ...genRotation(),
  ...genRotationWorksheetStyle(),
  ...genEnergy(),
+ ...genOscillations(),
  ...genEnergyWorksheetStyle(),
  ...genIdeaProblems(),
  ...genWordProblems(),
@@ -2042,12 +2159,14 @@ document.addEventListener('keydown', (e) => {
    d: btnD,
    p: btnP,
    e: btnE,
+   o: btnO,
    t: btnT,
    m: btnM,
    'κ': btnK,
    'δ': btnD,
    'π': btnP,
    'ε': btnE,
+   'ο': btnO,
    'τ': btnT,
    'μ': btnM
   };
