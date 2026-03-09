@@ -1458,6 +1458,80 @@ function genOscillations(){
   'Η περίοδος εξαρτάται μόνο από m και k, όχι από το πλάτος ή την αρχική φάση.'
  ));
 
+ // Extra hard, standalone problems from lecture formulas
+ for (const A of [0.10, 0.20, 0.30, 0.40]) {
+  for (const phi of [0, Math.PI/6, Math.PI/4, Math.PI/3]) {
+   const x0 = A * Math.sin(phi);
+   const v0 = 5 * A * Math.cos(phi);
+   out.push(makeQuestion('oscillations','hard',
+    `Αρμονική ταλάντωση περιγράφεται από x(t)=A·sin(ωt+φ) με A=${fmt(A)} m, ω=5 rad/s και φ=${fmt(phi)} rad. Ποια είναι η απομάκρυνση στη στιγμή t=0;`,
+    [`${fmt(x0)} m`, `${fmt(A*Math.cos(phi))} m`, `${fmt(v0)} m`, `${fmt(5*A*Math.sin(phi))} m`],
+    0,
+    'Στη στιγμή t=0: x(0)=A·sinφ.'
+   ));
+   out.push(makeQuestion('oscillations','hard',
+    `Για x(t)=A·sin(ωt+φ) με A=${fmt(A)} m, ω=5 rad/s και φ=${fmt(phi)} rad, ποια είναι η ταχύτητα στη στιγμή t=0;`,
+    [`${fmt(v0)} m/s`, `${fmt(A*Math.sin(phi))} m/s`, `${fmt(25*A*Math.sin(phi))} m/s`, `${fmt(A*Math.cos(phi))} m/s`],
+    0,
+    'v(t)=ωA cos(ωt+φ), άρα v(0)=ωA cosφ.'
+   ));
+  }
+ }
+
+ for (const m of [1, 2, 3, 4]) {
+  for (const k of [40, 90, 160]) {
+   const w = Math.sqrt(k/m);
+   const f = w/(2*Math.PI);
+   out.push(makeQuestion('oscillations','hard',
+    `Για ιδανικό ελατήριο με m=${m} kg και k=${k} N/m, ποια είναι η συχνότητα f της ταλάντωσης;`,
+    [`${fmt(f)} Hz`, `${fmt(2*Math.PI/w)} Hz`, `${fmt(w)} Hz`, `${fmt(Math.PI*w)} Hz`],
+    0,
+    'f=ω/(2π) με ω=√(k/m).'
+   ));
+  }
+ }
+
+ for (const A of [0.15, 0.25, 0.35]) {
+  for (const w of [4, 6, 8]) {
+   const x = A/2;
+   const vAbs = w*Math.sqrt(Math.max(0, A*A - x*x));
+   const aAbs = w*w*Math.abs(x);
+   out.push(makeQuestion('oscillations','hard',
+    `Σε ΑΑΤ με A=${fmt(A)} m και ω=${w} rad/s, ποιο είναι το μέτρο της ταχύτητας όταν x=A/2;`,
+    [`${fmt(vAbs)} m/s`, `${fmt(w*A/2)} m/s`, `${fmt(w*w*A/2)} m/s`, `${fmt(w*A)} m/s`],
+    0,
+    'Από v²=ω²(A²−x²). Για x=A/2: |v|=ω√(A²−A²/4).'
+   ));
+   out.push(makeQuestion('oscillations','hard',
+    `Σε ΑΑΤ με A=${fmt(A)} m και ω=${w} rad/s, ποιο είναι το μέτρο της επιτάχυνσης όταν x=A/2;`,
+    [`${fmt(aAbs)} m/s^2`, `${fmt(w*A/2)} m/s^2`, `${fmt(w*w*A)} m/s^2`, `${fmt(w/2)} m/s^2`],
+    0,
+    'Επειδή a=-ω²x, στο x=A/2 έχουμε |a|=ω²A/2.'
+   ));
+  }
+ }
+
+ out.push(makeQuestion('oscillations','hard',
+  'Αν η σταθερά ελατηρίου τετραπλασιαστεί (k→4k) με ίδια μάζα, πώς αλλάζει η κυκλική συχνότητα ω;',
+  ['διπλασιάζεται','τετραπλασιάζεται','μένει ίδια','μειώνεται στο μισό'],
+  0,
+  'ω=√(k/m), άρα για k→4k παίρνουμε ω→2ω.'
+ ));
+
+ out.push(makeQuestion('oscillations','hard',
+  'Αν η μάζα τετραπλασιαστεί (m→4m) με ίδιο k, πώς αλλάζει η κυκλική συχνότητα ω;',
+  ['μειώνεται στο μισό','τετραπλασιάζεται','μένει ίδια','διπλασιάζεται'],
+  0,
+  'ω=√(k/m), άρα για m→4m παίρνουμε ω→ω/2.'
+ ));
+
+ out.push(makeQuestion('oscillations','hard',
+  'Για x(t)=A sin(ωt+φ), ποια από τις παρακάτω συναρτήσεις είναι σωστή για την επιτάχυνση;',
+  ['a(t)=-ω²A sin(ωt+φ)','a(t)=ωA cos(ωt+φ)','a(t)=A sin(ωt+φ)','a(t)=ω²A cos(ωt+φ)'],
+  0,
+  'Παραγωγίζουμε δύο φορές: a(t)=x¨(t)=-ω²A sin(ωt+φ).'
+ ));
+
  return out;
 }
 

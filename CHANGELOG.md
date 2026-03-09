@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.8.18] - 2026-03-10
+### Added
+- Expanded **Ταλαντώσεις** question bank with many additional standalone questions, especially at hard level.
+- Added harder exercise-style items on:
+  - initial conditions from x(t)=A sin(ωt+φ)
+  - v(0), x(0), f from m,k
+  - |v| and |a| at x=A/2
+  - parameter scaling effects (k→4k, m→4m)
+  - correct functional form of a(t)
+
 ## [0.8.17] - 2026-03-10
 ### Added
 - Added new **Ταλαντώσεις** chapter based on Lecture 5 notes.
