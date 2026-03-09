@@ -1865,10 +1865,21 @@ function loadPrefs(){
   const raw = localStorage.getItem(PREFS_KEY);
   if (!raw) return;
   const p = JSON.parse(raw);
-  if (p.difficulty) difficultySelect.value = p.difficulty;
-  if (p.count) countSelect.value = String(p.count);
+
+  const allowedDiffs = ['mixed', 'easy', 'medium', 'hard'];
+  const d = String(p.difficulty || 'mixed');
+  difficultySelect.value = allowedDiffs.includes(d) ? d : 'mixed';
+
+  const allowedCounts = ['10','20','30','40','60'];
+  const c = String(p.count || '30');
+  countSelect.value = allowedCounts.includes(c) ? c : '30';
+
   if (typeof p.timer === 'boolean') timerToggle.checked = p.timer;
-  if (p.timerSeconds) timerSecondsSelect.value = String(p.timerSeconds);
+
+  const allowedTimer = ['20','30','45','60'];
+  const ts = String(p.timerSeconds || DEFAULT_TIMER_SECONDS);
+  timerSecondsSelect.value = allowedTimer.includes(ts) ? ts : String(DEFAULT_TIMER_SECONDS);
+
   if (typeof p.streak === 'boolean') streakToggle.checked = p.streak;
  } catch {}
 }
