@@ -1532,6 +1532,154 @@ function genOscillations(){
   'Παραγωγίζουμε δύο φορές: a(t)=x¨(t)=-ω²A sin(ωt+φ).'
  ));
 
+ // Ενέργεια σε ΑΑΤ
+ for (const k of [100, 200, 400]) {
+  for (const A of [0.1, 0.2, 0.4]) {
+   const E = 0.5 * k * A * A;
+   out.push(makeQuestion('oscillations','medium',
+    `Σε ΑΑΤ με σταθερά ελατηρίου k=${k} N/m και πλάτος A=${fmt(A)} m, ποια είναι η ολική μηχανική ενέργεια;`,
+    [`${fmt(E)} J`, `${fmt(k*A)} J`, `${fmt(0.5*k*A)} J`, `${fmt(k*A*A)} J`],
+    0,
+    'Η ολική ενέργεια είναι E = ½kA² (σταθερή).'
+   ));
+  }
+ }
+
+ // Ενέργεια: μοιρασμός κινητικής/δυναμικής
+ for (const k of [100, 250]) {
+  for (const A of [0.2, 0.4]) {
+   for (const xRatio of [0, 0.5, 1]) {
+    const x = xRatio * A;
+    const U = 0.5 * k * x * x;
+    const E = 0.5 * k * A * A;
+    const K = E - U;
+    const ratio = xRatio === 0 ? 'Κ/E=1' : (xRatio === 1 ? 'Κ/E=0' : 'Κ/U=3');
+    out.push(makeQuestion('oscillations','hard',
+     `Σε ΑΑΤ με k=${k} N/m, A=${fmt(A)} m, ποιος είναι ο λόγος Κινητικής/Ολικής ενέργειας όταν x=${fmt(x)} m;`,
+     xRatio === 0 ? ['Κ/E = 1 (ολόκληρη κινητική)', 'Κ/E = 0', 'Κ/E = 0.5', 'Κ/E = 0.25'] :
+     xRatio === 1 ? ['Κ/E = 0 (ολόκληρη δυναμική)', 'Κ/E = 1', 'Κ/E = 0.5', 'Κ/E = 0.25'] :
+     ['Κ/E = 0.75', 'Κ/E = 0.5', 'Κ/E = 0.25', 'Κ/E = 0'],
+     0,
+     xRatio === 0 ? 'Στη θέση ισορροπίας (x=0): U=0, άρα Κ=E.' :
+     xRatio === 1 ? 'Στις ακραίες θέσεις (x=±A): Κ=0, άρα U=E.' :
+     'Για x=A/2: U=¼E, άρα Κ=¾E.'
+    ));
+   }
+  }
+ }
+
+ // Ελατήρια σε σειρά
+ for (const k1 of [100, 200]) {
+  for (const k2 of [100, 200, 300]) {
+   const kSeries = (k1 * k2) / (k1 + k2);
+   const m = 2;
+   const T = 2 * Math.PI * Math.sqrt(m / kSeries);
+   out.push(makeQuestion('oscillations','hard',
+    `Δύο ελατήρια με σταθερές k₁=${k1} N/m και k₂=${k2} N/m συνδέονται σε σειρά. Ποια είναι η ισοδύναμη σταθερά;`,
+    [`${fmt(kSeries)} N/m`, `${fmt(k1+k2)} N/m`, `${fmt(Math.sqrt(k1*k2))} N/m`, `${fmt((k1+k2)/2)} N/m`],
+    0,
+    'Για ελατήρια σε σειρά: 1/k = 1/k₁ + 1/k₂, άρα k = k₁k₂/(k₁+k₂).'
+   ));
+   out.push(makeQuestion('oscillations','hard',
+    `Τα δύο ελατήρια (k₁=${k1}, k₂=${k2} N/m) σε σειρά φορτίζονται με m=${m} kg. Ποια είναι η περίοδος ταλάντωσης;`,
+    [`${fmt(T)} s`, `${fmt(2*Math.PI*Math.sqrt(m*(k1+k2)/(k1*k2)))} s`, `${fmt(2*Math.PI*Math.sqrt(m/(k1+k2)))} s`, `${fmt(2*Math.PI*Math.sqrt(m*k1*k2/(k1+k2)))} s`],
+    0,
+    'T = 2π√(m/k) όπου k = k₁k₂/(k₁+k₂).'
+   ));
+  }
+ }
+
+ // Ελατήρια παράλληλα
+ for (const k1 of [100, 200]) {
+  for (const k2 of [100, 200, 300]) {
+   const kParallel = k1 + k2;
+   const m = 2;
+   const T = 2 * Math.PI * Math.sqrt(m / kParallel);
+   out.push(makeQuestion('oscillations','hard',
+    `Δύο ελατήρια με σταθερές k₁=${k1} N/m και k₂=${k2} N/m συνδέονται παράλληλα. Ποια είναι η ισοδύναμη σταθερά;`,
+    [`${fmt(kParallel)} N/m`, `${fmt(k1*k2/(k1+k2))} N/m`, `${fmt(Math.sqrt(k1*k2))} N/m`, `${fmt((k1+k2)/2)} N/m`],
+    0,
+    'Για ελατήρια παράλληλα: k = k₁ + k₂.'
+   ));
+   out.push(makeQuestion('oscillations','hard',
+    `Τα δύο ελατήρια (k₁=${k1}, k₂=${k2} N/m) παράλληλα φορτίζονται με m=${m} kg. Ποια είναι η περίοδος ταλάντωσης;`,
+    [`${fmt(T)} s`, `${fmt(2*Math.PI*Math.sqrt(m/(k1*k2/(k1+k2))))} s`, `${fmt(2*Math.PI*Math.sqrt(m*k1*k2/(k1+k2)))} s`, `${fmt(2*Math.PI*Math.sqrt(m*(k1+k2)))} s`],
+    0,
+    'T = 2π√(m/k) όπου k = k₁ + k₂.'
+   ));
+  }
+ }
+
+ // Απλό εκκρεμές
+ for (const L of [0.5, 1.0, 1.5, 2.0]) {
+  const g = 9.8;
+  const T = 2 * Math.PI * Math.sqrt(L / g);
+  out.push(makeQuestion('oscillations','medium',
+   `Ένα απλό εκκρεμές έχει μήκος L=${fmt(L)} m. Ποια είναι η περίοδός του; (g=9.8 m/s²)`,
+   [`${fmt(T)} s`, `${fmt(2*Math.PI*Math.sqrt(g/L))} s`, `${fmt(Math.sqrt(L/g))} s`, `${fmt(2*Math.PI*L/g)} s`],
+   0,
+   'Για απλό εκκρεμές: T = 2π√(L/g).'
+  ));
+ }
+
+ // Απλό εκκρεμές - εξάρτηση από μάζα
+ out.push(makeQuestion('oscillations','medium',
+  'Στο απλό εκκρεμές, η περίοδος T εξαρτάται από:',
+  ['το μήκος του νήματος L', 'τη μάζα του σώματος', 'το πλάτος της ταλάντωσης (για μικρές γωνίες)', 'την ταχύτητα αρχικής εκτίναξης'],
+  0,
+  'T = 2π√(L/g) εξαρτάται μόνο από L και g, όχι από m ή A (για μικρές γωνίες).'
+ ));
+
+ // Φυσικό εκκρεμές
+ out.push(makeQuestion('oscillations','hard',
+  'Ένας ομογενής δίσκος ακτίνας R κρέμεται από άξονα που περνά από το χείλος του. Η περίοδος ταλάντωσης είναι:',
+  ['T = 2π√(3R/2g)', 'T = 2π√(R/g)', 'T = 2π√(2R/g)', 'T = 2π√(R/2g)'],
+  0,
+  'Ι = ½mR² + mR² = 3/2 mR² (θεώρημα Steiner), d=R. T = 2π√(I/mgd) = 2π√(3R/2g).'
+ ));
+
+ // Σχέση ενέργειας και πλάτους
+ for (const E of [1, 2, 4, 8]) {
+  for (const k of [100, 200]) {
+   const A = Math.sqrt(2 * E / k);
+   out.push(makeQuestion('oscillations','medium',
+    `Αν η ολική ενέργεια είναι E=${E} J και k=${k} N/m, ποιο είναι το πλάτος ταλάντωσης;`,
+    [`${fmt(A)} m`, `${fmt(2*E/k)} m`, `${fmt(E/k)} m`, `${fmt(Math.sqrt(E/k))} m`],
+    0,
+    'Από E = ½kA² προκύπτει A = √(2E/k).'
+   ));
+  }
+ }
+
+ // Ταχύτητα σε οποιαδήποτε θέση x
+ for (const A of [0.2, 0.4]) {
+  for (const w of [5, 10]) {
+   for (const x of [0, 0.1, 0.2]) {
+    if (x >= A) continue;
+    const v = w * Math.sqrt(A*A - x*x);
+    out.push(makeQuestion('oscillations','hard',
+     `Σε ΑΑΤ με A=${fmt(A)} m και ω=${w} rad/s, ποια είναι η ταχύτητα όταν x=${fmt(x)} m;`,
+     [`${fmt(v)} m/s`, `${fmt(w*x)} m/s`, `${fmt(w*w*x)} m/s`, `${fmt(w*A)} m/s`],
+     0,
+     'v = ±ω√(A²−x²).'
+    ));
+   }
+  }
+ }
+
+ // Σχέση δύναμης και απομάκρυνσης
+ for (const k of [50, 100, 200]) {
+  for (const x of [0.05, 0.1, 0.2]) {
+   const F = k * x;
+   out.push(makeQuestion('oscillations','easy',
+    `Σύμφωνα με τον νόμο του Hooke, αν k=${k} N/m και x=${fmt(x)} m, ποιο είναι το μέτρο της δύναμης;`,
+    [`${fmt(F)} N`, `${fmt(k/x)} N`, `${fmt(k+x)} N`, `${fmt(k-x)} N`],
+    0,
+    '|F| = k|x| (το πρόσημο δείχνει κατεύθυνση).'
+   ));
+  }
+ }
+
  return out;
 }
 
