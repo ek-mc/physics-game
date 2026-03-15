@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.8.20] - 2026-03-15
+### Changed
+- Menu best-info now shows only global progress:
+  - `Best score: X/Y | Best streak: Z`
+- Removed per-current-settings best line from menu to reduce clutter.
+
 ## [0.8.19] - 2026-03-15
 ### Added
 - New **Work–Energy exam pack** with applied scenarios, including:
