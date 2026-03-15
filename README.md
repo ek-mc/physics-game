@@ -26,10 +26,6 @@ Status: Active | Last release: v0.8.19 | Last update: 2026-03-15 | Live: https:/
 ## Live Demo
 - https://ek-mc.github.io/physics-game/
 
-## UI
-- Includes a site favicon (`/favicon.svg`).
-
-
 ## Changelog
 See [CHANGELOG.md](CHANGELOG.md).
 
