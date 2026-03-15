@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.8.19] - 2026-03-15
+### Added
+- New **Work–Energy exam pack** with applied scenarios, including:
+  - sand-penetration average resistive-force questions,
+  - spring compression/release from energy balance,
+  - mixed friction + spring energy equations,
+  - `F-x` area-based work (constant and triangular profiles),
+  - conservative-force/path-independence checks.
+- New **Definitions exam pack** to strengthen notation and concept traps around:
+  - `W, K, U, P`, Joule/Watt, conservative force, closed path, reference level,
+  - symbol confusion (e.g. `W` work vs weight in context).
+
+### Changed
+- Integrated both new packs into the active bank generation pipeline.
+- Expanded progression coverage (`easy -> medium -> hard`) for energy/definitions content.
+
 ## [0.8.18] - 2026-03-10
 ### Added
 - Expanded **Ταλαντώσεις** question bank with many additional standalone questions, especially at hard level.
