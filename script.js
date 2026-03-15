@@ -1934,6 +1934,137 @@ function ensureUniqueAnswerOptions(q){
  return { ...q, a: finalOpts, c: correctIndex };
 }
 
+function genEnergyExamPack(){
+ const out = [];
+
+ // 1) Sand penetration / average resistive force (work-energy)
+ for (const m of [0.5, 1, 2]) {
+  for (const v of [6, 8, 10]) {
+   for (const d of [0.05, 0.1, 0.2]) {
+    const F = (0.5*m*v*v)/d;
+    out.push(makeQuestion('energy','hard',
+     `Βλήμα μάζας ${m} kg εισέρχεται σε άμμο με ταχύτητα ${v} m/s και σταματά μετά από ${fmt(d)} m. Ποια είναι η μέση αντιστατική δύναμη της άμμου;`,
+     [`${fmt(F)} N`, `${fmt(F/2)} N`, `${fmt(F*2)} N`, `${fmt(m*v/d)} N`],
+     0,
+     'ΘΜΚΕ: το έργο της αντιστατικής δύναμης ισούται με την απώλεια κινητικής ενέργειας, F·d = ½mv².'
+    ));
+   }
+  }
+ }
+
+ // 2) Spring compression from initial speed
+ for (const m of [1, 2, 3]) {
+  for (const v of [2, 4, 6]) {
+   for (const k of [100, 200, 400]) {
+    const x = Math.sqrt((m*v*v)/k);
+    out.push(makeQuestion('energy','medium',
+     `Σώμα μάζας ${m} kg χτυπά ιδανικό ελατήριο k=${k} N/m με ταχύτητα ${v} m/s σε λείο οριζόντιο. Ποια είναι η μέγιστη συμπίεση;`,
+     [`${fmt(x)} m`, `${fmt((m*v*v)/(2*k))} m`, `${fmt((m*v)/k)} m`, `${fmt(Math.sqrt((2*m*v*v)/k))} m`],
+     0,
+     'Στη μέγιστη συμπίεση v=0: ½mv² = ½kx².'
+    ));
+   }
+  }
+ }
+
+ // 3) Mixed (friction + spring)
+ for (const m of [1, 2]) {
+  for (const v of [4, 6]) {
+   for (const mu of [0.1, 0.2]) {
+    const g = 10;
+    const k = 200;
+    const x = (-(mu*m*g) + Math.sqrt((mu*m*g)*(mu*m*g) + k*m*v*v))/k;
+    out.push(makeQuestion('energy','hard',
+     `Σώμα m=${m} kg με v₀=${v} m/s κινείται σε οριζόντιο με τριβή μ=${mu} και συμπιέζει ελατήριο k=${k} N/m μέχρι στάση. Ποια είναι περίπου η συμπίεση x; (g=10)`,
+     [`${fmt(x)} m`, `${fmt(Math.sqrt((m*v*v)/k))} m`, `${fmt(x/2)} m`, `${fmt(x*1.5)} m`],
+     0,
+     'Ισοζύγιο ενέργειας: ½mv² = ½kx² + μmgx.'
+    ));
+   }
+  }
+ }
+
+ // 4) F-x graph area concept (constant / piecewise)
+ for (const F of [20, 40, 60]) {
+  for (const x of [2, 3, 5]) {
+   out.push(makeQuestion('energy','easy',
+    `Σε διάγραμμα F-x με σταθερή δύναμη F=${F} N από x=0 έως x=${x} m, ποιο είναι το έργο;`,
+    [`${fmt(F*x)} J`, `${fmt(F+x)} J`, `${fmt(F/x)} J`, `${fmt(0.5*F*x)} J`],
+    0,
+    'Το έργο ισούται με το εμβαδό κάτω από τη γραφική F-x.'
+   ));
+  }
+ }
+
+ // Triangle area in F-x
+ for (const Fmax of [30, 50, 80]) {
+  for (const base of [2, 4]) {
+   const W = 0.5*Fmax*base;
+   out.push(makeQuestion('energy','medium',
+    `Διάγραμμα F-x: τρίγωνο με βάση ${base} m και ύψος ${Fmax} N. Ποιο είναι το έργο;`,
+    [`${fmt(W)} J`, `${fmt(Fmax*base)} J`, `${fmt((Fmax+base)/2)} J`, `${fmt(Fmax/base)} J`],
+    0,
+    'Για τριγωνική κατανομή, W = εμβαδό = ½·βάση·ύψος.'
+   ));
+  }
+ }
+
+ // 5) Path independence / conservative force
+ out.push(makeQuestion('energy','hard',
+  'Για διατηρητική δύναμη, το έργο από Α σε Β εξαρτάται από:',
+  ['μόνο τα άκρα Α και Β', 'το μήκος της διαδρομής', 'τον χρόνο κίνησης', 'την ταχύτητα εκκίνησης'],
+  0,
+  'Κύριο χαρακτηριστικό διατηρητικής δύναμης: path independence.'
+ ));
+
+ out.push(makeQuestion('energy','hard',
+  'Σε κλειστή διαδρομή υπό μόνο διατηρητικές δυνάμεις, το συνολικό έργο είναι:',
+  ['0', 'θετικό', 'αρνητικό', 'ίσο με ΔΚ'],
+  0,
+  'Για κλειστή τροχιά: ∮F·dr = 0.'
+ ));
+
+ // 6) Exam-style short conceptual traps
+ out.push(makeQuestion('energy','hard',
+  'Όταν η τριβή ολίσθησης δρα, η μηχανική ενέργεια K+U:',
+  ['δεν διατηρείται γενικά', 'διατηρείται πάντα', 'γίνεται πάντα μηδέν', 'ισούται με την ισχύ'],
+  0,
+  'Μη-διατηρητικές δυνάμεις (όπως τριβή) αλλάζουν το K+U.'
+ ));
+
+ out.push(makeQuestion('energy','hard',
+  'Το W στη σχέση ΣW=ΔK σημαίνει:',
+  ['συνολικό έργο όλων των δυνάμεων', 'μόνο το βάρος', 'μόνο το έργο της Ν', 'ισχύ'],
+  0,
+  'Το θεώρημα έργου-ενέργειας χρησιμοποιεί το άθροισμα έργων όλων των δυνάμεων.'
+ ));
+
+ return out;
+}
+
+function genDefinitionsExamPack(){
+ const out = [];
+ const defs = [
+  ['Στο κεφάλαιο έργου-ενέργειας, το W συμβολίζει συνήθως:', ['έργο', 'βάρος', 'watt', 'γωνιακή ταχύτητα'], 0, 'Διαχωρισμός συμβόλων: W(work) vs weight (βάρος).'],
+  ['Το σύμβολο P στη μηχανική ενέργειας είναι συνήθως:', ['ισχύς', 'πίεση πάντα', 'ορμή', 'δυναμική ενέργεια'], 0, 'Στο συγκεκριμένο πλαίσιο P=dW/dt.'],
+  ['Η μονάδα Joule (J) είναι μονάδα:', ['ενέργειας/έργου', 'δύναμης', 'ισχύος', 'μάζας'], 0, 'J = N·m.'],
+  ['Η μονάδα Watt (W) είναι μονάδα:', ['ισχύος', 'έργου', 'ροπής', 'επιτάχυνσης'], 0, '1 W = 1 J/s.'],
+  ['Διατηρητική δύναμη σημαίνει:', ['έργο ανεξάρτητο διαδρομής', 'έργο πάντα θετικό', 'μηδενική δύναμη', 'σταθερή ισχύς'], 0, 'Ορισμός διατηρητικής δύναμης.'],
+  ['Αν μόνο διατηρητικές δυνάμεις δρουν:', ['K+U=σταθερό', 'K=σταθερό πάντα', 'U=0', 'ΣF=0'], 0, 'ΑΔΜΕ.'],
+  ['Το επίπεδο αναφοράς της δυναμικής ενέργειας:', ['επιλέγεται συμβατικά', 'είναι πάντα το έδαφος', 'είναι πάντα y=0', 'δεν μπορεί να αλλάξει'], 0, 'Μόνο οι διαφορές U έχουν φυσική σημασία.'],
+  ['Η ισχύς ορίζεται ως:', ['P=dW/dt', 'P=W·t', 'P=F/a', 'P=ΔK'], 0, 'Ρυθμός παραγωγής έργου.'],
+  ['ΣW=ΔK είναι:', ['Θεώρημα έργου-κινητικής ενέργειας', 'ΑΔΜΕ', '2ος Newton', 'νόμος Hooke'], 0, 'ΘΜΚΕ.'],
+  ['Σε κλειστή τροχιά διατηρητικής δύναμης ισχύει:', ['∮F·dr=0', '∮F·dr>0', '∮F·dr<0', '∮F·dr=ΔK'], 0, 'Κλειστή διαδρομή και διατηρητικές δυνάμεις.']
+ ];
+
+ for (let r=0; r<3; r++) {
+  for (const [q,a,c,e] of defs) {
+   out.push(makeQuestion('formulas', r===0?'easy':(r===1?'medium':'hard'), q, a, c, e));
+  }
+ }
+ return out;
+}
+
 const bank = uniqueQuestions([
  ...genKinematics(),
  ...genKinematicsHardVariety(),
@@ -1952,6 +2083,8 @@ const bank = uniqueQuestions([
  ...genWordProblems(),
  ...genGraphConcepts(),
  ...genFormulaQuiz(),
+ ...genDefinitionsExamPack(),
+ ...genEnergyExamPack(),
  ...genVeryHardMixed()
 ]).map(ensureUniqueAnswerOptions);
 
