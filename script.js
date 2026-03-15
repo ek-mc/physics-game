@@ -2252,10 +2252,8 @@ function updateMenuInfo(){
  }).join(' | ');
 
  bankInfo.textContent = `Σύνολο ερωτήσεων: ${bank.length} | ${byChapter}`;
- const cfg = { mode: 'random', chapter: null, difficulty, count, timer, timerSeconds, streakMode };
- const b = getBest(cfg);
  const g = getGlobalBest();
- bestInfo.textContent = `Best (τρέχουσες ρυθμίσεις random): ${b.score}/${b.total} | streak: ${b.streak || 0} • Global best: ${g.score}/${g.total || '-'} | streak: ${g.streak || 0}`;
+ bestInfo.textContent = `Best score: ${g.score}/${g.total || '-'} | Best streak: ${g.streak || 0}`;
 }
 
 function start(mode, chapter){
