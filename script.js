@@ -4,6 +4,7 @@ const chapters = {
  rotation: 'Περιστροφή',
  energy: 'Έργο & Ενέργεια',
  oscillations: 'Ταλαντώσεις',
+ waves: 'Μηχανικά κύματα',
  formulas: 'Τύποι (mixed)'
 };
 
@@ -41,6 +42,7 @@ const btnD = document.getElementById('btnD');
 const btnP = document.getElementById('btnP');
 const btnE = document.getElementById('btnE');
 const btnO = document.getElementById('btnO');
+const btnW = document.getElementById('btnW');
 const btnT = document.getElementById('btnT');
 const btnM = document.getElementById('btnM');
 
@@ -2065,6 +2067,113 @@ function genDefinitionsExamPack(){
  return out;
 }
 
+function genWaves(){
+ const out = [];
+
+ out.push(makeQuestion('waves','easy',
+  'Τι μεταφέρει ένα μηχανικό κύμα κατά τη διάδοσή του;',
+  ['Ενέργεια και ορμή, όχι ύλη','Ύλη μόνο','Μόνο θερμότητα','Τίποτα από τα παραπάνω'],
+  0,
+  'Στο μηχανικό κύμα τα σωματίδια ταλαντώνονται γύρω από ισορροπία: μεταφέρεται ενέργεια/ορμή, όχι ύλη.'
+ ));
+
+ out.push(makeQuestion('waves','easy',
+  'Για τη διάδοση μηχανικού κύματος απαιτείται:',
+  ['Υλικό μέσο','Κενό','Μόνο ηλεκτρικό πεδίο','Μόνο μαγνητικό πεδίο'],
+  0,
+  'Μηχανικά κύματα διαδίδονται σε στερεά/υγρά/αέρια μέσα.'
+ ));
+
+ out.push(makeQuestion('waves','easy',
+  'Εγκάρσιο κύμα σημαίνει ότι η ταλάντωση των μορίων είναι:',
+  ['Κάθετη στη διεύθυνση διάδοσης','Παράλληλη στη διεύθυνση διάδοσης','Τυχαία','Μηδενική'],
+  0,
+  'Εγκάρσιο: κάθετη ταλάντωση, π.χ. κύμα σε χορδή.'
+ ));
+
+ out.push(makeQuestion('waves','easy',
+  'Διαμήκες κύμα σημαίνει ότι η ταλάντωση των μορίων είναι:',
+  ['Παράλληλη στη διεύθυνση διάδοσης','Κάθετη στη διεύθυνση διάδοσης','Κυκλική','Ελικοειδής'],
+  0,
+  'Διαμήκες: παράλληλη ταλάντωση, π.χ. ήχος στον αέρα.'
+ ));
+
+ out.push(makeQuestion('waves','medium',
+  'Το μήκος κύματος λ είναι:',
+  ['Η ελάχιστη απόσταση δύο σημείων που ταλαντώνονται με τον ίδιο τρόπο','Η μέγιστη απομάκρυνση από ισορροπία','Ο χρόνος μιας ταλάντωσης','Ο αριθμός ταλαντώσεων ανά δευτερόλεπτο'],
+  0,
+  'Ορισμός λ: χωρική περιοδικότητα του κύματος.'
+ ));
+
+ out.push(makeQuestion('waves','medium',
+  'Η συχνότητα f και η περίοδος T συνδέονται με:',
+  ['f = 1/T','f = T','f = 2πT','f = T^2'],
+  0,
+  'Θεμελιώδης σχέση περιοδικών φαινομένων: f=1/T.'
+ ));
+
+ for (const f of [2,4,5,8,10,12]){
+  for (const l of [0.2,0.4,0.5,0.8,1.2,1.5]){
+   const v = f*l;
+   out.push(makeQuestion('waves', v<3 ? 'easy' : 'medium',
+    `Αρμονικό κύμα με συχνότητα f=${fmt(f)} Hz και μήκος κύματος λ=${fmt(l)} m. Ποια είναι η ταχύτητα διάδοσης;`,
+    [`${fmt(v)} m/s`, `${fmt(f/l)} m/s`, `${fmt(l/f)} m/s`, `${fmt(2*Math.PI*f*l)} m/s`],
+    0,
+    'Ισχύει v = f·λ.'
+   ));
+  }
+ }
+
+ for (const v of [20,30,40,60,80,120,200,340]){
+  for (const f of [2,4,5,8,10,20,40]){
+   const l = v/f;
+   out.push(makeQuestion('waves','medium',
+    `Κύμα με ταχύτητα v=${fmt(v)} m/s και συχνότητα f=${fmt(f)} Hz. Ποιο είναι το μήκος κύματος;`,
+    [`${fmt(l)} m`, `${fmt(v*f)} m`, `${fmt(f/v)} m`, `${fmt(1/f)} m`],
+    0,
+    'Από v=fλ ⇒ λ=v/f.'
+   ));
+  }
+ }
+
+ out.push(makeQuestion('waves','hard',
+  'Σε ίδιο μέσο, αν διπλασιαστεί η συχνότητα f μιας πηγής, τότε η ταχύτητα v του κύματος:',
+  ['Μένει ίδια','Διπλασιάζεται','Υποδιπλασιάζεται','Μηδενίζεται'],
+  0,
+  'Στο ίδιο μέσο η ταχύτητα καθορίζεται από ιδιότητες μέσου, όχι από το πλάτος/συχνότητα.'
+ ));
+
+ out.push(makeQuestion('waves','hard',
+  'Σε ίδιο μέσο, αν διπλασιαστεί η συχνότητα, το μήκος κύματος λ:',
+  ['Υποδιπλασιάζεται','Διπλασιάζεται','Μένει ίδιο','Εξαρτάται μόνο από το πλάτος'],
+  0,
+  'Με v σταθερό και v=fλ, αν f→2f τότε λ→λ/2.'
+ ));
+
+ out.push(makeQuestion('waves','hard',
+  'Ποια πρόταση είναι σωστή για μηχανικά κύματα;',
+  ['Η ταχύτητα διάδοσης εξαρτάται από τις μηχανικές ιδιότητες του μέσου','Η ταχύτητα εξαρτάται μόνο από το πλάτος','Η ταχύτητα εξαρτάται μόνο από τη συχνότητα','Τα μηχανικά κύματα διαδίδονται μόνο σε κενό'],
+  0,
+  'Η v καθορίζεται από ελαστικές ιδιότητες και πυκνότητα του μέσου.'
+ ));
+
+ out.push(makeQuestion('waves','easy',
+  'Ποιο είναι χαρακτηριστικό παράδειγμα διαμήκους μηχανικού κύματος;',
+  ['Ο ήχος στον αέρα','Κύμα σε χορδή','Ηλεκτρομαγνητικό κύμα στο κενό','Φως laser'],
+  0,
+  'Ο ήχος στον αέρα είναι διαμήκες μηχανικό κύμα.'
+ ));
+
+ out.push(makeQuestion('waves','easy',
+  'Ποιο από τα παρακάτω ΔΕΝ είναι μηχανικό κύμα;',
+  ['Ηλεκτρομαγνητικό κύμα στο κενό','Κύμα στη θάλασσα','Σεισμικό κύμα','Κύμα σε νήμα'],
+  0,
+  'Τα ηλεκτρομαγνητικά κύματα δεν απαιτούν υλικό μέσο.'
+ ));
+
+ return out;
+}
+
 const bank = uniqueQuestions([
  ...genKinematics(),
  ...genKinematicsHardVariety(),
@@ -2078,6 +2187,7 @@ const bank = uniqueQuestions([
  ...genRotationWorksheetStyle(),
  ...genEnergy(),
  ...genOscillations(),
+ ...genWaves(),
  ...genEnergyWorksheetStyle(),
  ...genIdeaProblems(),
  ...genWordProblems(),
@@ -2515,7 +2625,7 @@ document.addEventListener('keydown', (e) => {
   }
  }
 
- // Menu shortcuts: K/D/P/E/T/M
+ // Menu shortcuts: K/D/P/E/O/W/T/M
  if (inMenu) {
   const key = (e.key || '').toLowerCase();
   const map = {
@@ -2524,6 +2634,7 @@ document.addEventListener('keydown', (e) => {
    p: btnP,
    e: btnE,
    o: btnO,
+   w: btnW,
    t: btnT,
    m: btnM,
    'κ': btnK,
@@ -2531,6 +2642,7 @@ document.addEventListener('keydown', (e) => {
    'π': btnP,
    'ε': btnE,
    'ο': btnO,
+   'ω': btnW,
    'τ': btnT,
    'μ': btnM
   };
