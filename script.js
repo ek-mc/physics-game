@@ -2391,6 +2391,15 @@ function stemSignature(text){
  return String(text)
   .toLowerCase()
   .replace(/[0-9]+([.,][0-9]+)?/g, 'N')
+  .replace(/[=:+\-*/(),.;]/g, ' ')
+  .replace(/\b[a-zα-ω]\b/g, 'v')
+  .replace(/\s+/g, ' ')
+  .trim();
+}
+
+function coarseSignature(text){
+ return stemSignature(text)
+  .replace(/\b(v|n|hz|m|s|rad|kg|j|w)\b/g, '')
   .replace(/\s+/g, ' ')
   .trim();
 }
@@ -2399,17 +2408,35 @@ function countUniqueStems(src){
  return new Set((src||[]).map(q => stemSignature(q.q))).size;
 }
 
+function reorderToAvoidNearRepeats(picked){
+ if (picked.length <= 2) return picked;
+ const out = [picked[0]];
+ const rest = picked.slice(1);
+ while (rest.length){
+  const prev = coarseSignature(out[out.length - 1].q);
+  let idx = rest.findIndex((q) => coarseSignature(q.q) !== prev);
+  if (idx === -1) idx = 0;
+  out.push(rest.splice(idx, 1)[0]);
+ }
+ return out;
+}
+
 function pickDiverseQuestions(src, targetCount){
  const shuffled = shuffle(src);
- const used = new Set();
+ const usedFine = new Set();
+ const usedCoarseCounts = new Map();
  const picked = [];
 
  for (const q of shuffled){
-  const sig = stemSignature(q.q);
-  if (used.has(sig)) continue;
-  used.add(sig);
+  const fine = stemSignature(q.q);
+  const coarse = coarseSignature(q.q);
+  const coarseCount = usedCoarseCounts.get(coarse) || 0;
+  if (usedFine.has(fine)) continue;
+  if (coarseCount >= 2) continue;
+  usedFine.add(fine);
+  usedCoarseCounts.set(coarse, coarseCount + 1);
   picked.push(q);
-  if (picked.length >= targetCount) return picked;
+  if (picked.length >= targetCount) return reorderToAvoidNearRepeats(picked);
  }
 
  for (const q of shuffled){
@@ -2417,7 +2444,7 @@ function pickDiverseQuestions(src, targetCount){
   if (!picked.includes(q)) picked.push(q);
  }
 
- return picked;
+ return reorderToAvoidNearRepeats(picked);
 }
 
 function savePrefs(){
