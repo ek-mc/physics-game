@@ -504,6 +504,114 @@ function genKinematicsExamStyleSet(){
  return out;
 }
 
+function genKinematicsCompositeMotions(){
+ const out = [];
+
+ // Projectile motion fundamentals (components)
+ for (const v0 of [10, 15, 20, 25]) {
+  for (const ang of [30, 37, 45, 53, 60]) {
+   const r = Math.PI * ang / 180;
+   const vx = v0 * Math.cos(r);
+   const vy = v0 * Math.sin(r);
+   out.push(makeQuestion('kinematics','easy',
+    `Πλάγια βολή: v₀=${v0} m/s, φ=${ang}°. Ποια είναι η οριζόντια συνιστώσα v₀x;`,
+    [`${fmt(vx)} m/s`, `${fmt(vy)} m/s`, `${fmt(v0)} m/s`, `${fmt(vx+vy)} m/s`],
+    0,
+    'Στην πλάγια βολή: v₀x=v₀cosφ.'
+   ));
+   out.push(makeQuestion('kinematics','easy',
+    `Πλάγια βολή: v₀=${v0} m/s, φ=${ang}°. Ποια είναι η κατακόρυφη συνιστώσα v₀y;`,
+    [`${fmt(vy)} m/s`, `${fmt(vx)} m/s`, `${fmt(v0)} m/s`, `${fmt(vy-vx)} m/s`],
+    0,
+    'Στην πλάγια βολή: v₀y=v₀sinφ.'
+   ));
+  }
+ }
+
+ // Projectile equations x(t), y(t), vy(t)
+ for (const v0x of [6, 8, 10, 12]) {
+  for (const v0y of [8, 10, 12, 14]) {
+   for (const t of [1, 2, 3]) {
+    const g = 10;
+    const x = v0x * t;
+    const y = v0y * t - 0.5 * g * t * t;
+    const vy = v0y - g * t;
+    out.push(makeQuestion('kinematics','medium',
+     `Πλάγια βολή με v₀x=${v0x} m/s, v₀y=${v0y} m/s (g=10). Για t=${t} s, ποια είναι η οριζόντια θέση x;`,
+     [`${fmt(x)} m`, `${fmt(y)} m`, `${fmt(vy)} m`, `${fmt(x+t)} m`],
+     0,
+     'Για τον οριζόντιο άξονα: x=v₀x t.'
+    ));
+    out.push(makeQuestion('kinematics','medium',
+     `Πλάγια βολή με v₀x=${v0x} m/s, v₀y=${v0y} m/s (g=10). Για t=${t} s, ποια είναι η κατακόρυφη ταχύτητα v_y;`,
+     [`${fmt(vy)} m/s`, `${fmt(v0y)} m/s`, `${fmt(v0x)} m/s`, `${fmt(v0y+10*t)} m/s`],
+     0,
+     'Για τον κατακόρυφο άξονα: v_y=v₀y-gt.'
+    ));
+   }
+  }
+ }
+
+ // Time of flight and range (from ground)
+ for (const v0 of [12, 16, 20, 24]) {
+  for (const ang of [30, 45, 60]) {
+   const r = Math.PI * ang / 180;
+   const g = 10;
+   const T = (2 * v0 * Math.sin(r)) / g;
+   const R = (v0 * v0 * Math.sin(2*r)) / g;
+   out.push(makeQuestion('kinematics','hard',
+    `Βολή από το έδαφος με v₀=${v0} m/s και φ=${ang}° (g=10). Ποιος είναι ο χρόνος πτήσης;`,
+    [`${fmt(T)} s`, `${fmt(T/2)} s`, `${fmt(R)} s`, `${fmt(v0/g)} s`],
+    0,
+    'Για εκτόξευση/πρόσκρουση στο ίδιο ύψος: T=2v₀sinφ/g.'
+   ));
+   out.push(makeQuestion('kinematics','hard',
+    `Βολή από το έδαφος με v₀=${v0} m/s και φ=${ang}° (g=10). Ποιο είναι το βεληνεκές;`,
+    [`${fmt(R)} m`, `${fmt(T)} m`, `${fmt(R/2)} m`, `${fmt(v0*Math.cos(r))} m`],
+    0,
+    'Για ίδια στάθμη: R=v₀² sin(2φ)/g.'
+   ));
+  }
+ }
+
+ // Circular motion kinematics (uniform)
+ for (const r of [1, 1.5, 2, 3]) {
+  for (const w of [1, 2, 3, 4]) {
+   const v = r * w;
+   const ac = r * w * w;
+   out.push(makeQuestion('kinematics','medium',
+    `Ομαλή κυκλική κίνηση με ακτίνα r=${fmt(r)} m και γωνιακή ταχύτητα ω=${fmt(w)} rad/s. Ποιο είναι το μέτρο της ταχύτητας;`,
+    [`${fmt(v)} m/s`, `${fmt(ac)} m/s`, `${fmt(w/r)} m/s`, `${fmt(r/w)} m/s`],
+    0,
+    'Για ομαλή κυκλική: v=rω.'
+   ));
+   out.push(makeQuestion('kinematics','hard',
+    `Ομαλή κυκλική κίνηση με r=${fmt(r)} m και ω=${fmt(w)} rad/s. Ποια είναι η κεντρομόλος επιτάχυνση;`,
+    [`${fmt(ac)} m/s²`, `${fmt(v)} m/s²`, `${fmt(w*w/r)} m/s²`, `${fmt(r/w)} m/s²`],
+    0,
+    'Κεντρομόλος: a_c=rω²=v²/r.'
+   ));
+  }
+ }
+
+ // Polar/cartesian conversion quick checks
+ out.push(makeQuestion('kinematics','medium',
+  'Σε πολικές συντεταγμένες, η μετατροπή σε καρτεσιανές είναι:',
+  ['x=r cosθ, y=r sinθ', 'x=r sinθ, y=r cosθ', 'x=rθ, y=r/θ', 'x=cosr, y=sinr'],
+  0,
+  'Βασική μετατροπή: x=r cosθ και y=r sinθ.'
+ ));
+
+ out.push(makeQuestion('kinematics','hard',
+  'Στην ομαλή κυκλική κίνηση ισχύει:',
+  ['θ(t)=θ₀+ωt', 'θ(t)=θ₀+αt²', 'ω(t)=ω₀+αt με α≠0', 'v(t)=v₀+at ευθύγραμμα'],
+  0,
+  'Για ομαλή κυκλική, ω σταθερή και θ=θ₀+ωt.'
+ ));
+
+ return out;
+}
+
 function genDynamics(){
  const out = [];
 
@@ -2286,6 +2394,7 @@ const bank = uniqueQuestions([
  ...genKinematicsAdvanced(),
  ...genKinematicsWorksheetStyle(),
  ...genKinematicsExamStyleSet(),
+ ...genKinematicsCompositeMotions(),
  ...genDynamics(),
  ...genDynamicsVariety(),
  ...genDynamicsWorksheetStyle(),
